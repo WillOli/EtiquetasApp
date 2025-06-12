@@ -1,3 +1,7 @@
+## 👨‍💻 Autor
+
+Desenvolvido por [William Silva Oliveira](https://br.linkedin.com/in/william-silva-oliveira)
+
 ```markdown
 # 🖨️ Sistema Local de Impressão de Etiquetas
 
@@ -61,7 +65,3 @@ Aplicação desktop leve e confiável desenvolvida em **Java 21**, com **fronten
 A impressão é feita via `javax.print`, utilizando a **impressora padrão do sistema operacional**. Certifique-se de que a impressora de etiquetas esteja corretamente instalada e definida como padrão no Windows.
 
 ---
-
-## 👨‍💻 Autor
-
-Desenvolvido por [William Silva Oliveira](https://br.linkedin.com/in/william-silva-oliveira)
