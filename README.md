@@ -1,6 +1,7 @@
 ## 👨‍💻 Autor
 
-Desenvolvido por <a href="https://br.linkedin.com/in/william-silva-oliveira" target="_blank">William Silva Oliveira</a>
+Desenvolvido por <a href="https://br.linkedin.com/in/william-silva-oliveira" target="_blank" rel="noopener noreferrer">William Silva Oliveira</a>
+
 
 ```markdown
 # 🖨️ Sistema Local de Impressão de Etiquetas
