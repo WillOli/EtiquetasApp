@@ -1,15 +1,71 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.*;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+
+public class Main {
+
+    public static void main(String[] args) {
+        int port = 8080;
+        System.out.println("Servidor iniciado na porta " + port);
+
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            while (true) {
+                try {
+                    Socket clientSocket = serverSocket.accept();
+                    new Thread(() -> handleClient(clientSocket)).start();
+                } catch (IOException e) {
+                    System.err.println("Erro ao aceitar conexão: " + e.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao iniciar servidor: " + e.getMessage());
+        }
+    }
+
+    private static void handleClient(Socket socket) {
+        try (
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
+        ) {
+            String line;
+            StringBuilder request = new StringBuilder();
+            int contentLength = 0;
+
+            // Lê o cabeçalho HTTP
+            while (!(line = in.readLine()).isEmpty()) {
+                request.append(line).append("\n");
+                if (line.toLowerCase().startsWith("content-length:")) {
+                    contentLength = Integer.parseInt(line.split(":")[1].trim());
+                }
+            }
+
+            // Lê o corpo da requisição (caso exista)
+            char[] body = new char[contentLength];
+            in.read(body);
+            String requestBody = new String(body);
+
+            System.out.println("Requisição recebida:");
+            System.out.println(request.toString());
+            System.out.println("Corpo:");
+            System.out.println(requestBody);
+
+            // Resposta simples
+            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nServidor Java ativo!";
+            out.write(response);
+            out.flush();
+
+        } catch (IOException e) {
+            System.err.println("Erro no cliente: " + e.getMessage());
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                System.err.println("Erro ao fechar conexão: " + e.getMessage());
+            }
         }
     }
 }
