@@ -1,13 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const labelText = document.getElementById('labelText');
-  const labelWidth = document.getElementById('labelWidth');
-  const labelHeight = document.getElementById('labelHeight');
-
   labelText.addEventListener('input', updatePreview);
-  labelWidth.addEventListener('input', updatePreview);
-  labelHeight.addEventListener('input', updatePreview);
-
-  updatePreview(); // Inicializa
+  updatePreview(); // Inicializa visualização
 });
 
 function appendText(value) {
@@ -19,10 +13,9 @@ function appendText(value) {
 function appendSpecial() {
   const textarea = document.getElementById('labelText');
   const text = textarea.value;
-  const match = text.match(/^\d+/);
   const special = " - ESPECIAL ";
-  if (match && !text.includes(special)) {
-    textarea.value = text.slice(0, match[0].length) + special + text.slice(match[0].length);
+  if (!text.includes(special)) {
+    textarea.value = text + special;
   }
   updatePreview();
 }
@@ -38,22 +31,22 @@ function setQuantity(amount) {
 
 function updatePreview() {
   const text = document.getElementById('labelText').value || 'Digite o texto acima';
-  const width = document.getElementById('labelWidth').value;
-  const height = document.getElementById('labelHeight').value;
-
-  const preview = document.getElementById('labelPreview');
   const previewText = document.getElementById('previewText');
-
-  preview.style.width = `${width}cm`;
-  preview.style.height = `${height}cm`;
   previewText.textContent = text;
 }
 
 function printLabels() {
   const text = document.getElementById('labelText').value || 'Etiqueta de Exemplo';
-  const width = document.getElementById('labelWidth').value;
-  const height = document.getElementById('labelHeight').value;
-  const quantity = parseInt(document.getElementById('labelQuantity').value);
+  const quantity = parseInt(document.getElementById('labelQuantity').value) || 1;
+
+  if (quantity < 1 || quantity > 100) {
+    alert('A quantidade deve estar entre 1 e 100.');
+    return;
+  }
+
+  // Tamanho fixo definido no backend
+  const width = 6;  // cm
+  const height = 4; // cm
 
   let html = `
     <style>
