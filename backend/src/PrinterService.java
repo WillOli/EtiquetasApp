@@ -12,15 +12,24 @@ public class PrinterService {
             return;
         }
 
-        // Gera o conteúdo a ser impresso (pode adaptar a formatação aqui)
+        // Configurações manuais
+        int totalWidth = 40; // Largura da etiqueta (em caracteres)
+        int topMarginLines = 2; // Linhas vazias no topo da etiqueta
+        int leftMarginSpace = 4; // Espaços à esquerda
+        int lineSpacing = 2; // Linhas entre cada etiqueta
+
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < quantity; i++) {
-            sb.append(centerText(labelText)).append("\n\n"); // Duplo espaçamento entre etiquetas
+            sb.append("\n".repeat(topMarginLines)); // Margem superior
+            String centered = centerText(labelText, totalWidth);
+            sb.append(" ".repeat(leftMarginSpace)).append(centered).append("\n");
+            sb.append("\n".repeat(lineSpacing)); // Espaço entre etiquetas
         }
 
         String fullText = sb.toString();
+
         try {
-            // Converte para InputStream
             InputStream is = new ByteArrayInputStream(fullText.getBytes("UTF8"));
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(is, flavor, null);
@@ -36,11 +45,8 @@ public class PrinterService {
         }
     }
 
-    // Centraliza o texto em até 40 caracteres (ajuste conforme necessário)
-    private String centerText(String text) {
-        int totalWidth = 40;
+    private String centerText(String text, int totalWidth) {
         int padding = Math.max((totalWidth - text.length()) / 2, 0);
         return " ".repeat(padding) + text;
     }
 }
-

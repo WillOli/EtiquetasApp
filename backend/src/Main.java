@@ -1,10 +1,8 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.*;
-
 
 public class Main {
 
@@ -43,18 +41,32 @@ public class Main {
                 }
             }
 
-            // Lê o corpo da requisição (caso exista)
+            // Lê o corpo da requisição
             char[] body = new char[contentLength];
             in.read(body);
             String requestBody = new String(body);
 
-            System.out.println("Requisição recebida:");
+            System.out.println("\n--- Requisição recebida ---");
             System.out.println(request.toString());
             System.out.println("Corpo:");
             System.out.println(requestBody);
 
-            // Resposta simples
-            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nServidor Java ativo!";
+            // Processa JSON
+            try {
+                JSONObject json = new JSONObject(requestBody);
+                String text = json.getString("text");
+                int quantity = json.getInt("quantity");
+
+                PrinterService printer = new PrinterService();
+                printer.printLabels(text, quantity);
+
+            } catch (Exception e) {
+                System.err.println("Erro ao interpretar JSON ou imprimir: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            // Envia resposta
+            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nEtiqueta enviada para impressão.";
             out.write(response);
             out.flush();
 
