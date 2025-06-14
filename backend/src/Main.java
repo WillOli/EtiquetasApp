@@ -3,6 +3,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDateTime; // << LOG ADICIONADO
 
 public class Main {
 
@@ -29,6 +30,9 @@ public class Main {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
         ) {
+            // << LOG ADICIONADO
+            System.out.println("[LOG] " + LocalDateTime.now() + " - Conexão recebida de " + socket.getInetAddress());
+
             String line;
             StringBuilder header = new StringBuilder();
             int contentLength = 0;
@@ -65,15 +69,16 @@ public class Main {
             in.read(body);
             String requestBody = new String(body);
 
-            System.out.println("\n--- Requisição recebida ---");
-            System.out.println(header.toString());
-            System.out.println("Corpo:");
-            System.out.println(requestBody);
+            // << LOG ADICIONADO
+            System.out.println("[LOG] JSON recebido: " + requestBody);
 
             try {
                 JSONObject json = new JSONObject(requestBody);
                 String text = json.getString("text");
                 int quantity = json.getInt("quantity");
+
+                // << LOG ADICIONADO
+                System.out.println("[LOG] Impressão solicitada - Texto: \"" + text + "\", Quantidade: " + quantity);
 
                 PrinterService printer = new PrinterService();
                 printer.printLabels(text, quantity);
