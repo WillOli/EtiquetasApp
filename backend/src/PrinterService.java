@@ -5,14 +5,14 @@ import java.time.format.DateTimeFormatter;
 
 public class PrinterService {
 
-    private static final String LOG_FILE = "logs.txt"; // Caminho do arquivo de log
+    private static final String LOG_FILE = "logs.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public void printLabels(String labelText, int quantity) {
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 
         if (defaultService == null) {
-            log("[ERRO] Nenhuma impressora padrão encontrada.");
+            log("[ERRO] Nenhuma impressora padrão encontrada."); // já existente
             return;
         }
 
@@ -49,10 +49,14 @@ public class PrinterService {
 
             job.print(doc, null);
 
-            log("[STATUS] Impressão enviada com sucesso.");
+            log("[STATUS] Impressão enviada com sucesso."); // já existente
 
+        } catch (PrintException e) {
+            log("[ERRO] Erro específico da impressora: " + e.getMessage()); // << NOVO
+        } catch (UnsupportedEncodingException e) {
+            log("[ERRO] Codificação não suportada: " + e.getMessage()); // << NOVO
         } catch (Exception e) {
-            log("[ERRO] Falha na impressão: " + e.getMessage());
+            log("[ERRO] Falha inesperada na impressão: " + e.getMessage()); // << NOVO
             e.printStackTrace();
         }
     }

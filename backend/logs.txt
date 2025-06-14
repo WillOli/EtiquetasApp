@@ -103,3 +103,16 @@ Texto:
 
 [2025-06-14 15:06:34] [STATUS] Impressão enviada com sucesso.
 
+[2025-06-14 15:56:43] [IMPRESSÃO] 2025-06-14 15:56:43
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+Texto:
+
+
+              Etiqueta de Exemplo
+
+
+
+
+[2025-06-14 15:56:43] [STATUS] Impressão enviada com sucesso.
+

@@ -3,7 +3,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.LocalDateTime; // << LOG ADICIONADO
+import java.time.LocalDateTime;
 
 public class Main {
 
@@ -30,7 +30,6 @@ public class Main {
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
         ) {
-            // << LOG ADICIONADO
             System.out.println("[LOG] " + LocalDateTime.now() + " - Conexão recebida de " + socket.getInetAddress());
 
             String line;
@@ -38,7 +37,6 @@ public class Main {
             int contentLength = 0;
             String method = "GET";
 
-            // Lê os cabeçalhos
             while (!(line = in.readLine()).isEmpty()) {
                 header.append(line).append("\n");
                 if (line.toUpperCase().startsWith("CONTENT-LENGTH:")) {
@@ -49,7 +47,6 @@ public class Main {
                 }
             }
 
-            // Responde OPTIONS (pré-flight)
             if (method.equals("OPTIONS")) {
                 String response = ""
                         + "HTTP/1.1 204 No Content\r\n"
@@ -64,37 +61,37 @@ public class Main {
                 return;
             }
 
-            // Lê corpo da requisição POST
             char[] body = new char[contentLength];
             in.read(body);
             String requestBody = new String(body);
 
-            // << LOG ADICIONADO
             System.out.println("[LOG] JSON recebido: " + requestBody);
+
+            String responseMessage = "Etiqueta enviada para impressão.";
 
             try {
                 JSONObject json = new JSONObject(requestBody);
                 String text = json.getString("text");
                 int quantity = json.getInt("quantity");
 
-                // << LOG ADICIONADO
                 System.out.println("[LOG] Impressão solicitada - Texto: \"" + text + "\", Quantidade: " + quantity);
 
                 PrinterService printer = new PrinterService();
                 printer.printLabels(text, quantity);
 
             } catch (Exception e) {
-                System.err.println("Erro ao interpretar JSON ou imprimir: " + e.getMessage());
+                System.err.println("[ERRO] Falha ao interpretar JSON ou imprimir: " + e.getMessage());
                 e.printStackTrace();
+
+                responseMessage = "Erro: JSON inválido ou falha na impressão."; // << NOVO
             }
 
-            // Envia resposta com CORS
             String response = ""
                     + "HTTP/1.1 200 OK\r\n"
                     + "Content-Type: text/plain\r\n"
                     + "Access-Control-Allow-Origin: *\r\n"
                     + "\r\n"
-                    + "Etiqueta enviada para impressão.";
+                    + responseMessage;
             out.write(response);
             out.flush();
 
