@@ -30,28 +30,46 @@ public class Main {
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
         ) {
             String line;
-            StringBuilder request = new StringBuilder();
+            StringBuilder header = new StringBuilder();
             int contentLength = 0;
+            String method = "GET";
 
-            // Lê o cabeçalho HTTP
+            // Lê os cabeçalhos
             while (!(line = in.readLine()).isEmpty()) {
-                request.append(line).append("\n");
-                if (line.toLowerCase().startsWith("content-length:")) {
+                header.append(line).append("\n");
+                if (line.toUpperCase().startsWith("CONTENT-LENGTH:")) {
                     contentLength = Integer.parseInt(line.split(":")[1].trim());
+                }
+                if (line.startsWith("POST") || line.startsWith("OPTIONS")) {
+                    method = line.split(" ")[0];
                 }
             }
 
-            // Lê o corpo da requisição
+            // Responde OPTIONS (pré-flight)
+            if (method.equals("OPTIONS")) {
+                String response = ""
+                        + "HTTP/1.1 204 No Content\r\n"
+                        + "Access-Control-Allow-Origin: *\r\n"
+                        + "Access-Control-Allow-Methods: POST, OPTIONS\r\n"
+                        + "Access-Control-Allow-Headers: Content-Type\r\n"
+                        + "Access-Control-Max-Age: 86400\r\n"
+                        + "\r\n";
+                out.write(response);
+                out.flush();
+                socket.close();
+                return;
+            }
+
+            // Lê corpo da requisição POST
             char[] body = new char[contentLength];
             in.read(body);
             String requestBody = new String(body);
 
             System.out.println("\n--- Requisição recebida ---");
-            System.out.println(request.toString());
+            System.out.println(header.toString());
             System.out.println("Corpo:");
             System.out.println(requestBody);
 
-            // Processa JSON
             try {
                 JSONObject json = new JSONObject(requestBody);
                 String text = json.getString("text");
@@ -65,8 +83,13 @@ public class Main {
                 e.printStackTrace();
             }
 
-            // Envia resposta
-            String response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nEtiqueta enviada para impressão.";
+            // Envia resposta com CORS
+            String response = ""
+                    + "HTTP/1.1 200 OK\r\n"
+                    + "Content-Type: text/plain\r\n"
+                    + "Access-Control-Allow-Origin: *\r\n"
+                    + "\r\n"
+                    + "Etiqueta enviada para impressão.";
             out.write(response);
             out.flush();
 
