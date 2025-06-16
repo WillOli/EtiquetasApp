@@ -7,12 +7,34 @@ public class PrinterService {
 
     private static final String LOG_FILE = "logs.txt";
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final int MAX_CHARACTERS = 40;
+    private static final int MAX_QUANTITY = 100;
 
     public void printLabels(String labelText, int quantity) {
+        if (labelText == null || labelText.trim().isEmpty()) {
+            log("[ERRO] Texto da etiqueta está vazio.");
+            return;
+        }
+
+        if (labelText.length() > MAX_CHARACTERS) {
+            log("[ERRO] Texto excede o limite de " + MAX_CHARACTERS + " caracteres.");
+            return;
+        }
+
+        if (quantity <= 0) {
+            log("[ERRO] Quantidade inválida. Deve ser maior que zero.");
+            return;
+        }
+
+        if (quantity > MAX_QUANTITY) {
+            log("[ERRO] Quantidade acima do limite permitido (" + MAX_QUANTITY + ").");
+            return;
+        }
+
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 
         if (defaultService == null) {
-            log("[ERRO] Nenhuma impressora padrão encontrada."); // já existente
+            log("[ERRO] Nenhuma impressora padrão encontrada.");
             return;
         }
 
@@ -49,14 +71,14 @@ public class PrinterService {
 
             job.print(doc, null);
 
-            log("[STATUS] Impressão enviada com sucesso."); // já existente
+            log("[STATUS] Impressão enviada com sucesso.");
 
         } catch (PrintException e) {
-            log("[ERRO] Erro específico da impressora: " + e.getMessage()); // << NOVO
+            log("[ERRO] Erro específico da impressora: " + e.getMessage());
         } catch (UnsupportedEncodingException e) {
-            log("[ERRO] Codificação não suportada: " + e.getMessage()); // << NOVO
+            log("[ERRO] Codificação não suportada: " + e.getMessage());
         } catch (Exception e) {
-            log("[ERRO] Falha inesperada na impressão: " + e.getMessage()); // << NOVO
+            log("[ERRO] Falha inesperada na impressão: " + e.getMessage());
             e.printStackTrace();
         }
     }

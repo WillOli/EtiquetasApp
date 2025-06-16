@@ -15,6 +15,7 @@ public class Main {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();
+                    clientSocket.setSoTimeout(10000); // TIMEOUT DE 10 SEGUNDOS
                     new Thread(() -> handleClient(clientSocket)).start();
                 } catch (IOException e) {
                     System.err.println("Erro ao aceitar conexão: " + e.getMessage());

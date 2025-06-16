@@ -122,3 +122,9 @@
 .scroll-buttons-container .btn-quantidade:hover {
   background-color: #D1D5DB;
 }
+
+/* já incluído na modal com Tailwind, mas caso queira sem Tailwind: */
+#alertModal {
+  display: none;
+}
+

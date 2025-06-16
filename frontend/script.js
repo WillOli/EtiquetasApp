@@ -58,29 +58,29 @@ function printLabels() {
   printButtonText.textContent = 'Imprimindo...';
 
   fetch('http://localhost:8080/print', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ text, quantity })
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.text().then(text => { throw new Error(text || 'Erro na impressão'); });
-    }
-    return response.text();
-  })
-  .then(data => {
-    alert('Impressão enviada com sucesso!');
-  })
-  .catch(error => {
-    alert('Erro ao imprimir: ' + error.message);
-  })
-  .finally(() => {
-    // Reativa botão e esconde spinner
-    printButton.disabled = false;
-    printButton.classList.remove('opacity-70', 'cursor-not-allowed');
-    spinner.classList.add('hidden');
-    printButtonText.textContent = 'Imprimir Etiquetas';
-  });
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ text, quantity })
+})
+.then(response => {
+  if (!response.ok) {
+    return response.text().then(text => { throw new Error(text || 'Erro na impressão'); });
+  }
+  return response.text();
+})
+.then(data => {
+  showModal('Impressão enviada com sucesso!');
+})
+.catch(error => {
+  showModal('Erro ao imprimir: ' + error.message);
+})
+.finally(() => {
+  printButton.disabled = false;
+  printButton.classList.remove('opacity-70', 'cursor-not-allowed');
+  spinner.classList.add('hidden');
+  printButtonText.textContent = 'Imprimir Etiquetas';
+});
+
 }
