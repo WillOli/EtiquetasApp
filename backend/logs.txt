@@ -492,3 +492,141 @@ Texto:
 
 [2025-06-17 10:01:14] [STATUS] Impressão enviada com sucesso.
 
+[2025-06-17 10:10:01] [IMPRESSÃO] 2025-06-17 10:10:01
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^FO50,50^A0N,40,40^FD2 - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:10:01] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:12:51] [IMPRESSÃO] 2025-06-17 10:12:51
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO50,50^A0N,40,40^FD1 - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:12:51] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:44:10] [IMPRESSÃO] 2025-06-17 10:44:10
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO50,50^A0N,40,40^FD - ESPECIAL ^FS
+^FO450,50^A0N,40,40^FD - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:44:10] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:44:18] [IMPRESSÃO] 2025-06-17 10:44:18
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO50,50^A0N,40,40^FD - ESPECIAL 12^FS
+^FO450,50^A0N,40,40^FD - ESPECIAL 12^FS
+^XZ
+
+
+[2025-06-17 10:44:19] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:44:37] [IMPRESSÃO] 2025-06-17 10:44:37
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO50,50^A0N,40,40^FD26^FS
+^FO450,50^A0N,40,40^FD26^FS
+^XZ
+
+
+[2025-06-17 10:44:37] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:50:11] [IMPRESSÃO] 2025-06-17 10:50:11
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO135,100^A0N,40,40^FD7 - ESPECIAL ^FS
+^FO535,100^A0N,40,40^FD7 - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:50:11] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:54:59] [IMPRESSÃO] 2025-06-17 10:54:59
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO37,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^FO437,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:54:59] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:56:57] [IMPRESSÃO] 2025-06-17 10:56:57
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 2
+ZPL:
+^XA
+^PW800
+^LL240
+^FO37,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^FO437,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^FO37,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^FO437,105^A0N,30,30^FD7 - ESPECIAL ^FS
+^XZ
+
+
+[2025-06-17 10:56:57] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 10:59:34] [IMPRESSÃO] 2025-06-17 10:59:34
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW800
+^LL240
+^FO12,102^A0N,36,36^FDEtiqueta de Exe...^FS
+^FO412,102^A0N,36,36^FDEtiqueta de Exe...^FS
+^XZ
+
+
+[2025-06-17 10:59:34] [STATUS] Impressão enviada com sucesso.
+
+[2025-06-17 11:13:20] [IMPRESSÃO] 2025-06-17 11:13:20
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade: 1
+ZPL:
+^XA
+^PW660
+^LL200
+^FO10,88^A0N,24,24^FD6 - ESPECIAL...^FS
+^FO340,88^A0N,24,24^FD6 - ESPECIAL...^FS
+^XZ
+
+
+[2025-06-17 11:13:20] [STATUS] Impressão enviada com sucesso.
+

@@ -32,7 +32,7 @@ function setQuantity(amount) {
 function updatePreview() {
   const text = document.getElementById('labelText').value || 'Digite o texto acima';
   const previewText = document.getElementById('previewText');
-  previewText.textContent = text;
+  previewText.innerHTML = `<span>${text}</span><span>${text}</span>`; // Duplica o texto
 }
 
 /* ========== Função para enviar requisição de impressão ========== */
@@ -96,7 +96,6 @@ function showModal(message) {
     closeModal();
   }, 3000);
 }
-
 
 function closeModal() {
   const modal = document.getElementById('alertModal');

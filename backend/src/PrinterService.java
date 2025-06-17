@@ -38,34 +38,66 @@ public class PrinterService {
             return;
         }
 
-        int totalWidth = 40;
-        int topMarginLines = 2;
-        int leftMarginSpace = 4;
-        int lineSpacing = 2;
+        int dotsPerMM = 8; // 203 dpi
+        int labelWidthDots = 40 * dotsPerMM;  // 320 dots (40mm)
+        int labelHeightDots = 25 * dotsPerMM; // 200 dots (25mm)
+        int pageWidthDots = labelWidthDots * 2 + 20; // 660 dots (320 * 2 + 20 dots de lacuna horizontal)
+        int fontHeight = 24;  // Ajustado para caber em 200 dots, centralizado
+        int charsPerLine = 12; // Estimativa de caracteres que cabem em 320 dots
+        int textWidthEstimate = Math.min(labelText.length(), charsPerLine) * 25; // 25 dots por caractere como média
 
-        StringBuilder sb = new StringBuilder();
+        // Centralização: Margens ajustadas para o meio de 320x200 dots (sem margens externas)
+        int marginLeft = (labelWidthDots - textWidthEstimate) / 2;
+        if (marginLeft < 0) marginLeft = 0; // Sem margem mínima, pois margens são 0
+        int marginTop = (labelHeightDots - fontHeight) / 2; // Centraliza verticalmente
+
+        StringBuilder zplBuilder = new StringBuilder();
 
         for (int i = 0; i < quantity; i++) {
-            sb.append("\n".repeat(topMarginLines));
-            String centered = centerText(labelText, totalWidth);
-            sb.append(" ".repeat(leftMarginSpace)).append(centered).append("\n");
-            sb.append("\n".repeat(lineSpacing));
+            if (i % 2 == 0) {
+                zplBuilder.append("^XA\n");
+                zplBuilder.append("^PW").append(pageWidthDots).append("\n");
+                zplBuilder.append("^LL").append(labelHeightDots).append("\n");
+            }
+
+            // Adiciona texto em ambas as colunas para cada etiqueta
+            for (int col = 0; col < 2; col++) {
+                int posX = marginLeft + col * (labelWidthDots + 10); // Adiciona 10 dots de lacuna/2 por lado
+                int posY = marginTop;
+
+                // Ajuste para texto longo: quebre ou reduza se necessário
+                String displayText = labelText;
+                if (labelText.length() > charsPerLine) {
+                    displayText = labelText.substring(0, charsPerLine) + "...";
+                    textWidthEstimate = charsPerLine * 25;
+                    marginLeft = (labelWidthDots - textWidthEstimate) / 2;
+                    if (marginLeft < 0) marginLeft = 0;
+                }
+
+                zplBuilder.append("^FO").append(posX).append(",").append(posY)
+                        .append("^A0N,").append(fontHeight).append(",").append(fontHeight)
+                        .append("^FD").append(displayText).append("^FS\n");
+            }
+
+            if (i % 2 == 1 || i == quantity - 1) {
+                zplBuilder.append("^XZ\n");
+            }
         }
 
-        String fullText = sb.toString();
+        String zpl = zplBuilder.toString();
 
         try {
-            InputStream is = new ByteArrayInputStream(fullText.getBytes("UTF8"));
+            InputStream is = new ByteArrayInputStream(zpl.getBytes("UTF8"));
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc doc = new SimpleDoc(is, flavor, null);
             DocPrintJob job = defaultService.createPrintJob();
 
             String logMessage = String.format(
-                    "[IMPRESSÃO] %s\nImpressora: %s\nQuantidade: %d\nTexto:\n%s",
+                    "[IMPRESSÃO] %s\nImpressora: %s\nQuantidade: %d\nZPL:\n%s",
                     FORMATTER.format(LocalDateTime.now()),
                     defaultService.getName(),
                     quantity,
-                    fullText
+                    zpl
             );
             log(logMessage);
 
@@ -81,11 +113,6 @@ public class PrinterService {
             log("[ERRO] Falha inesperada na impressão: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private String centerText(String text, int totalWidth) {
-        int padding = Math.max((totalWidth - text.length()) / 2, 0);
-        return " ".repeat(padding) + text;
     }
 
     private void log(String message) {

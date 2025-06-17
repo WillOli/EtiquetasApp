@@ -1,4 +1,3 @@
-/* ========== BASE ========== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -128,3 +127,19 @@
   display: none;
 }
 
+/* ========== PREVISUALIZAÇÃO DA ETIQUETA ========== */
+#labelPreview {
+  border: 1px solid #ccc;
+  padding: 4px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  width: 12cm; /* 6cm por coluna x 2 */
+  height: 4cm;
+}
+#labelPreview span {
+  width: 5.8cm; /* Ajuste para simular cada coluna */
+  text-align: center;
+  font-weight: bold;
+  overflow-wrap: break-word;
+}
