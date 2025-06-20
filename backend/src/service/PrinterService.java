@@ -22,13 +22,17 @@ public class PrinterService {
             log("[ERRO] Texto excede o limite de " + MAX_CHARACTERS + " caracteres.");
             return;
         }
-        if (quantity <= 0) {
+
+        // Multiplica a quantidade por 2 para imprimir etiquetas duplas
+        int actualQuantity = quantity * 2;
+
+        if (actualQuantity <= 0) {
             log("[ERRO] Quantidade inválida. Deve ser maior que zero.");
             return;
         }
 
-        if (quantity > MAX_QUANTITY) {
-            log("[ERRO] Quantidade acima do limite permitido (" + MAX_QUANTITY + ").");
+        if (actualQuantity > MAX_QUANTITY) {
+            log("[ERRO] Quantidade total (" + actualQuantity + ") acima do limite permitido (" + MAX_QUANTITY + ").");
             return;
         }
 
@@ -54,7 +58,7 @@ public class PrinterService {
 
         StringBuilder zplBuilder = new StringBuilder();
 
-        for (int i = 0; i < quantity; i++) {
+        for (int i = 0; i < actualQuantity; i++) {
             if (i % 2 == 0) {
                 zplBuilder.append("^XA\n");
                 zplBuilder.append("^PW").append(pageWidthDots).append("\n");
@@ -80,7 +84,7 @@ public class PrinterService {
                         .append("^FD").append(displayText).append("^FS\n");
             }
 
-            if (i % 2 == 1 || i == quantity - 1) {
+            if (i % 2 == 1 || i == actualQuantity - 1) {
                 zplBuilder.append("^XZ\n");
             }
         }
@@ -94,10 +98,11 @@ public class PrinterService {
             DocPrintJob job = defaultService.createPrintJob();
 
             String logMessage = String.format(
-                    "[IMPRESSÃO] %s\nImpressora: %s\nQuantidade: %d\nZPL:\n%s",
+                    "[IMPRESSÃO] %s\nImpressora: %s\nQuantidade solicitada: %d\nQuantidade real: %d\nZPL:\n%s",
                     FORMATTER.format(LocalDateTime.now()),
                     defaultService.getName(),
                     quantity,
+                    actualQuantity,
                     zpl
             );
             log(logMessage);
