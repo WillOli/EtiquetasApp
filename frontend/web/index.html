@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>App de Impressão de Etiquetas</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/web/css/style.css" />
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
   <div class="w-full max-w-5xl flex flex-col md:flex-row gap-6">
@@ -19,18 +19,18 @@
         <small id="text-help" class="text-gray-500">Use os botões abaixo para preencher rapidamente.</small>
         
         <div class="mt-2 grid grid-cols-4 gap-2">
-          <button class="btn" onclick="appendText('1')" role="button" aria-label="Adicionar 1">1</button>
-          <button class="btn" onclick="appendText('2')" role="button" aria-label="Adicionar 2">2</button>
-          <button class="btn" onclick="appendText('3')" role="button" aria-label="Adicionar 3">3</button>
-          <button class="btn" onclick="appendText('4')" role="button" aria-label="Adicionar 4">4</button>
-          <button class="btn" onclick="appendText('5')" role="button" aria-label="Adicionar 5">5</button>
-          <button class="btn" onclick="appendText('6')" role="button" aria-label="Adicionar 6">6</button>
-          <button class="btn" onclick="appendText('7')" role="button" aria-label="Adicionar 7">7</button>
-          <button class="btn" onclick="appendText('8')" role="button" aria-label="Adicionar 8">8</button>
-          <button class="btn" onclick="appendText('9')" role="button" aria-label="Adicionar 9">9</button>
-          <button class="btn" onclick="appendText('0')" role="button" aria-label="Adicionar 0">0</button>
-          <button class="btn" onclick="appendText('- ESPECIAL')" role="button" aria-label="Adicionar ESPECIAL">- ESPECIAL</button>
-          <button class="btn-danger" onclick="clearText()" role="button" aria-label="Apagar texto">Apagar</button>
+          <button class="btn" onclick="textUtils.appendText('1')" role="button" aria-label="Adicionar 1">1</button>
+          <button class="btn" onclick="textUtils.appendText('2')" role="button" aria-label="Adicionar 2">2</button>
+          <button class="btn" onclick="textUtils.appendText('3')" role="button" aria-label="Adicionar 3">3</button>
+          <button class="btn" onclick="textUtils.appendText('4')" role="button" aria-label="Adicionar 4">4</button>
+          <button class="btn" onclick="textUtils.appendText('5')" role="button" aria-label="Adicionar 5">5</button>
+          <button class="btn" onclick="textUtils.appendText('6')" role="button" aria-label="Adicionar 6">6</button>
+          <button class="btn" onclick="textUtils.appendText('7')" role="button" aria-label="Adicionar 7">7</button>
+          <button class="btn" onclick="textUtils.appendText('8')" role="button" aria-label="Adicionar 8">8</button>
+          <button class="btn" onclick="textUtils.appendText('9')" role="button" aria-label="Adicionar 9">9</button>
+          <button class="btn" onclick="textUtils.appendText('0')" role="button" aria-label="Adicionar 0">0</button>
+          <button class="btn" onclick="textUtils.appendSpecial()" role="button" aria-label="Adicionar ESPECIAL">- ESPECIAL</button>
+          <button class="btn-danger" onclick="textUtils.clearText()" role="button" aria-label="Apagar texto">Apagar</button>
         </div>
       </div>
 
@@ -47,19 +47,19 @@
         </p>
         
         <div class="mt-2 flex gap-2 overflow-x-auto mb-6">
-          <button class="btn" onclick="setQuantity(1)">1</button>
-          <button class="btn" onclick="setQuantity(2)">2</button>
-          <button class="btn" onclick="setQuantity(3)">3</button>
-          <button class="btn" onclick="setQuantity(4)">4</button>
-          <button class="btn" onclick="setQuantity(5)">5</button>
-          <button class="btn" onclick="setQuantity(6)">6</button>
-          <button class="btn" onclick="setQuantity(7)">7</button>
-          <button class="btn" onclick="setQuantity(8)">8</button>
-          <button class="btn" onclick="setQuantity(9)">9</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(1)">1</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(2)">2</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(3)">3</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(4)">4</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(5)">5</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(6)">6</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(7)">7</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(8)">8</button>
+          <button class="btn" onclick="quantityUtils.setQuantity(9)">9</button>
         </div>
       </div>
 
-      <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2" onclick="printLabels()" role="button" aria-label="Imprimir etiquetas">
+      <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2" onclick="printUtils.printLabels()" role="button" aria-label="Imprimir etiquetas">
         <span id="printButtonText">Imprimir Etiquetas</span>
         <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -87,10 +87,10 @@
   <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 max-w-sm shadow-lg text-center">
       <p id="alertMessage" class="text-lg font-semibold mb-4"></p>
-      <button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">OK</button>
+      <button onclick="modalUtils.closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">OK</button>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="/web/script/main.js"></script>
 </body>
 </html>
