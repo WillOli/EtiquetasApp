@@ -1,97 +1,96 @@
-  <!DOCTYPE html>
-  <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>App de Impressão de Etiquetas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-    
-
-    <div class="w-full max-w-5xl flex flex-col md:flex-row gap-6">
-
-      <!-- Área de preenchimento -->
-      <section class="bg-white rounded-lg shadow-lg p-6 flex-1">
-        <h2 class="text-xl font-bold mb-4">Preenchimento da Etiqueta</h2>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>App de Impressão de Etiquetas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-5xl flex flex-col md:flex-row gap-6">
+    <!-- Área de preenchimento -->
+    <section class="bg-white rounded-lg shadow-lg p-6 flex-1">
+      <h2 class="text-xl font-bold mb-4">Preenchimento da Etiqueta</h2>
+      
+      <div class="mb-4">
+        <label for="labelText" class="block text-sm font-medium text-gray-700">Texto da Etiqueta</label>
+        <textarea id="labelText" rows="4" class="mt-1 w-full border-gray-300 rounded-md shadow-sm text-lg px-2" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
+        <small id="text-help" class="text-gray-500">Use os botões abaixo para preencher rapidamente.</small>
         
-        <div class="mb-4">
-          <label for="labelText" class="block text-sm font-medium text-gray-700">Texto da Etiqueta</label>
-          <textarea id="labelText" rows="4" class="mt-1 w-full border-gray-300 rounded-md shadow-sm text-lg px-2" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
-          <small id="text-help" class="text-gray-500">Use os botões abaixo para preencher rapidamente.</small>
-          
-          <div class="mt-2 grid grid-cols-4 gap-2">
-            <button class="btn" onclick="appendText('1')" role="button" aria-label="Adicionar 1">1</button>
-            <button class="btn" onclick="appendText('2')" role="button" aria-label="Adicionar 2">2</button>
-            <button class="btn" onclick="appendText('3')" role="button" aria-label="Adicionar 3">3</button>
-            <button class="btn" onclick="appendText('4')" role="button" aria-label="Adicionar 4">4</button>
-            <button class="btn" onclick="appendText('5')" role="button" aria-label="Adicionar 5">5</button>
-            <button class="btn" onclick="appendText('6')" role="button" aria-label="Adicionar 6">6</button>
-            <button class="btn" onclick="appendText('7')" role="button" aria-label="Adicionar 7">7</button>
-            <button class="btn" onclick="appendText('8')" role="button" aria-label="Adicionar 8">8</button>
-            <button class="btn" onclick="appendText('9')" role="button" aria-label="Adicionar 9">9</button>
-            <button class="btn" onclick="appendText('0')" role="button" aria-label="Adicionar 0">0</button>
-            <button class="btn" onclick="appendSpecial()" role="button" aria-label="Adicionar ESPECIAL">- ESPECIAL</button>
-            <button class="btn-danger" onclick="clearText()" role="button" aria-label="Apagar texto">Apagar</button>
-          </div>
+        <div class="mt-2 grid grid-cols-4 gap-2">
+          <button class="btn" onclick="appendText('1')" role="button" aria-label="Adicionar 1">1</button>
+          <button class="btn" onclick="appendText('2')" role="button" aria-label="Adicionar 2">2</button>
+          <button class="btn" onclick="appendText('3')" role="button" aria-label="Adicionar 3">3</button>
+          <button class="btn" onclick="appendText('4')" role="button" aria-label="Adicionar 4">4</button>
+          <button class="btn" onclick="appendText('5')" role="button" aria-label="Adicionar 5">5</button>
+          <button class="btn" onclick="appendText('6')" role="button" aria-label="Adicionar 6">6</button>
+          <button class="btn" onclick="appendText('7')" role="button" aria-label="Adicionar 7">7</button>
+          <button class="btn" onclick="appendText('8')" role="button" aria-label="Adicionar 8">8</button>
+          <button class="btn" onclick="appendText('9')" role="button" aria-label="Adicionar 9">9</button>
+          <button class="btn" onclick="appendText('0')" role="button" aria-label="Adicionar 0">0</button>
+          <button class="btn" onclick="appendText('- ESPECIAL')" role="button" aria-label="Adicionar ESPECIAL">- ESPECIAL</button>
+          <button class="btn-danger" onclick="clearText()" role="button" aria-label="Apagar texto">Apagar</button>
         </div>
+      </div>
 
-        <!-- Quantidade -->
-        <div class="mb-4">
-          <label for="labelQuantity" class="block text-sm font-medium text-gray-700">Quantidade</label>
-          <input id="labelQuantity" type="number" min="1" value="1" class="mt-1 w-full border-gray-300 rounded-md shadow-sm text-lg px-2" aria-describedby="quantity-help"/>
-          <small id="quantity-help" class="text-gray-500">Selecione a quantidade de etiquetas a imprimir.</small>
-          
-
-          
-          <div class="mt-2 flex gap-2 overflow-x-auto mb-6">
-            <button class="btn" onclick="setQuantity(1)">1</button>
-            <button class="btn" onclick="setQuantity(2)">2</button>
-            <button class="btn" onclick="setQuantity(3)">3</button>
-            <button class="btn" onclick="setQuantity(4)">4</button>
-            <button class="btn" onclick="setQuantity(5)">5</button>
-            <button class="btn" onclick="setQuantity(6)">6</button>
-            <button class="btn" onclick="setQuantity(7)">7</button>
-            <button class="btn" onclick="setQuantity(8)">8</button>
-            <button class="btn" onclick="setQuantity(9)">9</button>
-          </div>
+      <!-- Quantidade -->
+      <div class="mb-4">
+        <label for="labelQuantity" class="block text-sm font-medium text-gray-700">Quantidade</label>
+        <input id="labelQuantity" type="number" min="1" value="1" class="mt-1 w-full border-gray-300 rounded-md shadow-sm text-lg px-2" aria-describedby="quantity-help"/>
+        <small id="quantity-help" class="text-gray-500">Selecione a quantidade de etiquetas a imprimir.</small>
+        <p id="duplicate-info" class="duplicate-info mt-2 text-blue-700 font-semibold text-base flex items-center gap-2">
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Quantidade solicitada: 1, Total impresso: 2
+        </p>
+        
+        <div class="mt-2 flex gap-2 overflow-x-auto mb-6">
+          <button class="btn" onclick="setQuantity(1)">1</button>
+          <button class="btn" onclick="setQuantity(2)">2</button>
+          <button class="btn" onclick="setQuantity(3)">3</button>
+          <button class="btn" onclick="setQuantity(4)">4</button>
+          <button class="btn" onclick="setQuantity(5)">5</button>
+          <button class="btn" onclick="setQuantity(6)">6</button>
+          <button class="btn" onclick="setQuantity(7)">7</button>
+          <button class="btn" onclick="setQuantity(8)">8</button>
+          <button class="btn" onclick="setQuantity(9)">9</button>
         </div>
+      </div>
 
-        <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2" onclick="printLabels()" role="button" aria-label="Imprimir etiquetas">
-    <span id="printButtonText">Imprimir Etiquetas</span>
-    <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-    </svg>
-  </button>
+      <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2" onclick="printLabels()" role="button" aria-label="Imprimir etiquetas">
+        <span id="printButtonText">Imprimir Etiquetas</span>
+        <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+      </button>
+    </section>
 
-      </section>
-
-      <!-- Área de visualização -->
-      <section class="bg-white rounded-lg shadow-lg p-6 flex-1">
-        <h2 class="text-xl font-bold mb-4">Visualização da Etiqueta</h2>
-        <div>
-          <h3 class="text-lg font-semibold mb-2">Layout</h3>
-          <div id="labelPreview" class="border p-4 bg-white flex items-center justify-center overflow-hidden" style="width: 6cm; height: 4cm;">
-            <span id="previewText" class="text-base font-bold break-all text-center"></span>
-          </div>
-          <small class="text-gray-500 block mt-2">Tamanho da etiqueta será configurado no servidor.</small>
+    <!-- Área de visualização -->
+    <section class="bg-white rounded-lg shadow-lg p-6 flex-1">
+      <h2 class="text-xl font-bold mb-4">Visualização da Etiqueta</h2>
+      <div>
+        <h3 class="text-lg font-semibold mb-2">Layout</h3>
+        <div id="labelPreview" class="border p-4 bg-white flex items-center justify-center overflow-hidden" style="width: 6cm; height: 4cm;">
+          <span id="previewText" class="text-base font-bold break-all text-center"></span>
         </div>
-      </section>
+        <small class="text-gray-500 block mt-2">Tamanho da etiqueta será configurado no servidor.</small>
+      </div>
+    </section>
+  </div>
 
-    </div>
+  <!-- Iframe para impressão -->
+  <iframe id="printFrame" style="display: none;"></iframe>
 
-    <!-- Iframe para impressão -->
-    <iframe id="printFrame" style="display: none;"></iframe>
-
-    <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+  <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-6 max-w-sm shadow-lg text-center">
       <p id="alertMessage" class="text-lg font-semibold mb-4"></p>
       <button onclick="closeModal()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">OK</button>
     </div>
   </div>
 
-    <script src="script.js"></script>
-  </body>
-  </html>
+  <script src="script.js"></script>
+</body>
+</html>

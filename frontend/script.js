@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   const labelText = document.getElementById('labelText');
+  const labelQuantity = document.getElementById('labelQuantity');
   labelText.addEventListener('input', updatePreview);
+  labelQuantity.addEventListener('input', updateDuplicateInfo);
   updatePreview(); // Inicializa visualização
+  updateDuplicateInfo(); // Inicializa informação de duplicação
 });
 
 function appendText(value) {
@@ -27,12 +30,20 @@ function clearText() {
 
 function setQuantity(amount) {
   document.getElementById('labelQuantity').value = amount;
+  updateDuplicateInfo();
 }
 
 function updatePreview() {
   const text = document.getElementById('labelText').value || 'Digite o texto acima';
   const previewText = document.getElementById('previewText');
-  previewText.innerHTML = `<span>${text}</span><span>${text}</span>`; // Duplica o texto
+  previewText.textContent = text;
+}
+
+function updateDuplicateInfo() {
+  const quantity = parseInt(document.getElementById('labelQuantity').value) || 1;
+  const totalPrinted = quantity * 2;
+  const duplicateInfo = document.getElementById('duplicate-info');
+  duplicateInfo.textContent = `Quantidade solicitada: ${quantity}, Total impresso: ${totalPrinted}`;
 }
 
 /* ========== Função para enviar requisição de impressão ========== */

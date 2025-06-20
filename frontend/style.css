@@ -1,3 +1,4 @@
+/* ========== BASE ========== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -38,7 +39,7 @@
   font-size: 1.125rem;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   touch-action: manipulation;
 }
 
@@ -61,7 +62,7 @@
   font-size: 1.125rem;
   cursor: pointer;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   touch-action: manipulation;
 }
 
@@ -83,7 +84,7 @@
   box-sizing: border-box;
   margin-top: 14px;
   touch-action: manipulation;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-primary:hover {
@@ -109,7 +110,7 @@
   font-size: 1rem;
   text-align: center;
   border-radius: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,10);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   scroll-snap-align: start;
   background-color: #E5E7EB;
   color: #374151;
@@ -122,24 +123,15 @@
   background-color: #D1D5DB;
 }
 
+/* ========== INFORMAÇÃO DE DUPLICAÇÃO ========== */
+.duplicate-info {
+  background-color: #EFF6FF;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #BFDBFE;
+}
+
 /* já incluído na modal com Tailwind, mas caso queira sem Tailwind: */
 #alertModal {
   display: none;
-}
-
-/* ========== PREVISUALIZAÇÃO DA ETIQUETA ========== */
-#labelPreview {
-  border: 1px solid #ccc;
-  padding: 4px;
-  background: white;
-  display: flex;
-  justify-content: space-between;
-  width: 12cm; /* 6cm por coluna x 2 */
-  height: 4cm;
-}
-#labelPreview span {
-  width: 5.8cm; /* Ajuste para simular cada coluna */
-  text-align: center;
-  font-weight: bold;
-  overflow-wrap: break-word;
 }
