@@ -4,28 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Aplicativo para impressão de etiquetas - Espaço Vista" />
-  <title>App de Impressão de Etiquetas - Espaço Vista</title>
+  <title>Espaço Vista</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="/web/css/style.css" />
+  <link rel="icon" href="img/Logo V.png" type="image/png" />
 </head>
 <body class="bg-[var(--bg-primary)] min-h-screen flex flex-col font-sans">
   <!-- Cabeçalho com Logo -->
-  <header class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-4 mb-6 flex justify-center items-center shadow-md">
-    <img src="./img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-14 md:h-16" />
+  <header class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 mb-4 flex justify-center items-center shadow-md">
+    <img src="./img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-12 sm:h-14" />
   </header>
 
-  <main class="w-full max-w-6xl mx-auto px-4 flex-grow">
-    <div class="flex flex-col md:flex-row gap-6">
+  <main class="w-full max-w-full mx-auto px-2 sm:px-4 flex-grow">
+    <div class="flex flex-col gap-3">
       <!-- Área de Preenchimento -->
-      <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-6 flex-1" aria-label="Área de preenchimento de etiquetas">
-        <h2 class="text-2xl font-semibold mb-6 text-[var(--text-primary)]">Preenchimento da Etiqueta</h2>
+      <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-2 sm:p-4 flex-1" aria-label="Área de preenchimento de etiquetas">
+        <h2 class="text-lg sm:text-2xl font-semibold mb-3 text-[var(--text-primary)]">Preenchimento da Etiqueta</h2>
         
-        <div class="mb-6">
-          <label for="labelText" class="block text-sm font-medium text-[var(--text-primary)] mb-2">Texto da Etiqueta</label>
-          <textarea id="labelText" rows="4" class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
-          <small id="text-help" class="text-gray-500 block mt-1">Use os botões abaixo para preencher rapidamente.</small>
+        <div class="mb-3">
+          <label for="labelText" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Texto da Etiqueta</label>
+          <textarea id="labelText" rows="2" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
+          <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões abaixo para preencher rapidamente.</small>
           
-          <div class="mt-4 grid grid-cols-4 gap-3">
+          <div class="mt-2 flex flex-wrap gap-2">
             <button class="btn" onclick="textUtils.appendText('1')" role="button" aria-label="Adicionar 1">1</button>
             <button class="btn" onclick="textUtils.appendText('2')" role="button" aria-label="Adicionar 2">2</button>
             <button class="btn" onclick="textUtils.appendText('3')" role="button" aria-label="Adicionar 3">3</button>
@@ -42,63 +43,43 @@
         </div>
 
         <!-- Quantidade -->
-        <div class="mb-6">
-          <label for="labelQuantity" class="block text-sm font-medium text-[var(--text-primary)] mb-2">Quantidade</label>
-          <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" aria-describedby="quantity-help" />
-          <small id="quantity-help" class="text-gray-500 block mt-1">Selecione a quantidade de etiquetas a imprimir.</small>
-          <p id="duplicate-info" class="duplicate-info mt-3 text-[var(--text-primary)] font-medium flex items-center gap-2">
-            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="mb-3">
+          <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
+          <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" aria-describedby="quantity-help" />
+          <small id="quantity-help" class="text-gray-500 block mt-1 text-xs">Selecione a quantidade de etiquetas a imprimir.</small>
+          <p id="duplicate-info" class="duplicate-info mt-2 text-[var(--text-primary)] font-medium flex items-center gap-2 text-xs sm:text-sm">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Quantidade solicitada: 1, Total impresso: 2
           </p>
           
-          <div class="mt-4 flex gap-2 overflow-x-auto mb-6 scroll-snap-x-container">
+          <div class="mt-2 flex gap-2 overflow-x-auto mb-3 scroll-snap-x-container">
             <button class="btn" onclick="quantityUtils.setQuantity(1)">1</button>
             <button class="btn" onclick="quantityUtils.setQuantity(2)">2</button>
             <button class="btn" onclick="quantityUtils.setQuantity(3)">3</button>
             <button class="btn" onclick="quantityUtils.setQuantity(4)">4</button>
             <button class="btn" onclick="quantityUtils.setQuantity(5)">5</button>
             <button class="btn" onclick="quantityUtils.setQuantity(6)">6</button>
-            <button class="btn" onclick="quantityUtils.setQuantity(7)">7</button>
-            <button class="btn" onclick="quantityUtils.setQuantity(8)">8</button>
-            <button class="btn" onclick="quantityUtils.setQuantity(9)">9</button>
           </div>
         </div>
 
-        <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2 py-3 text-lg" onclick="printUtils.printLabels()" role="button" aria-label="Imprimir etiquetas">
+        <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2 py-2 text-sm sm:text-lg" onclick="printUtils.printLabels()" role="button" aria-label="Imprimir etiquetas">
           <span id="printButtonText">Imprimir Etiquetas</span>
-          <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg id="spinner" class="w-4 h-4 sm:w-5 sm:h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
           </svg>
         </button>
-      </section>
-
-      <!-- Área de Visualização -->
-      <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-6 flex-1" aria-label="Área de visualização de etiquetas">
-        <h2 class="text-2xl font-semibold mb-6 text-[var(--text-primary)]">Visualização da Etiqueta</h2>
-        <div>
-          <h3 class="text-lg font-medium mb-4 text-[var(--text-primary)]">Layout</h3>
-          <div class="preview-container flex flex-row gap-6 justify-center">
-            <div id="labelPreview1" class="border border-gray-300 p-6 bg-white flex items-center justify-center label-preview overflow-hidden" style="width: 6cm; height: 4cm;">
-              <span id="previewText1" class="text-lg font-bold break-all text-center text-[var(--text-primary)]">Digite o texto acima</span>
-            </div>
-            <div id="labelPreview2" class="border border-gray-300 p-6 bg-white flex items-center justify-center label-preview overflow-hidden" style="width: 6cm; height: 4cm;">
-              <span id="previewText2" class="text-lg font-bold break-all text-center text-[var(--text-primary)]">Digite o texto acima</span>
-            </div>
-          </div>
-          <small class="text-gray-500 block mt-2 text-center">Tamanho da etiqueta será configurado no servidor.</small>
-        </div>
       </section>
     </div>
   </main>
 
   <!-- Modal de Alerta -->
   <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50" role="alertdialog" aria-labelledby="alertMessage">
-    <div class="bg-[var(--bg-content)] rounded-lg p-6 max-w-md shadow-lg text-center">
-      <p id="alertMessage" class="text-lg font-semibold mb-4 text-[var(--text-primary)]"></p>
-      <button onclick="modalUtils.closeModal()" class="bg-[var(--btn-primary)] text-white px-6 py-2 rounded-lg hover:bg-[var(--btn-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary)]" aria-label="Fechar modal">OK</button>
+    <div class="bg-[var(--bg-content)] rounded-lg p-3 sm:p-4 max-w-xs sm:max-w-sm shadow-lg text-center">
+      <p id="alertMessage" class="text-sm sm:text-base font-semibold mb-2 sm:mb-3 text-[var(--text-primary)]"></p>
+      <button onclick="modalUtils.closeModal()" class="bg-[var(--btn-primary)] text-white px-3 sm:px-4 py-1 rounded-lg hover:bg-[var(--btn-primary-hover)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary)]" aria-label="Fechar modal">OK</button>
     </div>
   </div>
 
@@ -106,8 +87,8 @@
   <iframe id="printFrame" style="display: none;"></iframe>
 
   <!-- Rodapé -->
-  <footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-4 mt-6 text-center">
-    <p>&copy; 2025 Espaço Vista. Todos os direitos reservados. | Contato: suporte@espacovista.com</p>
+  <footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-2 sm:py-3 mt-3 text-center">
+    <p class="text-xs">© 2025 Espaço Vista. Todos os direitos reservados. | Contato: suporte@espacovista.com</p>
   </footer>
 
   <script type="module" src="/web/script/main.js"></script>

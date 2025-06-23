@@ -12,15 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
       throw new Error('Elementos labelText ou labelQuantity não encontrados');
     }
 
-    labelText.addEventListener('input', () => {
-      try {
-        textUtils.updatePreview();
-      } catch (error) {
-        console.error('Erro ao atualizar preview:', error);
-        modalUtils.showModal('Erro ao atualizar a visualização: ' + error.message);
-      }
-    });
-
     labelQuantity.addEventListener('input', () => {
       try {
         quantityUtils.updateDuplicateInfo();
@@ -30,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    textUtils.updatePreview();
     quantityUtils.updateDuplicateInfo();
   } catch (error) {
     console.error('Erro ao inicializar eventos:', error);
