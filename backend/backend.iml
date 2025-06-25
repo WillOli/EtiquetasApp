@@ -9,6 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="junit.jupiter" level="project" />
-    <orderEntry type="library" name="json-20231013" level="project" />
+    <orderEntry type="library" exported="" name="json-20231013" level="project" />
   </component>
 </module>

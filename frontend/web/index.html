@@ -19,11 +19,9 @@
     <div class="flex flex-col gap-3">
       <!-- Área de Preenchimento -->
       <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-2 sm:p-4 flex-1" aria-label="Área de preenchimento de etiquetas">
-        <h2 class="text-lg sm:text-2xl font-semibold mb-3 text-[var(--text-primary)]">Preenchimento da Etiqueta</h2>
         
         <div class="mb-3">
-          <label for="labelText" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Texto da Etiqueta</label>
-          <textarea id="labelText" rows="2" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
+          <textarea id="labelText" rows="2" class="w-full borderborder-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
           <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões abaixo para preencher rapidamente.</small>
           
           <div class="mt-2 flex flex-wrap gap-2">
@@ -46,7 +44,6 @@
         <div class="mb-3">
           <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
           <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" aria-describedby="quantity-help" />
-          <small id="quantity-help" class="text-gray-500 block mt-1 text-xs">Selecione a quantidade de etiquetas a imprimir.</small>
           <p id="duplicate-info" class="duplicate-info mt-2 text-[var(--text-primary)] font-medium flex items-center gap-2 text-xs sm:text-sm">
             <svg class="w-4 h-4 sm:w-5 sm:h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

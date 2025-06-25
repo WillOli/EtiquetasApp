@@ -70,14 +70,14 @@ public class PrinterService {
                 int posX = marginLeft + col * (labelWidthDots + 10); // Adiciona 10 dots de lacuna/2 por lado
                 int posY = marginTop;
 
-                // Ajuste para texto longo: quebre ou reduza se necessário
-                String displayText = labelText;
-                if (labelText.length() > charsPerLine) {
-                    displayText = labelText.substring(0, charsPerLine) + "...";
-                    textWidthEstimate = charsPerLine * 25;
-                    marginLeft = (labelWidthDots - textWidthEstimate) / 2;
-                    if (marginLeft < 0) marginLeft = 0;
-                }
+                String displayText = labelText; // Sem corte
+
+                marginLeft = (labelWidthDots - textWidthEstimate) / 2;
+                if (marginLeft < 0) marginLeft = 0;
+
+
+                marginLeft = (labelWidthDots - textWidthEstimate) / 2;
+                if (marginLeft < 0) marginLeft = 0;
 
                 zplBuilder.append("^FO").append(posX).append(",").append(posY)
                         .append("^A0N,").append(fontHeight).append(",").append(fontHeight)
