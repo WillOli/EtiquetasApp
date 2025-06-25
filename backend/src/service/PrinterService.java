@@ -47,8 +47,8 @@ public class PrinterService {
         int labelWidthDots = 40 * dotsPerMM;  // 320 dots (40mm)
         int labelHeightDots = 25 * dotsPerMM; // 200 dots (25mm)
         int pageWidthDots = labelWidthDots * 2 + 20; // 660 dots (320 * 2 + 20 dots de lacuna horizontal)
-        int fontHeight = 24;  // Ajustado para caber em 200 dots, centralizado
-        int charsPerLine = 12; // Estimativa de caracteres que cabem em 320 dots
+        int fontHeight = 36;  // Ajustado para caber em 200 dots, centralizado
+        int charsPerLine = 9; // Estimativa de caracteres que cabem em 320 dots
         int textWidthEstimate = Math.min(labelText.length(), charsPerLine) * 25; // 25 dots por caractere como média
 
         // Centralização: Margens ajustadas para o meio de 320x200 dots (sem margens externas)
@@ -71,10 +71,6 @@ public class PrinterService {
                 int posY = marginTop;
 
                 String displayText = labelText; // Sem corte
-
-                marginLeft = (labelWidthDots - textWidthEstimate) / 2;
-                if (marginLeft < 0) marginLeft = 0;
-
 
                 marginLeft = (labelWidthDots - textWidthEstimate) / 2;
                 if (marginLeft < 0) marginLeft = 0;
