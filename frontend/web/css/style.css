@@ -7,7 +7,7 @@
 
 /* Variáveis de cores baseadas no padrão "VISTA" */
 :root {
-  --bg-header: #221f1f; /* Fundo do cabeçalho */
+  --bg-header: #211f1f; /* Fundo do cabeçalho */
   --text-header: #FFFFFF; /* Texto do cabeçalho */
   --bg-primary: #F9FAFB; /* Fundo principal da página */
   --bg-content: #D3D3D3; /* Fundo das seções de conteúdo */
@@ -17,7 +17,6 @@
   --btn-secondary-hover: #D1D5DB; /* Hover do botão secundário */
   --btn-danger: #DC2626; /* Botão de apagar (vermelho) */
   --btn-danger-hover: #B91C1C; /* Hover do botão de apagar */
-  --btn-whatsapp: #00A82D; /* Botão WhatsApp (verde) */
   --text-primary: #1E293B; /* Texto principal */
   --info-bg: #D3D3D3; /* Fundo da info de duplicação */
   --info-border: #E5E7EB; /* Borda da info de duplicação */
@@ -26,7 +25,7 @@
 /* ========== RESPONSIVIDADE ========== */
 @media (max-width: 640px) {
   header img {
-    height: 6rem; /* Logo menor em mobile */
+    height: 100hdv; /* Logo menor em mobile */
   }
 
   .flex-col {
@@ -76,7 +75,7 @@
   /* Ajustando botões para tablet */
   .btn, .btn-danger {
     width: 140px;
-    height: 100px;
+    height: 100dvh;
     font-size: 1.25rem;
     padding: 1rem;
     
@@ -131,17 +130,18 @@
 
   /* Ajustando campos para desktop */
   #labelQuantity {
-    height: 48px;
+    height: 64px;
     font-size: 1.25rem;
     padding: 0.75rem;
-    width: 400px; /* 👈 largura ajustada aqui */
+    width: 10%; /* 👈 largura ajustada aqui */
+    max-width: 400px;
   }
 
   #labelText {
     height: 64px;
     font-size: 1.25rem;
     padding: 0.75rem;
-    width: 400px; /* 👈 largura ajustada aqui */
+    max-width: 400px; /* 👈 largura ajustada aqui */
   }
 
   .button-grid {
