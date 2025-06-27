@@ -45,6 +45,12 @@ export async function printLabels() {
 
     const data = await response.text();
     modalUtils.showModal('Impressão enviada com sucesso!');
+
+    // Limpas o texto da etiqueta e redefinir a quantidade após impressão bem-sucedida
+    textUtils.clearText();
+    quantityUtils.setQuantity(1);
+    quantityUtils.updateDuplicateInfo(); // Atualiza a informação de duplicação
+
   } catch (error) {
     console.error('Erro ao imprimir etiquetas:', error);
     modalUtils.showModal('Erro ao imprimir: ' + error.message);
