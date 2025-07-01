@@ -58,13 +58,7 @@
   }
 
   /* Reduzindo tamanho dos campos para mobile */
-  #labelQuantity {
-    height: 36px;
-    font-size: 0.75rem;
-    padding: 0.25rem;
-  }
-
-  #labelText {
+  #labelQuantity, #labelText, #labelType { /* Adicionado #labelType */
     height: 36px;
     font-size: 0.75rem;
     padding: 0.25rem;
@@ -94,14 +88,8 @@
   }
 
   /* Ajustando campos para tablet */
-  #labelQuantity {
+  #labelQuantity, #labelText, #labelType { /* Adicionado #labelType */
     height: 40px;
-    font-size: 1rem;
-    padding: 0.5rem;
-  }
-
-  #labelText {
-    height: 48px;
     font-size: 1rem;
     padding: 0.5rem;
   }
@@ -129,19 +117,14 @@
   }
 
   /* Ajustando campos para desktop */
-  #labelQuantity {
+  #labelQuantity, #labelText, #labelType { /* Adicionado #labelType */
     height: 64px;
     font-size: 1.25rem;
     padding: 0.75rem;
-    width: 10%; /* 👈 largura ajustada aqui */
     max-width: 400px;
   }
-
-  #labelText {
-    height: 64px;
-    font-size: 1.25rem;
-    padding: 0.75rem;
-    max-width: 400px; /* 👈 largura ajustada aqui */
+  #labelQuantity {
+      width: 10%; /* Largura ajustada aqui para o input de quantidade */
   }
 
   .button-grid {
@@ -272,7 +255,8 @@ section {
   border: 1px solid var(--info-border);
 }
 
-#labelText, #labelQuantity {
+/* Aplicando estilos aos campos de input e select */
+#labelText, #labelQuantity, #labelType {
   height: 64px;
   font-size: 1.25rem;
   padding: 0.75rem;

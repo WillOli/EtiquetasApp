@@ -47,45 +47,20 @@ async function sendPrintRequest(text, quantity, labelType, buttonId, buttonTextI
         printButton.disabled = false;
         printButton.classList.remove('opacity-70', 'cursor-not-allowed');
         spinner.classList.add('hidden');
-        printButtonText.textContent = printButtonText.getAttribute('data-original-text'); // Restaura o texto original
+        // Restaura o texto original do botão usando o atributo data-original-text
+        printButtonText.textContent = printButtonText.getAttribute('data-original-text'); 
     }
 }
 
-export async function printLabels() {
+export async function sendPrintRequestWrapper() {
     const text = document.getElementById('labelText')?.value || 'Etiqueta de Exemplo';
     const quantityInput = document.getElementById('labelQuantity');
     const quantity = parseInt(quantityInput.value) || 1;
+    const labelTypeSelect = document.getElementById('labelType');
+    // Pega o valor do seletor. Se o seletor não for encontrado ou não tiver valor, usa 'STANDARD' como padrão.
+    const labelType = labelTypeSelect ? labelTypeSelect.value : 'STANDARD'; 
 
     // Guarda o texto original do botão antes de chamar sendPrintRequest
-    document.getElementById('printButtonStandardText').setAttribute('data-original-text', 'Imprimir Etiquetas (Padrão)');
-    await sendPrintRequest(text, quantity, 'STANDARD', 'printButtonStandard', 'printButtonStandardText', 'spinnerStandard');
+    document.getElementById('printButtonText').setAttribute('data-original-text', 'Imprimir Etiquetas');
+    await sendPrintRequest(text, quantity, labelType, 'printButton', 'printButtonText', 'spinner');
 }
-
-export async function print62mmLabels() {
-    const text = document.getElementById('labelText')?.value || 'Etiqueta de Exemplo';
-    const quantityInput = document.getElementById('labelQuantity');
-    const quantity = parseInt(quantityInput.value) || 1;
-
-    // Guarda o texto original do botão antes de chamar sendPrintRequest
-    document.getElementById('printButton62mmText').setAttribute('data-original-text', 'Imprimir Etiquetas (62mm)');
-    await sendPrintRequest(text, quantity, 'SIXTY_TWO_MM', 'printButton62mm', 'printButton62mmText', 'spinner62mm');
-}
-
-// Funções existentes que não precisam ser alteradas, mas certifique-se de que estão no mesmo arquivo ou importadas corretamente:
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    const labelText = document.getElementById('labelText');
-    const labelQuantity = document.getElementById('labelQuantity');
-    labelText.addEventListener('input', updatePreview); // Se você tiver um preview
-    labelQuantity.addEventListener('input', updateDuplicateInfo);
-    // updatePreview(); // Inicializa visualização, se houver
-    updateDuplicateInfo(); // Inicializa informação de duplicação
-});
-
-function updateDuplicateInfo() {
-    const quantity = parseInt(document.getElementById('labelQuantity').value) || 1;
-    const totalPrinted = quantity * 2;
-    const duplicateInfo = document.getElementById('duplicate-info');
-    duplicateInfo.textContent = `Quantidade solicitada: ${quantity}, Total impresso: ${totalPrinted}`;
-}
-*/

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error('Elementos labelText ou labelQuantity não encontrados');
         }
 
+        // Event listener para a quantidade
         labelQuantity.addEventListener('input', () => {
             try {
                 quantityUtils.updateDuplicateInfo();
@@ -21,18 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Adicione o evento de input para o labelText se você tiver uma função updatePreview
-        // labelText.addEventListener('input', () => {
-        //     try {
-        //         textUtils.updatePreview(); // Se você tiver essa função no textUtils
-        //     } catch (error) {
-        //         console.error('Erro ao atualizar preview:', error);
-        //         modalUtils.showModal('Erro ao atualizar preview: ' + error.message);
-        //     }
-        // });
+        // Event listener para o texto (se você tiver uma função updatePreview no textUtils)
+        // Se você não tiver uma função updatePreview no textUtils ou um elemento 'previewText' no HTML,
+        // pode remover ou adaptar este trecho.
+        labelText.addEventListener('input', () => {
+            try {
+                // textUtils.updatePreview(); // Chame esta função se ela existir e for necessária
+            } catch (error) {
+                console.error('Erro ao atualizar preview:', error);
+                modalUtils.showModal('Erro ao atualizar preview: ' + error.message);
+            }
+        });
 
+        // Inicializa as informações ao carregar a página
         quantityUtils.updateDuplicateInfo();
-        // textUtils.updatePreview(); // Inicializa preview se você tiver essa função
+        // textUtils.updatePreview(); // Chame esta função se ela existir e for necessária
+
     } catch (error) {
         console.error('Erro ao inicializar eventos:', error);
         modalUtils.showModal('Erro ao carregar a página: ' + error.message);

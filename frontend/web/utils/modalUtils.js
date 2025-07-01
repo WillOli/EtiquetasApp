@@ -13,7 +13,7 @@ export function showModal(message) {
     }, 3000);
   } catch (error) {
     console.error('Erro ao exibir modal:', error);
-    alert('Erro ao exibir mensagem: ' + message);
+    alert('Erro ao exibir mensagem: ' + message); // Fallback para alerta do navegador
   }
 }
 
