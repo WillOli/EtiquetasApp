@@ -46,9 +46,13 @@ public class PrintController {
             String responseMessage;
             try {
                 JSONObject json = new JSONObject(requestBody);
-                PrintRequest printRequest = new PrintRequest(json.getString("text"), json.getInt("quantity"));
+                // Adiciona a leitura do tipo de etiqueta, com "standard" como padrão
+                String labelTypeString = json.optString("labelType", "standard");
+
+                PrintRequest printRequest = new PrintRequest(json.getString("text"), json.getInt("quantity"), labelTypeString);
                 PrinterService printerService = new PrinterService();
-                printerService.printLabels(printRequest.getText(), printRequest.getQuantity());
+                // Passa o tipo de etiqueta para o serviço de impressão
+                printerService.printLabels(printRequest.getText(), printRequest.getQuantity(), printRequest.getLabelType());
                 responseMessage = "Etiqueta enviada para impressão.";
             } catch (Exception e) {
                 System.err.println("[ERRO] Falha ao interpretar JSON ou imprimir: " + e.getMessage());

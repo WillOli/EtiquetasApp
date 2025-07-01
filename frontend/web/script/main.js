@@ -4,28 +4,39 @@ import * as printUtils from '../utils/printUtils.js';
 import * as modalUtils from '../utils/modalUtils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  try {
-    const labelText = document.getElementById('labelText');
-    const labelQuantity = document.getElementById('labelQuantity');
+    try {
+        const labelText = document.getElementById('labelText');
+        const labelQuantity = document.getElementById('labelQuantity');
 
-    if (!labelText || !labelQuantity) {
-      throw new Error('Elementos labelText ou labelQuantity não encontrados');
-    }
+        if (!labelText || !labelQuantity) {
+            throw new Error('Elementos labelText ou labelQuantity não encontrados');
+        }
 
-    labelQuantity.addEventListener('input', () => {
-      try {
+        labelQuantity.addEventListener('input', () => {
+            try {
+                quantityUtils.updateDuplicateInfo();
+            } catch (error) {
+                console.error('Erro ao atualizar informação de duplicação:', error);
+                modalUtils.showModal('Erro ao atualizar a quantidade: ' + error.message);
+            }
+        });
+
+        // Adicione o evento de input para o labelText se você tiver uma função updatePreview
+        // labelText.addEventListener('input', () => {
+        //     try {
+        //         textUtils.updatePreview(); // Se você tiver essa função no textUtils
+        //     } catch (error) {
+        //         console.error('Erro ao atualizar preview:', error);
+        //         modalUtils.showModal('Erro ao atualizar preview: ' + error.message);
+        //     }
+        // });
+
         quantityUtils.updateDuplicateInfo();
-      } catch (error) {
-        console.error('Erro ao atualizar informação de duplicação:', error);
-        modalUtils.showModal('Erro ao atualizar a quantidade: ' + error.message);
-      }
-    });
-
-    quantityUtils.updateDuplicateInfo();
-  } catch (error) {
-    console.error('Erro ao inicializar eventos:', error);
-    modalUtils.showModal('Erro ao carregar a página: ' + error.message);
-  }
+        // textUtils.updatePreview(); // Inicializa preview se você tiver essa função
+    } catch (error) {
+        console.error('Erro ao inicializar eventos:', error);
+        modalUtils.showModal('Erro ao carregar a página: ' + error.message);
+    }
 });
 
 // Expor funções globais para eventos inline no HTML
