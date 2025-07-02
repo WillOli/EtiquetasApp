@@ -1,42 +1,29 @@
 package application;
 
 import controller.PrintController;
-
-import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import io.javalin.Javalin;
+import io.javalin.plugin.bundled.CorsPlugin;
 
 public class Main {
 
     public static void main(String[] args) {
         int port = 8080;
-        System.out.println("Servidor iniciado na porta " + port);
 
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            while (true) {
-                try {
-                    Socket clientSocket = serverSocket.accept();
-                    clientSocket.setSoTimeout(10000); // TIMEOUT DE 10 SEGUNDOS
-                    new Thread(() -> {
-                        try {
-                            PrintController controller = new PrintController();
-                            controller.handleClient(clientSocket);
-                        } catch (IOException e) {
-                            System.err.println("Erro no cliente: " + e.getMessage());
-                        } finally {
-                            try {
-                                clientSocket.close();
-                            } catch (IOException e) {
-                                System.err.println("Erro ao fechar conexão: " + e.getMessage());
-                            }
-                        }
-                    }).start();
-                } catch (IOException e) {
-                    System.err.println("Erro ao aceitar conexão: " + e.getMessage());
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Erro ao iniciar servidor: " + e.getMessage());
-        }
+        // 1. Cria e configura uma instância do Javalin.
+        Javalin app = Javalin.create(config -> {
+            // Sintaxe correta e definitiva para o CorsPlugin
+            config.registerPlugin(new CorsPlugin(cors -> {
+                cors.addRule(it -> {
+                    it.anyHost(); // Permite acesso de qualquer origem
+                });
+            }));
+        }).start(port);
+
+        System.out.println("Servidor iniciado na porta " + port);
+        System.out.println("Acesse http://localhost:" + port + " no seu navegador para testar.");
+
+        // 2. Define as rotas (endpoints) da sua API.
+        app.post("/print", PrintController::handlePrintRequest);
+        app.get("/", ctx -> ctx.result("Servidor de impressão Espaço Vista está no ar!"));
     }
 }

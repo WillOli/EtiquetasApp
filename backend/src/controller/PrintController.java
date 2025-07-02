@@ -1,66 +1,59 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import io.javalin.http.Context;
 import model.PrintRequest;
 import service.PrinterService;
-import view.HttpResponseView;
-import org.json.JSONObject;
-
-import java.io.*;
-import java.net.Socket;
-import java.time.LocalDateTime;
 
 public class PrintController {
 
-    public void handleClient(Socket socket) throws IOException {
-        try (
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
-        ) {
-            System.out.println("[LOG] " + LocalDateTime.now() + " - Conexão recebida de " + socket.getInetAddress());
+    private static final PrinterService printerService = new PrinterService();
+    private static final Gson gson = new Gson();
 
-            String line;
-            StringBuilder header = new StringBuilder();
-            int contentLength = 0;
-            String method = "GET";
+    public static void handlePrintRequest(Context ctx) {
+        try {
+            String requestBody = ctx.body();
+            PrintRequest printRequest = gson.fromJson(requestBody, PrintRequest.class);
 
-            while (!(line = in.readLine()).isEmpty()) {
-                header.append(line).append("\n");
-                if (line.toUpperCase().startsWith("CONTENT-LENGTH:")) {
-                    contentLength = Integer.parseInt(line.split(":")[1].trim());
-                }
-                if (line.startsWith("POST") || line.startsWith("OPTIONS")) {
-                    method = line.split(" ")[0];
-                }
-            }
-
-            if (method.equals("OPTIONS")) {
-                HttpResponseView.sendOptionsResponse(out);
+            // --- VALIDAÇÃO MELHORADA ---
+            if (printRequest == null) {
+                ctx.status(400).result("Erro na requisição: Pedido vazio ou mal formatado.");
                 return;
             }
-
-            char[] body = new char[contentLength];
-            in.read(body);
-            String requestBody = new String(body);
-            System.out.println("[LOG] JSON recebido: " + requestBody);
-
-            String responseMessage;
-            try {
-                JSONObject json = new JSONObject(requestBody);
-                // Adiciona a leitura do tipo de etiqueta, com "standard" como padrão
-                String labelTypeString = json.optString("labelType", "standard");
-
-                PrintRequest printRequest = new PrintRequest(json.getString("text"), json.getInt("quantity"), labelTypeString);
-                PrinterService printerService = new PrinterService();
-                // Passa o tipo de etiqueta para o serviço de impressão
-                printerService.printLabels(printRequest.getText(), printRequest.getQuantity(), printRequest.getLabelType());
-                responseMessage = "Etiqueta enviada para impressão.";
-            } catch (Exception e) {
-                System.err.println("[ERRO] Falha ao interpretar JSON ou imprimir: " + e.getMessage());
-                e.printStackTrace();
-                responseMessage = "Erro: JSON inválido ou falha na impressão.";
+            if (printRequest.getText() == null || printRequest.getText().trim().isEmpty()) {
+                ctx.status(400).result("Erro na requisição: O texto da etiqueta não pode ser vazio.");
+                return;
             }
+            if (printRequest.getQuantity() <= 0) {
+                ctx.status(400).result("Erro na requisição: A quantidade deve ser maior que zero.");
+                return;
+            }
+            if (printRequest.getLabelType() == null) {
+                // O construtor do PrintRequest já define um padrão, mas esta é uma segurança extra.
+                System.err.println("[AVISO] Tipo de etiqueta não especificado, usando padrão.");
+            }
+            // --- FIM DA VALIDAÇÃO ---
 
-            HttpResponseView.sendResponse(out, responseMessage);
+
+            printerService.printLabels(
+                    printRequest.getText(),
+                    printRequest.getQuantity(),
+                    printRequest.getLabelType()
+            );
+
+            ctx.status(200).result("Impressão enviada com sucesso!");
+
+        } catch (JsonSyntaxException e) {
+            ctx.status(400).result("Erro na requisição: JSON mal formatado. Corpo recebido: " + ctx.body());
+        } catch (PrinterService.PrinterServiceException e) {
+            // Captura uma exceção específica do nosso serviço de impressão
+            System.err.println("Erro de serviço de impressão: " + e.getMessage());
+            ctx.status(500).result("Erro na impressora: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Erro interno inesperado: " + e.getMessage());
+            e.printStackTrace();
+            ctx.status(500).result("Erro interno no servidor: Ocorreu uma falha inesperada.");
         }
     }
 }
