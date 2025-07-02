@@ -205,7 +205,7 @@ public class PrinterService {
         return zplBuilder.toString();
     }
 
-    private void log(String message) {
+    void log(String message) {
         String timestamped = "[" + FORMATTER.format(LocalDateTime.now()) + "] " + message;
         System.out.println(timestamped);
 
