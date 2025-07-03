@@ -88,7 +88,7 @@ public class PrinterService {
     }
 
     // ... (cole aqui seus métodos generateStandardLabelZPL, generate62mmLabelZPL e log sem alteração) ...
-    private String generateStandardLabelZPL(String labelText, int actualQuantity) {
+    public String generateStandardLabelZPL(String labelText, int actualQuantity) {
         int labelWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM;
         int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
         int pageWidthDots = labelWidthDots * 2 + GAP_HORIZONTAL_DOTS * 2;
@@ -129,7 +129,7 @@ public class PrinterService {
         return zplBuilder.toString();
     }
 
-    private String generate62mmLabelZPL(String labelText, int actualQuantity) {
+    public String generate62mmLabelZPL(String labelText, int actualQuantity) {
         int labelWidthDots = LABEL_WIDTH_MM_SIXTY_TWO_MM * DOTS_PER_MM;
         int labelHeightDots = LABEL_HEIGHT_MM_SIXTY_TWO_MM * DOTS_PER_MM;
         int pageWidthDots = labelWidthDots * 2 + GAP_HORIZONTAL_DOTS * 2;

@@ -3289,3 +3289,277 @@ ZPL:
 
 [2025-07-02 12:55:00] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-02 13:12:31] [IMPRESSÃO] 2025-07-02 13:12:31
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD10 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD10 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD10 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD10 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 13:12:31] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:49:47] [IMPRESSÃO] 2025-07-02 14:49:47
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:49:48] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:50:04] [IMPRESSÃO] 2025-07-02 14:50:04
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:50:04] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:50:12] [IMPRESSÃO] 2025-07-02 14:50:12
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:50:12] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:50:52] [IMPRESSÃO] 2025-07-02 14:50:52
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW660
+^LL200
+^FO16,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO346,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO16,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO346,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:50:53] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:50:56] [IMPRESSÃO] 2025-07-02 14:50:56
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:50:56] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:58:58] [IMPRESSÃO] 2025-07-02 14:58:58
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:58:58] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 14:59:05] [IMPRESSÃO] 2025-07-02 14:59:05
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW660
+^LL200
+^FO16,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO346,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO16,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO346,82^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 14:59:05] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 15:18:20] [IMPRESSÃO] 2025-07-02 15:18:20
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FDknkjljkl - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FDknkjljkl - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FDknkjljkl - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FDknkjljkl - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 15:18:20] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 16:46:53] [IMPRESSÃO] 2025-07-02 16:46:53
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 16:46:53] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-02 16:47:59] [IMPRESSÃO] 2025-07-02 16:47:59
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 2
+Quantidade real: 4
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD12 - ESPECIAL ^FS
+^XZ
+
+
+[2025-07-02 16:47:59] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-03 08:42:54] [IMPRESSÃO] 2025-07-03 08:42:54
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA
+^PW1012
+^LL496
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD10^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD10^FS
+^FO10,10^FB746,13,0,C,0
+^A0N,36,36^FD10^FS
+^FO516,10^FB746,13,0,C,0
+^A0N,36,36^FD10^FS
+^XZ
+
+
+[2025-07-03 08:42:54] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-03 14:11:58] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-03 14:26:17] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-03 14:27:07] [ERRO] Texto da etiqueta está vazio.
+

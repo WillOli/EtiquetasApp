@@ -5,33 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/byte_buddy_1_17_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_20231014.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit_4_13_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit_jupiter.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit_jupiter_api_6_0_0_M1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/junit_platform_launcher_6_0_0_M1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mockito_core_5_18_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/objenesis_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/application/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/PrintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/controller/PrintController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/PrintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/model/PrintRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/PrinterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/service/PrinterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/PrintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/PrintController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService$PrinterServiceException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/PrinterService$PrinterServiceException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/PrinterService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/.vscode/settings.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/css/style.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/img/GRUPO-VISTA.png" beforeDir="false" />
@@ -51,14 +24,24 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2zK3cqbd73ltfbJ1zmMYfWXj4h4" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -67,10 +50,26 @@
   "keyToString": {
     "Application.Main.executor": "Debug",
     "Application.application.Main.executor": "Debug",
+    "JUnit.PrinterServiceTest (1).executor": "Debug",
+    "JUnit.PrinterServiceTest (2).executor": "Debug",
+    "JUnit.PrinterServiceTest.executor": "Run",
+    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor": "Run",
+    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands.executor": "Coverage",
+    "JUnit.application in espaco-vista-printer.executor": "Debug",
+    "Maven.espaco-vista-printer [package].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "git-widget-placeholder": "main"
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "refatoracao-completa",
+    "last_directory_selection": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations",
+    "last_opened_file_path": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.splitter.proportion": "0.23217922"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -78,38 +77,104 @@
       <recent name="C:\Users\vista\OneDrive\Área de Trabalho\Desenvolvimento\app-impressora-etiquetas\backend\src\main\resources\web\script" />
       <recent name="C:\Users\vista\OneDrive\Área de Trabalho\Desenvolvimento\app-impressora-etiquetas\backend\src\main" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="service" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="main.Java.application.Main" />
+  <component name="RunManager" selected="JUnit.PrinterServiceTest (2)">
+    <configuration name="PrinterServiceTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="main.Java.application.*" />
+          <option name="PATTERN" value="java.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="java.service" />
+      <option name="MAIN_CLASS_NAME" value="java.service.PrinterServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="application.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="application.Main" />
+    <configuration name="PrinterServiceTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="application.*" />
+          <option name="PATTERN" value="service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.PrinterServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="PrinterServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="java.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="java" />
+      <option name="MAIN_CLASS_NAME" value="java.PrinterServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service" />
+      <option name="MAIN_CLASS_NAME" value="service.PrinterServiceTest" />
+      <option name="METHOD_NAME" value="testGenerateStandardLabelZPL_ContainsEssentialCommands" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="java.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="java.service" />
+      <option name="MAIN_CLASS_NAME" value="java.service.PrinterServiceTest" />
+      <option name="METHOD_NAME" value="testGenerateStandardLabelZPL_ContainsEssentialCommands" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.application.Main" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.PrinterServiceTest (2)" />
+        <item itemvalue="JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1)" />
+        <item itemvalue="JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands" />
+        <item itemvalue="JUnit.PrinterServiceTest" />
+        <item itemvalue="JUnit.PrinterServiceTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -122,5 +187,13 @@
       <updated>1751466020825</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/backend$PrinterServiceTest.ic" NAME="PrinterServiceTest Coverage Results" MODIFIED="1751562396102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/backend$PrinterServiceTest_testGenerateStandardLabelZPL_ContainsEssentialCommands.ic" NAME="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands Coverage Results" MODIFIED="1751563444517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>java.service.*</FILTER>
+    </SUITE>
   </component>
 </project>
