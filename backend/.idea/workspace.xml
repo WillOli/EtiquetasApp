@@ -5,28 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/controller/PrintControllerIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/application/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/controller/PrintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/controller/PrintController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/PrintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/PrintController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/GRUPO-VISTA.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/LOGO-ESPACO-VISTA1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo V.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo_V.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/modalUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/printUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/quantityUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/.vscode/settings.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/css/style.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/img/GRUPO-VISTA.png" beforeDir="false" />
@@ -75,7 +53,7 @@
     "JUnit.PrintControllerIntegrationTest.executor": "Run",
     "JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200.executor": "Run",
     "JUnit.PrinterServiceTest (1).executor": "Debug",
-    "JUnit.PrinterServiceTest (2).executor": "Debug",
+    "JUnit.PrinterServiceTest (2).executor": "Run",
     "JUnit.PrinterServiceTest.executor": "Run",
     "JUnit.PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull.executor": "Debug",
     "JUnit.PrinterServiceTest.testGenerate62mmLabelZPL_UsesFieldBlockCommand.executor": "Debug",
