@@ -5,6 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test/controller/PrintControllerIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/controller/PrintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/controller/PrintController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/PrintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/PrintController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/GRUPO-VISTA.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/LOGO-ESPACO-VISTA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo_V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/modalUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/printUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/quantityUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/.vscode/settings.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/css/style.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/web/img/GRUPO-VISTA.png" beforeDir="false" />
@@ -50,10 +72,14 @@
   "keyToString": {
     "Application.Main.executor": "Debug",
     "Application.application.Main.executor": "Debug",
+    "JUnit.PrintControllerIntegrationTest.executor": "Run",
+    "JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200.executor": "Run",
     "JUnit.PrinterServiceTest (1).executor": "Debug",
     "JUnit.PrinterServiceTest (2).executor": "Debug",
     "JUnit.PrinterServiceTest.executor": "Run",
-    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor": "Run",
+    "JUnit.PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull.executor": "Debug",
+    "JUnit.PrinterServiceTest.testGenerate62mmLabelZPL_UsesFieldBlockCommand.executor": "Debug",
+    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor": "Debug",
     "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands.executor": "Coverage",
     "JUnit.application in espaco-vista-printer.executor": "Debug",
     "Maven.espaco-vista-printer [package].executor": "Run",
@@ -82,17 +108,46 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.PrinterServiceTest (2)">
-    <configuration name="PrinterServiceTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="application.Main" />
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="java.service.*" />
+          <option name="PATTERN" value="application.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="java.service" />
-      <option name="MAIN_CLASS_NAME" value="java.service.PrinterServiceTest" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrintControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.PrintControllerIntegrationTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="controller" />
+      <option name="MAIN_CLASS_NAME" value="controller.PrintControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="postToPrint_withValidRequest_shouldReturn200" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -112,22 +167,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrinterServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="espaco-vista-printer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="java.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="java" />
-      <option name="MAIN_CLASS_NAME" value="java.PrinterServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
@@ -137,23 +177,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="service" />
       <option name="MAIN_CLASS_NAME" value="service.PrinterServiceTest" />
-      <option name="METHOD_NAME" value="testGenerateStandardLabelZPL_ContainsEssentialCommands" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="espaco-vista-printer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="java.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="java.service" />
-      <option name="MAIN_CLASS_NAME" value="java.service.PrinterServiceTest" />
-      <option name="METHOD_NAME" value="testGenerateStandardLabelZPL_ContainsEssentialCommands" />
+      <option name="METHOD_NAME" value="printLabels_shouldNotThrowException_whenTextIsNull" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -171,10 +195,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.PrinterServiceTest (2)" />
-        <item itemvalue="JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1)" />
-        <item itemvalue="JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands" />
-        <item itemvalue="JUnit.PrinterServiceTest" />
-        <item itemvalue="JUnit.PrinterServiceTest (1)" />
+        <item itemvalue="JUnit.PrintControllerIntegrationTest" />
+        <item itemvalue="JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull" />
       </list>
     </recent_temporary>
   </component>

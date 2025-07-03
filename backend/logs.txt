@@ -3563,3 +3563,9 @@ ZPL:
 
 [2025-07-03 14:27:07] [ERRO] Texto da etiqueta está vazio.
 
+[2025-07-03 14:40:13] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-03 15:40:27] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-03 15:53:26] [ERRO] Texto da etiqueta está vazio.
+

@@ -3,25 +3,27 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import io.javalin.http.Context;
+import model.PrintRequest;
 import service.PrinterService;
 
 public class PrintController {
 
-    private static final PrinterService printerService = new PrinterService();
-    private static final Gson gson = new Gson();
+    private final PrinterService printerService; // Não é mais estático
+    private final Gson gson = new Gson();
 
-    public static void handlePrintRequest(Context ctx) {
+    // Construtor que recebe a dependência de fora (injeção de dependência)
+    public PrintController(PrinterService printerService) {
+        this.printerService = printerService;
+    }
+
+    // Método de instância, não mais estático
+    public void handlePrintRequest(Context ctx) {
         try {
             String requestBody = ctx.body();
-            model.PrintRequest printRequest = gson.fromJson(requestBody, model.PrintRequest.class);
+            PrintRequest printRequest = gson.fromJson(requestBody, PrintRequest.class);
 
-            // --- VALIDAÇÃO MELHORADA ---
-            if (printRequest == null) {
-                ctx.status(400).result("Erro na requisição: Pedido vazio ou mal formatado.");
-                return;
-            }
-            if (printRequest.getText() == null || printRequest.getText().trim().isEmpty()) {
-                ctx.status(400).result("Erro na requisição: O texto da etiqueta não pode ser vazio.");
+            if (printRequest == null || printRequest.getText() == null || printRequest.getText().trim().isEmpty()) {
+                ctx.status(400).result("Erro na requisição: Texto da etiqueta não pode ser vazio.");
                 return;
             }
             if (printRequest.getQuantity() <= 0) {
@@ -29,10 +31,8 @@ public class PrintController {
                 return;
             }
             if (printRequest.getLabelType() == null) {
-                // O construtor do PrintRequest já define um padrão, mas esta é uma segurança extra.
                 System.err.println("[AVISO] Tipo de etiqueta não especificado, usando padrão.");
             }
-
 
             printerService.printLabels(
                     printRequest.getText(),
@@ -43,15 +43,12 @@ public class PrintController {
             ctx.status(200).result("Impressão enviada com sucesso!");
 
         } catch (JsonSyntaxException e) {
-            ctx.status(400).result("Erro na requisição: JSON mal formatado. Corpo recebido: " + ctx.body());
+            ctx.status(400).result("Erro na requisição: JSON mal formatado.");
         } catch (PrinterService.PrinterServiceException e) {
-            // Captura uma exceção específica do nosso serviço de impressão
-            System.err.println("Erro de serviço de impressão: " + e.getMessage());
             ctx.status(500).result("Erro na impressora: " + e.getMessage());
         } catch (Exception e) {
-            System.err.println("Erro interno inesperado: " + e.getMessage());
+            ctx.status(500).result("Erro interno no servidor: " + e.getMessage());
             e.printStackTrace();
-            ctx.status(500).result("Erro interno no servidor: Ocorreu uma falha inesperada.");
         }
     }
 }
