@@ -64,7 +64,7 @@ public class PrinterService {
             String logMessage = String.format(
                     "[IMPRESSÃO] %s\nTipo de Etiqueta: %s\nImpressora: %s\nQuantidade solicitada: %d\nQuantidade real: %d\nZPL:\n%s",
                     FORMATTER.format(LocalDateTime.now()), type.toString(), defaultService.getName(),
-                    quantity, quantity * 2, zpl);
+                    quantity, quantity * 2, formatZplLogging(zpl)); // <-- Formatando legenda dos logs
             log(logMessage);
 
             job.print(doc, null);
@@ -175,5 +175,19 @@ public class PrinterService {
         } catch (IOException e) {
             System.err.println("[ERRO] Falha ao escrever no log: " + e.getMessage());
         }
+    }
+
+    /**
+     * Formata uma string ZPL com múltiplos linhas para uma única linha compacta,
+     * ideal para ser exibida em logs.
+     * @param rawZpl A string ZPL original
+     * @return Uma versão formatada e mais legível do ZPL.
+     */
+    private String formatZplLogging(String rawZpl) {
+        if (rawZpl == null || rawZpl.trim().isEmpty()) {
+            return "[ZPL Vazio]";
+        }
+        // Substitui todas as quebras de linha por um espaço e remove espaços múltiplos.
+        return rawZpl.trim().replace("\n", " ").replaceAll("\\s+", " ");
     }
 }
