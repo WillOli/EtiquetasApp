@@ -149,8 +149,8 @@ public class PrinterService {
             }
 
             for (int col = 0; col < 2; col++) {
-                int initialYOffset = 10;
-                int marginLeftBlock = 10;
+                int initialYOffset = 95;
+                int marginLeftBlock = 30;
                 int posX = marginLeftBlock + col * (labelWidthDots + GAP_HORIZONTAL_DOTS);
                 int posY = initialYOffset;
                 zplBuilder.append("^FO").append(posX).append(",").append(posY).append("^FB").append(fieldBlockWidth)
