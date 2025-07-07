@@ -4155,3 +4155,15 @@ ZPL:
 
 [2025-07-04 16:51:05] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-07 09:33:52] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-07 09:34:16] [IMPRESSÃO] 2025-07-07 09:34:16
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^XZ
+
+[2025-07-07 09:34:16] [STATUS] Impressão enviada com sucesso.
+
