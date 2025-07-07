@@ -31,6 +31,7 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- Dependências de Teste -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -43,7 +44,6 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -58,8 +58,32 @@
         </dependency>
     </dependencies>
 
+    <!-- ======================================================= -->
+    <!-- SECÇÃO DE BUILD CORRIGIDA COM O PLUGIN ESSENCIAL        -->
+    <!-- ======================================================= -->
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <!-- Define a classe principal que será executada com 'java -jar' -->
+                                    <mainClass>application.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
