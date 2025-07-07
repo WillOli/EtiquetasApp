@@ -4217,3 +4217,13 @@ ZPL:
 
 [2025-07-07 10:28:55] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-07 10:49:38] [IMPRESSÃO] 2025-07-07 10:49:38
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL ^FS ^XZ
+
+[2025-07-07 10:49:38] [STATUS] Impressão enviada com sucesso.
+
