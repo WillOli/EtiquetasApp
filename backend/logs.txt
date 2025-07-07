@@ -4177,3 +4177,43 @@ ZPL:
 
 [2025-07-07 10:16:44] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-07 10:27:21] [IMPRESSÃO] 2025-07-07 10:27:21
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO^FS ^XZ
+
+[2025-07-07 10:27:21] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-07 10:27:47] [IMPRESSÃO] 2025-07-07 10:27:47
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO 😊^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO 😊^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO 😊^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRESSÃO 😊^FS ^XZ
+
+[2025-07-07 10:27:47] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-07 10:27:55] [IMPRESSÃO] 2025-07-07 10:27:55
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRE😊^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRE😊^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRE😊^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTESTE IMPRE😊^FS ^XZ
+
+[2025-07-07 10:27:55] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-07 10:28:55] [IMPRESSÃO] 2025-07-07 10:28:55
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL:
+^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDArroz com feijão^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDArroz com feijão^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDArroz com feijão^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDArroz com feijão^FS ^XZ
+
+[2025-07-07 10:28:55] [STATUS] Impressão enviada com sucesso.
+

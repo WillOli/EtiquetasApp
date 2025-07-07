@@ -100,6 +100,7 @@ public class PrinterService {
         for (int i = 0; i < actualQuantity; i++) {
             if (i % 2 == 0) {
                 zplBuilder.append("^XA\n");
+                zplBuilder.append("^CI28\n");
                 zplBuilder.append("^PW").append(pageWidthDots).append("\n");
                 zplBuilder.append("^LL").append(labelHeightDots).append("\n");
             }
@@ -144,6 +145,7 @@ public class PrinterService {
         for (int i = 0; i < actualQuantity; i++) {
             if (i % 2 == 0) {
                 zplBuilder.append("^XA\n");
+                zplBuilder.append("^CI28\n");
                 zplBuilder.append("^PW").append(pageWidthDots).append("\n");
                 zplBuilder.append("^LL").append(labelHeightDots).append("\n");
             }
