@@ -49,7 +49,7 @@ class PrintControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /print deve retornar 200 OK e mensagem de sucesso para um pedido válido")
+    @DisplayName("POST /print deve retornar 200 OK e mensagem    de sucesso para um pedido válido")
     void postToPrint_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
         // Arrange (Preparação)
         PrintRequest payload = new PrintRequest("TESTE-INTEGRACAO", 5, "STANDARD");

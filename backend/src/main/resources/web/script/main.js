@@ -7,7 +7,7 @@ import * as modalUtils from './utils/modalUtils.js';
 function initializeEventListeners() {
     console.log("Inicializando eventos..."); // Log para depuração
 
-    // Botões de texto
+    // Botões de texto (sem alterações)
     document.getElementById('btn-1')?.addEventListener('click', () => textUtils.appendText('1'));
     document.getElementById('btn-2')?.addEventListener('click', () => textUtils.appendText('2'));
     document.getElementById('btn-3')?.addEventListener('click', () => textUtils.appendText('3'));
@@ -21,27 +21,37 @@ function initializeEventListeners() {
     document.getElementById('btn-special')?.addEventListener('click', textUtils.appendSpecial);
     document.getElementById('btn-clear')?.addEventListener('click', textUtils.clearText);
 
-    // Botões de quantidade
+    // Botões de quantidade (sem alterações)
     document.getElementById('btn-q1')?.addEventListener('click', () => quantityUtils.setQuantity(1));
     document.getElementById('btn-q2')?.addEventListener('click', () => quantityUtils.setQuantity(2));
     document.getElementById('btn-q3')?.addEventListener('click', () => quantityUtils.setQuantity(3));
     document.getElementById('btn-q4')?.addEventListener('click', () => quantityUtils.setQuantity(4));
     document.getElementById('btn-q5')?.addEventListener('click', () => quantityUtils.setQuantity(5));
     document.getElementById('btn-q6')?.addEventListener('click', () => quantityUtils.setQuantity(6));
-    
-    // Botão de impressão principal
+
+    // Botão de impressão principal (sem alterações)
     document.getElementById('printButton')?.addEventListener('click', printUtils.sendPrintRequestWrapper);
 
-    // Input de quantidade
+    // Input de quantidade (sem alterações)
     const labelQuantity = document.getElementById('labelQuantity');
     if (labelQuantity) {
         labelQuantity.addEventListener('input', quantityUtils.updateDuplicateInfo);
-        quantityUtils.updateDuplicateInfo(); // Inicializa a contagem
     }
 
-    // Modal
+    // Modal (sem alterações)
     document.getElementById('alertModal')?.querySelector('button')?.addEventListener('click', modalUtils.closeModal);
-    
+
+    // ================== ALTERAÇÃO AQUI ==================
+    // Novo event listener para o seletor de tipo de etiqueta
+    const labelType = document.getElementById('labelType');
+    if (labelType) {
+        labelType.addEventListener('change', quantityUtils.updateDuplicateInfo);
+    }
+    // ====================================================
+
+    // Inicializa a informação de duplicação quando a página carrega
+    quantityUtils.updateDuplicateInfo();
+
     console.log("Eventos inicializados com sucesso."); // Log para depuração
 }
 
