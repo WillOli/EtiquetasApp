@@ -5,16 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/Java/model/ValidadePrintRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/web/script/ui.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/logs_2025-07.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs_2025-07.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Java/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/application/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controller/PrintController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/controller/PrintController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService$PrinterServiceException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/PrinterService$PrinterServiceException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/PrinterService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/java/service/PrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/service/PrinterServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.application.Main.executor": "Debug",
     "JUnit.PrintControllerIntegrationTest.executor": "Debug",
     "JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200.executor": "Run",

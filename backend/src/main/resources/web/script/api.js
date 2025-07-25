@@ -1,5 +1,4 @@
-import { showModal } from './modal.js';
-import { updateButtonState } from './modal.js';
+import { showModal, updateButtonState } from './modal.js';
 
 /**
  * Envia uma requisição para imprimir uma etiqueta simples.
@@ -25,15 +24,31 @@ export function sendSimplePrintRequest() {
  */
 export function sendValidityPrintRequest() {
     const productName = document.getElementById('productName')?.value;
+    const mfgDate = document.getElementById('mfgDate')?.value;
+    // ===== INÍCIO DA ALTERAÇÃO FINAL =====
+    // Lógica simplificada para ler diretamente do campo de texto
+    const validityDays = document.getElementById('validityDays')?.value;
+    // ===== FIM DA ALTERAÇÃO FINAL =====
+
     if (!productName || productName.trim() === '') {
         showModal('O nome do produto não pode estar vazio.');
         return;
     }
 
+    if (!mfgDate) {
+        showModal('A data de fabricação é obrigatória.');
+        return;
+    }
+
+    if (!validityDays || parseInt(validityDays) <= 0) {
+        showModal('Os dias de validade devem ser um número maior que zero.');
+        return;
+    }
+
     const payload = {
         productName,
-        mfgDate: document.getElementById('mfgDate').value,
-        expDate: document.getElementById('expDate').value,
+        mfgDate,
+        validityDays: parseInt(validityDays),
         quantity: parseInt(document.getElementById('labelQuantity').value),
         labelType: document.getElementById('labelType').value
     };

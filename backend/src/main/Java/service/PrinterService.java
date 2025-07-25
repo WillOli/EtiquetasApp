@@ -11,19 +11,17 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 public class PrinterService {
-    // As suas constantes de dimensão e fonte permanecem INALTERADAS.
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static final int MAX_CHARACTERS = 100;
-    private static final int MAX_QUANTITY = 100;
     private static final int LABEL_WIDTH_MM_STANDARD = 40;
     private static final int LABEL_HEIGHT_MM_STANDARD = 25;
     private static final int FONT_HEIGHT_STANDARD = 36;
     private static final int DOTS_PER_MM = 8;
-    private static final int LABEL_WIDTH_MM_SIXTY_TWO_MM = 80; // Ajustado para refletir o tamanho real da etiqueta
-    private static final int LABEL_HEIGHT_MM_SIXTY_TWO_MM = 25; // Ajustado para refletir o tamanho real da etiqueta
+    private static final int LABEL_WIDTH_MM_SIXTY_TWO_MM = 80;
+    private static final int LABEL_HEIGHT_MM_SIXTY_TWO_MM = 25;
     private static final int FONT_HEIGHT_SIXTY_TWO_MM = 36;
     private static final int FONT_WIDTH_SIXTY_TWO_MM = 36;
     private static final int GAP_HORIZONTAL_DOTS = 10;
@@ -34,18 +32,13 @@ public class PrinterService {
         }
     }
 
-    /**
-     * Gera dinamicamente o nome do ficheiro de log para o mês e ano atuais.
-     * @return Uma string como "logs_2025-07.txt".
-     */
     private String getCurrentLogFilename() {
         DateTimeFormatter fileFormatter = DateTimeFormatter.ofPattern("yyyy-MM");
         String monthYear = LocalDateTime.now().format(fileFormatter);
         return "logs_" + monthYear + ".txt";
     }
 
-    // O método printLabels permanece com a sua lógica original.
-    public void printLabels(String labelText, int quantity, PrintRequest.LabelType type) {
+    public void printLabels(String labelText, int quantity, PrintRequest.LabelType type) throws PrinterServiceException {
         if (labelText == null || labelText.trim().isEmpty()) {
             log("[ERRO] Texto da etiqueta está vazio.");
             return;
@@ -60,7 +53,6 @@ public class PrinterService {
             throw new PrinterServiceException("Nenhuma impressora padrão foi encontrada no servidor.");
         }
 
-        // A lógica de quantidade (duplicar ou não) agora é controlada pelo tipo de etiqueta.
         int actualQuantity = (type == PrintRequest.LabelType.STANDARD) ? quantity * 2 : quantity;
         String zpl = generateZpl(labelText, actualQuantity, type);
 
@@ -90,24 +82,35 @@ public class PrinterService {
 
     public void printValidadeLabel(ValidadePrintRequest request) throws PrinterServiceException {
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate mfg = LocalDate.parse(request.getMfgDate());
-            LocalDate exp = LocalDate.parse(request.getExpDate());
+            // Formato para exibir a data na etiqueta (dia/mês/ano)
+            DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+            // 1. Pega a data de fabricação e a formata
+            LocalDate manufacturingDate = LocalDate.parse(request.getMfgDate());
+            String formattedMfgDate = manufacturingDate.format(displayFormatter);
+
+            // 2. Pega o número de dias de validade diretamente da requisição
+            int validityDays = request.getValidityDays();
+
+            // 3. Monta o texto final da etiqueta com "Prazo: XX dias"
             // Usamos '\\&' para quebra de linha explícita no ZPL
             String labelText = String.format(
-                    "%s\\&Fab: %s\\&Val: %s",
+                    "%s\\&Fab: %s\\&Prazo: %d dias",
                     request.getProductName(),
-                    mfg.format(dtf),
-                    exp.format(dtf)
+                    formattedMfgDate,
+                    validityDays
             );
 
+            // 4. Converte o tipo de etiqueta e chama o método de impressão principal
             PrintRequest.LabelType labelType = PrintRequest.LabelType.valueOf(request.getLabelType().toUpperCase());
             printLabels(labelText, request.getQuantity(), labelType);
 
         } catch (IllegalArgumentException e) {
             log("[ERRO] Tipo de etiqueta inválido recebido: " + request.getLabelType());
             throw new PrinterServiceException("Tipo de etiqueta inválido: " + request.getLabelType());
+        } catch (DateTimeParseException e) {
+            log("[ERRO] Formato de data de fabricação inválido: " + request.getMfgDate());
+            throw new PrinterServiceException("Formato de data de fabricação inválido. Use yyyy-MM-dd.");
         } catch (Exception e) {
             log("[ERRO] Falha ao processar etiqueta de validade: " + e.getMessage());
             throw new PrinterServiceException("Falha ao processar etiqueta de validade: " + e.getMessage());
@@ -118,10 +121,10 @@ public class PrinterService {
         if (type == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return generate80x25LabelZPL(labelText, actualQuantity);
         }
-        return generate62mmLabelZPL(labelText, actualQuantity);
+        return generateStandardDualLabelZPL(labelText, actualQuantity);
     }
 
-    public String generate62mmLabelZPL(String labelText, int actualQuantity) {
+    public String generateStandardDualLabelZPL(String labelText, int actualQuantity) {
         int labelWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM;
         int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
         int pageWidthDots = labelWidthDots * 2 + GAP_HORIZONTAL_DOTS * 2;
@@ -157,36 +160,25 @@ public class PrinterService {
         return zplBuilder.toString();
     }
 
-    // ===== MÉTODO MODIFICADO =====
     public String generate80x25LabelZPL(String labelText, int actualQuantity) {
         int labelWidthDots = LABEL_WIDTH_MM_SIXTY_TWO_MM * DOTS_PER_MM;
         int labelHeightDots = LABEL_HEIGHT_MM_SIXTY_TWO_MM * DOTS_PER_MM;
         int fontHeight = FONT_HEIGHT_SIXTY_TWO_MM;
         int fontWidth = FONT_WIDTH_SIXTY_TWO_MM;
-
-        // O bloco de texto (^FB) ocupará a largura total da etiqueta para permitir a centralização.
         int fieldBlockWidth = labelWidthDots;
-        // Calcula o número máximo de linhas que cabem na etiqueta.
         int maxLines = (int) Math.floor((double) labelHeightDots / fontHeight);
-
         StringBuilder zplBuilder = new StringBuilder();
-
         for (int i = 0; i < actualQuantity; i++) {
-            zplBuilder.append("^XA\n"); // Início de cada etiqueta individual
-            zplBuilder.append("^CI28\n"); // Suporte a UTF-8
-            zplBuilder.append("^PW").append(labelWidthDots).append("\n"); // Largura da página/etiqueta
-            zplBuilder.append("^LL").append(labelHeightDots).append("\n"); // Altura da etiqueta
-
-            // Posição Y (vertical). Ajuste este valor se precisar mover o texto para cima ou para baixo.
+            zplBuilder.append("^XA\n");
+            zplBuilder.append("^CI28\n");
+            zplBuilder.append("^PW").append(labelWidthDots).append("\n");
+            zplBuilder.append("^LL").append(labelHeightDots).append("\n");
             int verticalPosition = 40;
-
-            // Montagem dos comandos ZPL para centralização
-            zplBuilder.append("^FO0,").append(verticalPosition) // Posição do campo (X=0, Y=verticalPosition)
-                    .append("^A0N,").append(fontHeight).append(",").append(fontWidth) // Define a fonte
-                    .append("^FB").append(fieldBlockWidth).append(",").append(maxLines).append(",0,C,0") // Define o Bloco de Texto: largura total, max linhas, sem espaço extra, Centralizado (C)
-                    .append("^FD").append(labelText).append("^FS\n"); // O texto a ser impresso
-
-            zplBuilder.append("^XZ\n"); // Fim de cada etiqueta individual
+            zplBuilder.append("^FO0,").append(verticalPosition)
+                    .append("^A0N,").append(fontHeight).append(",").append(fontWidth)
+                    .append("^FB").append(fieldBlockWidth).append(",").append(maxLines).append(",0,C,0")
+                    .append("^FD").append(labelText).append("^FS\n");
+            zplBuilder.append("^XZ\n");
         }
         return zplBuilder.toString();
     }
@@ -194,7 +186,6 @@ public class PrinterService {
     void log(String message) {
         String timestamped = "[" + FORMATTER.format(LocalDateTime.now()) + "] " + message;
         System.out.println(timestamped);
-
         String logFilename = getCurrentLogFilename();
         try {
             Path logDir = Paths.get("logs");

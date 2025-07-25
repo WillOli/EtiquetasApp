@@ -15,7 +15,6 @@ public class PrintController {
         this.printerService = printerService;
     }
 
-    // Método para etiqueta simples (sem alterações)
     public void handlePrintRequest(Context ctx) {
         try {
             PrintRequest printRequest = gson.fromJson(ctx.body(), PrintRequest.class);
@@ -32,7 +31,6 @@ public class PrintController {
         }
     }
 
-    // ALTERAÇÃO: NOVO MÉTODO para etiqueta de validade
     public void handleValidadePrintRequest(Context ctx) {
         try {
             ValidadePrintRequest request = gson.fromJson(ctx.body(), ValidadePrintRequest.class);
@@ -41,8 +39,12 @@ public class PrintController {
                 ctx.status(400).result("Nome do produto não pode ser vazio.");
                 return;
             }
-            if (request.getMfgDate() == null || request.getExpDate() == null) {
-                ctx.status(400).result("Datas de fabricação e validade são obrigatórias.");
+            if (request.getMfgDate() == null || request.getMfgDate().trim().isEmpty()) {
+                ctx.status(400).result("Data de fabricação é obrigatória.");
+                return;
+            }
+            if (request.getValidityDays() <= 0) {
+                ctx.status(400).result("Dias de validade devem ser maiores que zero.");
                 return;
             }
 

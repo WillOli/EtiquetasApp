@@ -148,3 +148,84 @@ ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab
 
 [2025-07-25 10:25:59] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-25 15:50:51] [IMPRESSÃO] 2025-07-25 15:50:51
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 15:50:51] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:00:55] [IMPRESSÃO] 2025-07-25 16:00:55
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:00:55] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:01:08] [IMPRESSÃO] 2025-07-25 16:01:08
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:01:08] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:01:23] [IMPRESSÃO] 2025-07-25 16:01:23
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 6
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:01:23] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:03:53] [IMPRESSÃO] 2025-07-25 16:03:53
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 3
+Quantidade real impressa: 3
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:03:53] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:03:58] [IMPRESSÃO] 2025-07-25 16:03:58
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 3
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:03:58] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:04:39] [IMPRESSÃO] 2025-07-25 16:04:39
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FD209 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:04:39] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:10:17] [IMPRESSÃO] 2025-07-25 16:10:17
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDSuco de Laranja🤣🤣\&Fab: 25/07/2025\&Prazo: 10000 dias^FS ^XZ
+
+[2025-07-25 16:10:17] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:11:00] [IMPRESSÃO] 2025-07-25 16:11:00
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDSuco de Laranja🤣🤣\&Fab: 25/07/2025\&Prazo: 1 dias^FS ^XZ
+
+[2025-07-25 16:11:00] [STATUS] Impressão enviada com sucesso.
+
