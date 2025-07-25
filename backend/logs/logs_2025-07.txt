@@ -43,3 +43,108 @@ ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL
 
 [2025-07-07 10:50:55] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-07 14:18:53] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-07 14:19:46] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-12 17:22:16] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-25 09:53:34] [IMPRESSÃO] 2025-07-25 09:53:34
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: SEC8425196BEA87
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 09:53:34] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 09:53:51] [IMPRESSÃO] 2025-07-25 09:53:51
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: SEC8425196BEA87
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 09:53:51] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:05:36] [IMPRESSÃO] 2025-07-25 10:05:36
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:05:36] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:07:03] [IMPRESSÃO] 2025-07-25 10:07:03
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 10:07:03] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:07:45] [IMPRESSÃO] 2025-07-25 10:07:45
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:07:45] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:14:19] [IMPRESSÃO] 2025-07-25 10:14:19
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:14:19] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:18:06] [IMPRESSÃO] 2025-07-25 10:18:06
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:18:06] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:18:20] [IMPRESSÃO] 2025-07-25 10:18:20
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:18:20] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:21:33] [IMPRESSÃO] 2025-07-25 10:21:33
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:21:33] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:22:49] [IMPRESSÃO] 2025-07-25 10:22:49
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 6
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:22:49] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:25:59] [IMPRESSÃO] 2025-07-25 10:25:59
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:25:59] [STATUS] Impressão enviada com sucesso.
+

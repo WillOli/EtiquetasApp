@@ -1,9 +1,10 @@
-package service;
+package java.service;
 
 import model.PrintRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import service.PrinterService;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +28,7 @@ class PrinterServiceTest {
         int quantity = 2; // 1 par de etiquetas
 
         // Act (Ação): Executa o método que queremos testar.
-        String zplResult = printerService.generateStandardLabelZPL(labelText, quantity);
+        String zplResult = printerService.generate62mmLabelZPL(labelText, quantity);
 
         // Assert (Verificação): Verifica se o resultado é o esperado.
         assertNotNull(zplResult, "O resultado do ZPL não deve ser nulo.");

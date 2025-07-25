@@ -5,7 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/Java/model/ValidadePrintRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/web/script/ui.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/logs_2025-07.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs_2025-07.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/java/service/PrinterServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/java/service/PrinterServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +67,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feature/quantidade-dinamica",
+    "git-widget-placeholder": "feat/Data-e-Validade",
     "last_directory_selection": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations",
     "last_opened_file_path": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend",
     "project.structure.last.edited": "Modules",
