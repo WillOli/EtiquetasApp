@@ -3,7 +3,6 @@ package service;
 import model.PrintRequest;
 import model.ValidadePrintRequest;
 import service.strategies.ILabelStrategy;
-
 import javax.print.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
