@@ -43,3 +43,357 @@ ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD12 - ESPECIAL
 
 [2025-07-07 10:50:55] [STATUS] Impressão enviada com sucesso.
 
+[2025-07-07 14:18:53] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-07 14:19:46] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-12 17:22:16] [ERRO] Texto da etiqueta está vazio.
+
+[2025-07-25 09:53:34] [IMPRESSÃO] 2025-07-25 09:53:34
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: SEC8425196BEA87
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDTeste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 09:53:34] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 09:53:51] [IMPRESSÃO] 2025-07-25 09:53:51
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: SEC8425196BEA87
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD5677 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 09:53:51] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:05:36] [IMPRESSÃO] 2025-07-25 10:05:36
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:05:36] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:07:03] [IMPRESSÃO] 2025-07-25 10:07:03
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FD20 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 10:07:03] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:07:45] [IMPRESSÃO] 2025-07-25 10:07:45
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB746,13,0,C,0 ^A0N,36,36^FDCarne moída - Picanha - Contra Filé - Patinho - Lagarto - Pele - Ricota\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:07:45] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:14:19] [IMPRESSÃO] 2025-07-25 10:14:19
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real: 2
+ZPL: ^XA ^CI28 ^PW1012 ^LL496 ^FO30,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO30,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^FO536,95^FB496,13,0,C,0 ^A0N,36,36^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:14:19] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:18:06] [IMPRESSÃO] 2025-07-25 10:18:06
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída - Carne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:18:06] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:18:20] [IMPRESSÃO] 2025-07-25 10:18:20
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:18:20] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:21:33] [IMPRESSÃO] 2025-07-25 10:21:33
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:21:33] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:22:49] [IMPRESSÃO] 2025-07-25 10:22:49
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 6
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,80^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:22:49] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 10:25:59] [IMPRESSÃO] 2025-07-25 10:25:59
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDCarne moída\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 10:25:59] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 15:50:51] [IMPRESSÃO] 2025-07-25 15:50:51
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Val: 24/08/2025^FS ^XZ
+
+[2025-07-25 15:50:51] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:00:55] [IMPRESSÃO] 2025-07-25 16:00:55
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:00:55] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:01:08] [IMPRESSÃO] 2025-07-25 16:01:08
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:01:08] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:01:23] [IMPRESSÃO] 2025-07-25 16:01:23
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 6
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:01:23] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:03:53] [IMPRESSÃO] 2025-07-25 16:03:53
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 3
+Quantidade real impressa: 3
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:03:53] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:03:58] [IMPRESSÃO] 2025-07-25 16:03:58
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 3
+Quantidade real impressa: 6
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ ^XA ^CI28 ^PW660 ^LL200 ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO16,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^FO346,82^A0N,36,36^FDteste\&Fab: 25/07/2025\&Prazo: 190 dias^FS ^XZ
+
+[2025-07-25 16:03:58] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:04:39] [IMPRESSÃO] 2025-07-25 16:04:39
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FD209 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:04:39] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:10:17] [IMPRESSÃO] 2025-07-25 16:10:17
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDSuco de Laranja🤣🤣\&Fab: 25/07/2025\&Prazo: 10000 dias^FS ^XZ
+
+[2025-07-25 16:10:17] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:11:00] [IMPRESSÃO] 2025-07-25 16:11:00
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDSuco de Laranja🤣🤣\&Fab: 25/07/2025\&Prazo: 1 dias^FS ^XZ
+
+[2025-07-25 16:11:00] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:14:54] [IMPRESSÃO] 2025-07-25 16:14:54
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,36,36^FB640,5,0,C,0^FDteste^FS ^XZ
+
+[2025-07-25 16:14:54] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:17:59] [IMPRESSÃO] 2025-07-25 16:17:59
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,90^A0N,36,36^FB640,5,0,C,0^FDteste^FS ^XZ
+
+[2025-07-25 16:18:00] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:20:14] [IMPRESSÃO] 2025-07-25 16:20:14
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,90^A0N,36,36^FB640,5,0,C,0^FDSuco de Laranja🤣🤣\&Fab: 25/07/2025\&Prazo: 20 dias^FS ^XZ
+
+[2025-07-25 16:20:14] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:23:48] [IMPRESSÃO] 2025-07-25 16:23:48
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,1200^A0N,36,36^FB640,5,0,C,0^FD1 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:23:48] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:24:02] [IMPRESSÃO] 2025-07-25 16:24:02
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,1200^A0N,36,36^FB640,5,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:24:02] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:37:12] [IMPRESSÃO] 2025-07-25 16:37:12
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,40^A0N,26,26^FB640,4,0,C,0^FD---PADRAO---\&12 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:37:13] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:37:46] [IMPRESSÃO] 2025-07-25 16:37:46
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO20,40^A0N,26,26^FB280,3,0,C,0^FD***DUPLA***\&12 - ESPECIAL ^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FD***DUPLA***\&12 - ESPECIAL ^FS ^FO20,40^A0N,26,26^FB280,3,0,C,0^FD***DUPLA***\&12 - ESPECIAL ^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FD***DUPLA***\&12 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:37:46] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:38:27] [IMPRESSÃO] 2025-07-25 16:38:27
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,90^A0N,26,26^FB640,4,0,C,0^FD12 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:38:27] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:38:37] [IMPRESSÃO] 2025-07-25 16:38:37
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO20,40^A0N,26,26^FB280,3,0,C,0^FD12 - ESPECIAL ^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FD12 - ESPECIAL ^FS ^FO20,40^A0N,26,26^FB280,3,0,C,0^FD12 - ESPECIAL ^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FD12 - ESPECIAL ^FS ^XZ
+
+[2025-07-25 16:38:37] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:40:09] [IMPRESSÃO] 2025-07-25 16:40:09
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:40:09] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:53:19] [IMPRESSÃO] 2025-07-25 16:53:19
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:53:19] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:53:23] [IMPRESSÃO] 2025-07-25 16:53:23
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO0,90^A0N,26,26^FB640,4,0,C,0^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-25 16:53:23] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-25 16:57:19] ### DEBUG: TIPO DE ETIQUETA RECEBIDO = SIXTY_TWO_MM ###
+
+[2025-07-25 16:57:19] [IMPRESSÃO] 2025-07-25 16:57:19
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO30,35^A0N,25,25^FDProduto:^FS ^FO200,35^A0N,25,25^FDteste\&Fab: 25/07/2025\&Prazo: 30 dias^FS ^FO30,65^GB400,2,2^FS ^FO30,85^A0N,25,25^FDFabricacao:^FS ^FO30,115^GB400,2,2^FS ^FO30,135^A0N,25,25^FDValidade:^FS ^FO30,165^GB400,2,2^FS ^XZ
+
+[2025-07-25 16:57:19] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-28 09:27:11] ### DEBUG: TIPO DE ETIQUETA RECEBIDO = SIXTY_TWO_MM ###
+
+[2025-07-28 09:27:11] [IMPRESSÃO] 2025-07-28 09:27:11
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO30,35^A0N,25,25^FDProduto:^FS ^FO200,35^A0N,25,25^FDSuco de Laranja\&Fab: 28/07/2025\&Prazo: 30 dias^FS ^FO30,65^GB400,2,2^FS ^FO30,85^A0N,25,25^FDFabricacao:^FS ^FO30,115^GB400,2,2^FS ^FO30,135^A0N,25,25^FDValidade:^FS ^FO30,165^GB400,2,2^FS ^XZ
+
+[2025-07-28 09:27:12] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-28 10:08:56] [IMPRESSÃO] 2025-07-28 10:08:56
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO30,40^A0N,28,28^FDProduto:^FS ^FO200,40^A0N,28,28^FDSuco de Laranja^FS ^FO30,68^GB400,2,2^FS ^FO30,95^A0N,28,28^FDFabricacao:^FS ^FO200,95^A0N,28,28^FD28/07/2025^FS ^FO30,123^GB400,2,2^FS ^FO30,150^A0N,28,28^FDValidade:^FS ^FO200,150^A0N,28,28^FD30 dias^FS ^FO30,178^GB400,2,2^FS ^XZ
+
+[2025-07-28 10:08:56] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-28 10:10:06] [IMPRESSÃO] 2025-07-28 10:10:06
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 2
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO30,40^A0N,28,28^FDProduto:^FS ^FO200,40^A0N,28,28^FDSuco de Laranja^FS ^FO30,68^GB400,2,2^FS ^FO30,95^A0N,28,28^FDFabricacao:^FS ^FO200,95^A0N,28,28^FD28/07/2025^FS ^FO30,123^GB400,2,2^FS ^FO30,150^A0N,28,28^FDValidade:^FS ^FO200,150^A0N,28,28^FD30 dias^FS ^FO30,178^GB400,2,2^FS ^XZ ^XA ^CI28 ^PW640 ^LL200 ^FO30,40^A0N,28,28^FDProduto:^FS ^FO200,40^A0N,28,28^FDSuco de Laranja^FS ^FO30,68^GB400,2,2^FS ^FO30,95^A0N,28,28^FDFabricacao:^FS ^FO200,95^A0N,28,28^FD28/07/2025^FS ^FO30,123^GB400,2,2^FS ^FO30,150^A0N,28,28^FDValidade:^FS ^FO200,150^A0N,28,28^FD30 dias^FS ^FO30,178^GB400,2,2^FS ^XZ
+
+[2025-07-28 10:10:07] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-28 10:13:23] [IMPRESSÃO] 2025-07-28 10:13:23
+Tipo de Etiqueta: STANDARD
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 2
+ZPL: ^XA ^CI28 ^PW660 ^LL200 ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 28/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 28/07/2025\&Prazo: 30 dias^FS ^FO20,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 28/07/2025\&Prazo: 30 dias^FS ^FO350,40^A0N,26,26^FB280,3,0,C,0^FDSuco de Laranja\&Fab: 28/07/2025\&Prazo: 30 dias^FS ^XZ
+
+[2025-07-28 10:13:23] [STATUS] Impressão enviada com sucesso.
+
+[2025-07-28 10:13:42] ### DEBUG: TIPO DE ETIQUETA RECEBIDO = SIXTY_TWO_MM ###
+
+[2025-07-28 10:13:42] [IMPRESSÃO] 2025-07-28 10:13:42
+Tipo de Etiqueta: SIXTY_TWO_MM
+Impressora: ZDesigner ZD220-203dpi ZPL
+Quantidade solicitada: 1
+Quantidade real impressa: 1
+ZPL: ^XA ^CI28 ^PW640 ^LL200 ^FO30,40^A0N,28,28^FDProduto:^FS ^FO200,40^A0N,28,28^FDteste2 - ESPECIAL ^FS ^FO30,68^GB400,2,2^FS ^FO30,95^A0N,28,28^FDFabricacao:^FS ^FO30,123^GB400,2,2^FS ^FO30,150^A0N,28,28^FDValidade:^FS ^FO30,178^GB400,2,2^FS ^XZ
+
+[2025-07-28 10:13:42] [STATUS] Impressão enviada com sucesso.
+

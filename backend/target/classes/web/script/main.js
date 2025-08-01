@@ -1,66 +1,36 @@
-import * as textUtils from './utils/textUtils.js';
-import * as quantityUtils from './utils/quantityUtils.js';
-import * as printUtils from './utils/printUtils.js';
-import * as modalUtils from './utils/modalUtils.js';
+import { initializeUI } from './ui.js';
+import { sendSimplePrintRequest, sendValidityPrintRequest } from './api.js';
+import { showModal } from './modal.js';
 
-// Função para registrar todos os nossos eventos
-function initializeEventListeners() {
-    console.log("Inicializando eventos..."); // Log para depuração
-
-    // Botões de texto (sem alterações)
-    document.getElementById('btn-1')?.addEventListener('click', () => textUtils.appendText('1'));
-    document.getElementById('btn-2')?.addEventListener('click', () => textUtils.appendText('2'));
-    document.getElementById('btn-3')?.addEventListener('click', () => textUtils.appendText('3'));
-    document.getElementById('btn-4')?.addEventListener('click', () => textUtils.appendText('4'));
-    document.getElementById('btn-5')?.addEventListener('click', () => textUtils.appendText('5'));
-    document.getElementById('btn-6')?.addEventListener('click', () => textUtils.appendText('6'));
-    document.getElementById('btn-7')?.addEventListener('click', () => textUtils.appendText('7'));
-    document.getElementById('btn-8')?.addEventListener('click', () => textUtils.appendText('8'));
-    document.getElementById('btn-9')?.addEventListener('click', () => textUtils.appendText('9'));
-    document.getElementById('btn-0')?.addEventListener('click', () => textUtils.appendText('0'));
-    document.getElementById('btn-special')?.addEventListener('click', textUtils.appendSpecial);
-    document.getElementById('btn-clear')?.addEventListener('click', textUtils.clearText);
-
-    // Botões de quantidade (sem alterações)
-    document.getElementById('btn-q1')?.addEventListener('click', () => quantityUtils.setQuantity(1));
-    document.getElementById('btn-q2')?.addEventListener('click', () => quantityUtils.setQuantity(2));
-    document.getElementById('btn-q3')?.addEventListener('click', () => quantityUtils.setQuantity(3));
-    document.getElementById('btn-q4')?.addEventListener('click', () => quantityUtils.setQuantity(4));
-    document.getElementById('btn-q5')?.addEventListener('click', () => quantityUtils.setQuantity(5));
-    document.getElementById('btn-q6')?.addEventListener('click', () => quantityUtils.setQuantity(6));
-
-    // Botão de impressão principal (sem alterações)
-    document.getElementById('printButton')?.addEventListener('click', printUtils.sendPrintRequestWrapper);
-
-    // Input de quantidade (sem alterações)
-    const labelQuantity = document.getElementById('labelQuantity');
-    if (labelQuantity) {
-        labelQuantity.addEventListener('input', quantityUtils.updateDuplicateInfo);
-    }
-
-    // Modal (sem alterações)
-    document.getElementById('alertModal')?.querySelector('button')?.addEventListener('click', modalUtils.closeModal);
-
-    // ================== ALTERAÇÃO AQUI ==================
-    // Novo event listener para o seletor de tipo de etiqueta
-    const labelType = document.getElementById('labelType');
-    if (labelType) {
-        labelType.addEventListener('change', quantityUtils.updateDuplicateInfo);
-    }
-    // ====================================================
-
-    // Inicializa a informação de duplicação quando a página carrega
-    quantityUtils.updateDuplicateInfo();
-
-    console.log("Eventos inicializados com sucesso."); // Log para depuração
-}
-
-// Roda nossa função de inicialização quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', () => {
-    try {
-        initializeEventListeners();
-    } catch (error) {
-        console.error('Erro fatal ao inicializar eventos:', error);
-        modalUtils.showModal('Erro crítico ao carregar a página: ' + error.message);
+    // Inicializa todos os elementos da UI e seus event listeners
+    initializeUI();
+
+    // Event listener principal para o botão de impressão
+    const printButton = document.getElementById('printButton');
+    if (printButton) {
+        printButton.addEventListener('click', handlePrintAction);
     }
 });
+
+/**
+ * Decide qual função de impressão chamar com base no modo ativo.
+ */
+function handlePrintAction() {
+    const validityForm = document.getElementById('validityForm');
+
+    // Validação de campos comuns
+    const quantity = parseInt(document.getElementById('labelQuantity')?.value) || 0;
+    if (quantity < 1) {
+        showModal('A quantidade deve ser de no mínimo 1.');
+        return;
+    }
+
+    if (validityForm && !validityForm.classList.contains('hidden')) {
+        // Modo "Validade" está ativo
+        sendValidityPrintRequest();
+    } else {
+        // Modo "Simples" está ativo
+        sendSimplePrintRequest();
+    }
+}
