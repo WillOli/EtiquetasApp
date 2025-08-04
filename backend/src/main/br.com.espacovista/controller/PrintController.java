@@ -36,8 +36,12 @@ public class PrintController {
             logger.warn("Erro de sintaxe no JSON recebido em /print.", e);
             ctx.status(400).result("Erro: Formato do JSON inválido.");
         } catch (Exception e) {
+            // O logger registra a exceção completa no log para que você possa depurar.
             logger.error("Erro interno no servidor ao processar /print.", e);
-            ctx.status(500).result("Erro interno no servidor.");
+
+            // --- ALTERAÇÃO DE SEGURANÇA ---
+            // Retorna uma mensagem genérica para o cliente, sem expor detalhes internos.
+            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
         }
     }
 
@@ -46,7 +50,12 @@ public class PrintController {
             ValidadePrintRequest request = gson.fromJson(ctx.body(), ValidadePrintRequest.class);
             logger.info("Recebida requisição para /print-validade: {}", ctx.body());
 
-            // Adicione validações aqui se necessário (ex: productName não pode ser nulo)
+            // TODO: Adicionar validações para os campos de ValidadePrintRequest
+            if (request == null || request.getProductName() == null || request.getProductName().trim().isEmpty()) {
+                logger.warn("Requisição /print-validade inválida: nome do produto vazio.");
+                ctx.status(400).result("Erro: Nome do produto não pode ser vazio.");
+                return;
+            }
 
             printerService.printValidadeLabel(request);
             ctx.status(200).result("Etiqueta de validade enviada com sucesso!");
@@ -55,8 +64,12 @@ public class PrintController {
             logger.warn("Erro de sintaxe no JSON recebido em /print-validade.", e);
             ctx.status(400).result("Erro: Formato do JSON inválido.");
         } catch (Exception e) {
+            // O logger registra a exceção completa no log.
             logger.error("Erro interno no servidor ao processar /print-validade.", e);
-            ctx.status(500).result("Erro interno no servidor.");
+
+            // --- ALTERAÇÃO DE SEGURANÇA ---
+            // Retorna uma mensagem genérica para o cliente.
+            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
         }
     }
 }
