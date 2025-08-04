@@ -13,29 +13,27 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+        int port = AppConfig.getServerPort();
         var printerService = new PrinterService();
         var printController = new PrintController(printerService);
-        int port = AppConfig.getServerPort();
 
         Javalin app = Javalin.create(config -> {
-            // --- ALTERAÇÃO DE SEGURANÇA NO CORS ---
+            // --- CONFIGURAÇÃO DE CORS SEGURA PARA PRODUÇÃO ---
             config.registerPlugin(new CorsPlugin(cors -> {
-                // Em vez de permitir qualquer host (anyHost), restringimos a origens específicas.
-                // Isso garante que apenas o seu frontend possa fazer requisições para esta API.
                 cors.addRule(it -> {
-                    // Adicione aqui o endereço onde seu frontend está rodando durante o desenvolvimento.
-                    // Exemplos comuns: http://localhost:5500 (Live Server), http://localhost:3000 (React), http://127.0.0.1:5500
+                    // Adicione aqui o(s) endereço(s) EXATO(s) de onde o seu frontend será acessado.
+                    // Durante o desenvolvimento, pode ser o endereço do Live Server da sua IDE.
                     it.allowHost("http://localhost:5500");
                     it.allowHost("http://127.0.0.1:5500");
 
+                    // QUANDO FOR PARA PRODUÇÃO, adicione o domínio real do seu site.
+                    // Exemplo: it.allowHost("https://www.seusite.com.br");
 
-                    // Em produção, você adicionaria o domínio real do seu site.
-                    // ex: it.allowHost("https://www.seusite.com.br");
-
-                    // Permite que o frontend envie os cabeçalhos necessários (opcional, mas bom ter).
-                    it.allowCredentials = true;
+                    // Se você não tiver certeza da porta, pode remover uma das linhas acima ou
+                    // adicionar outras conforme necessário.
                 });
             }));
+
             config.staticFiles.add(staticFiles -> {
                 staticFiles.hostedPath = "/web";
                 staticFiles.directory = "/web";
@@ -43,7 +41,7 @@ public class Main {
             });
         }).start(port);
 
-        logger.info("Servidor iniciado na porta {}", port);
+        logger.info("Servidor (versão de produção) iniciado na porta {}", port);
         logger.info("Acesse http://localhost:{}/web/index.html para usar a aplicação.", port);
 
         app.post("/print", printController::handlePrintRequest);
