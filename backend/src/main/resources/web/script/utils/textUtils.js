@@ -29,7 +29,7 @@ export function appendSpecial() {
     modalUtils.showModal('Erro ao adicionar texto especial: ' + error.message);
   }
 }
-
+  
 export function clearText() {
   try {
     const textarea = document.getElementById('labelText');
