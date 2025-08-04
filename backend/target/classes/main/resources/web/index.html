@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Aplicativo para impressão de etiquetas - Espaço Vista" />
+    <title>Espaço Vista - Impressão de Etiquetas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/web/css/style.css" />
+    <link rel="icon" href="/web/img/Logo_V.png" type="image/png" />
+</head>
+<body class="bg-[var(--bg-primary)] min-h-screen flex flex-col font-sans">
+<header class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 mb-4 flex justify-center items-center shadow-md">
+    <img src="/web/img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-12 sm:h-14" />
+</header>
+
+<main class="w-full max-w-full mx-auto px-2 sm:px-4 flex-grow">
+    <div class="flex flex-col gap-3">
+        <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-2 sm:p-4 flex-1" aria-label="Área de impressão de etiquetas">
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-[var(--text-primary)] mb-2">Qual tipo de etiqueta você quer imprimir?</label>
+                <div class="flex gap-2">
+                    <button id="btnModeSimple" class="btn-primary w-full sm:w-auto">Etiqueta Simples</button>
+                    <button id="btnModeValidity" class="btn-secondary w-full sm:w-auto">Etiqueta de Validade</button>
+                </div>
+            </div>
+
+            <div id="simpleForm">
+                <div class="mb-3">
+                    <textarea id="labelText" rows="2" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
+                    <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões abaixo para preencher rapidamente.</small>
+                </div>
+                <div class="mt-2 flex flex-wrap gap-2">
+                    <button class="btn-numeric" data-value="1">1</button>
+                    <button class="btn-numeric" data-value="2">2</button>
+                    <button class="btn-numeric" data-value="3">3</button>
+                    <button class="btn-numeric" data-value="4">4</button>
+                    <button class="btn-numeric" data-value="5">5</button>
+                    <button class="btn-numeric" data-value="6">6</button>
+                    <button class="btn-numeric" data-value="7">7</button>
+                    <button class="btn-numeric" data-value="8">8</button>
+                    <button class="btn-numeric" data-value="9">9</button>
+                    <button class="btn-numeric" data-value="0">0</button>
+                    <button id="btn-special" class="btn">- ESPECIAL</button>
+                    <button id="btn-clear" class="btn-danger">Apagar</button>
+                </div>
+            </div>
+            <div id="validityForm" class="hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="mb-3 col-span-1 sm:col-span-2">
+                        <label for="productName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
+                        <input type="text" id="productName" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Bolo de Chocolate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mfgDate" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Data de Fabricação</label>
+                        <input type="date" id="mfgDate" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="validityDays" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Prazo: </label>
+                        <div class="relative">
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="validityDays" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: 30">
+                                <button id="validityDropdownBtn" type="button" class="bg-gray-200 p-2 rounded-md hover:bg-gray-300">▼</button>
+                                <span class="text-[var(--text-primary)] font-medium">dia</span>
+                            </div>
+                            <div id="validityDropdownPanel" class="hidden absolute z-10 mt-1 w-full bg-[var(--bg-content)] border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="mb-3">
+                    <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
+                    <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" />
+                </div>
+                <div class="mb-3">
+                    <label for="labelType" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Tipo de Etiqueta</label>
+                    <select id="labelType" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-1 sm:p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                        <option value="SIXTY_TWO_MM">Padrão (80mmx25mm)</option>
+                        <option value="STANDARD">Etiqueta Dupla (40x25mm)</option>
+                    </select>
+                </div>
+            </div>
+            <p id="duplicate-info" class="duplicate-info mt-2 text-[var(--text-primary)] font-medium flex items-center gap-2 text-xs sm:text-sm">
+                <span id="duplicate-info-text">Quantidade solicitada: 1, Total impresso: 2</span>
+            </p>
+
+            <div class="mt-4 flex flex-col sm:flex-row gap-2">
+                <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2 py-2 text-sm sm:text-lg" role="button">
+                    <span id="printButtonText">Imprimir Etiquetas</span>
+                    <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+    </div>
+
+<footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 mt-4 text-center">
+    </footer>
+
+<script type="module" src="/web/script/main.js"></script>
+</body>
+</html>

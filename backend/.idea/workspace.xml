@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/impressao.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/impressao.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/SimpleStandardStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/SimpleStandardStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeStandardStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeStandardStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/model/ValidadePrintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/model/ValidadePrintRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterStrategyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterStrategyFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/espacovista/controller/PrintControllerIntegrationTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/espacovista/service/strategies/SimpleLayoutStrategyTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/espacovista/controller/PrintControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/espacovista/service/strategies/SimpleLayoutStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/br/com/espacovista/service/strategies/SimpleLayoutStrategyTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +64,7 @@
     &quot;JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor&quot;: &quot;Debug&quot;,
     &quot;JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.SimpleLayoutStrategyTest (1).executor&quot;: &quot;Debug&quot;,
+    &quot;JUnit.SimpleLayoutStrategyTest (2).executor&quot;: &quot;Debug&quot;,
     &quot;JUnit.SimpleLayoutStrategyTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.application in espaco-vista-printer.executor&quot;: &quot;Debug&quot;,
     &quot;Maven.espaco-vista-printer [clean].executor&quot;: &quot;Run&quot;,
@@ -76,7 +83,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;,
     &quot;settings.editor.splitter.proportion&quot;: &quot;0.23217922&quot;
   }
 }</component>
@@ -104,21 +111,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PrintControllerIntegrationTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="espaco-vista-printer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="java.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="java.controller" />
-      <option name="MAIN_CLASS_NAME" value="java.controller.PrintControllerIntegrationTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="PrintControllerIntegrationTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
@@ -129,6 +121,21 @@
       </extension>
       <option name="PACKAGE_NAME" value="espacovista.controller" />
       <option name="MAIN_CLASS_NAME" value="espacovista.controller.PrintControllerIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PrintControllerIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.espacovista.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.espacovista.controller" />
+      <option name="MAIN_CLASS_NAME" value="br.com.espacovista.controller.PrintControllerIntegrationTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -149,16 +156,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SimpleLayoutStrategyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="SimpleLayoutStrategyTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="java.service.strategies.*" />
+          <option name="PATTERN" value="br.com.espacovista.service.strategies.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="java.service.strategies" />
-      <option name="MAIN_CLASS_NAME" value="java.service.strategies.SimpleLayoutStrategyTest" />
+      <option name="PACKAGE_NAME" value="br.com.espacovista.service.strategies" />
+      <option name="MAIN_CLASS_NAME" value="br.com.espacovista.service.strategies.SimpleLayoutStrategyTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -176,10 +183,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.SimpleLayoutStrategyTest (2)" />
+        <item itemvalue="JUnit.PrintControllerIntegrationTest" />
         <item itemvalue="JUnit.SimpleLayoutStrategyTest (1)" />
         <item itemvalue="JUnit.PrintControllerIntegrationTest (2)" />
-        <item itemvalue="JUnit.SimpleLayoutStrategyTest" />
-        <item itemvalue="JUnit.PrintControllerIntegrationTest (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -199,6 +206,9 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/backend$PrinterServiceTest_testGenerateStandardLabelZPL_ContainsEssentialCommands.ic" NAME="PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands Coverage Results" MODIFIED="1751563444517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>java.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/backend$Main.ic" NAME="Main Coverage Results" MODIFIED="1754142341062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>application.*</FILTER>
     </SUITE>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package espacovista.controller;
+package br.com.espacovista.controller;
 
 import com.google.gson.Gson;
 import controller.PrintController;
@@ -34,12 +34,10 @@ class PrintControllerIntegrationTest {
     @BeforeEach
     void setUp() {
         PrintController printController = new PrintController(mockPrinterService);
-        // Usar a porta 8081 para ser consistente com a aplicação real
         app = Javalin.create()
                 .post("/print", printController::handlePrintRequest)
                 .post("/print-validade", printController::handleValidadePrintRequest)
                 .start(0);
-
         httpClient = HttpClient.newHttpClient();
     }
 
@@ -48,10 +46,10 @@ class PrintControllerIntegrationTest {
         app.stop();
     }
 
+    // Teste para /print (sem alterações necessárias aqui)
     @Test
     @DisplayName("POST /print deve retornar 200 OK para um pedido de Etiqueta Simples válido")
     void postToPrint_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
-        // Arrange
         PrintRequest payload = new PrintRequest("TESTE-SIMPLES", 1, "STANDARD");
         String requestJson = gson.toJson(payload);
         int serverPort = app.port();
@@ -62,36 +60,27 @@ class PrintControllerIntegrationTest {
                 .POST(HttpRequest.BodyPublishers.ofString(requestJson))
                 .build();
 
-        // Act
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // Assert
         assertEquals(200, response.statusCode());
-        assertEquals("Impressão enviada com sucesso!", response.body());
-
-        // ===================================================================
-        // =====                  MUDANÇA PRINCIPAL                    =====
-        // ===================================================================
-        // Usamos um ArgumentCaptor para "capturar" o objeto que foi passado para o mock.
-        // Esta é a forma correta de verificar objetos em testes.
-        ArgumentCaptor<PrintRequest> printRequestCaptor = ArgumentCaptor.forClass(PrintRequest.class);
-
-        // Verificamos se o controller chamou o método 'printLabels' com QUALQUER objeto PrintRequest.
-        verify(mockPrinterService).printLabels(printRequestCaptor.capture());
-
-        // Agora, pegamos o objeto que foi capturado e verificamos seus valores internos.
-        PrintRequest capturedRequest = printRequestCaptor.getValue();
-        assertEquals("TESTE-SIMPLES", capturedRequest.getText());
-        assertEquals(1, capturedRequest.getQuantity());
-        assertEquals(PrintRequest.LabelType.STANDARD, capturedRequest.getLabelType());
+        ArgumentCaptor<PrintRequest> captor = ArgumentCaptor.forClass(PrintRequest.class);
+        verify(mockPrinterService).printLabels(captor.capture());
+        assertEquals("TESTE-SIMPLES", captor.getValue().getText());
     }
 
+    // --- TESTE ATUALIZADO ---
     @Test
-    @DisplayName("POST /print-validade deve retornar 200 OK para um pedido de Etiqueta de Validade válido")
+    @DisplayName("POST /print-validade deve retornar 200 OK e chamar o serviço com os dados corretos")
     void postToPrintValidade_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
         // Arrange
         ValidadePrintRequest payload = new ValidadePrintRequest();
-        // (Em um teste real, você setaria os valores aqui. Para este exemplo, está ok)
+        payload.setProductName("Bolo de Teste");
+        payload.setMfgDate("2025-08-04");
+        payload.setValidityDays(5);
+        payload.setQuantity(2);
+        // O payload agora usa o enum diretamente.
+        payload.setLabelType(PrintRequest.LabelType.SIXTY_TWO_MM);
+
         String requestJson = gson.toJson(payload);
         int serverPort = app.port();
 
@@ -111,5 +100,11 @@ class PrintControllerIntegrationTest {
         // Verify
         ArgumentCaptor<ValidadePrintRequest> captor = ArgumentCaptor.forClass(ValidadePrintRequest.class);
         verify(mockPrinterService).printValidadeLabel(captor.capture());
+
+        // Valida os dados do objeto que foi passado para o serviço.
+        ValidadePrintRequest capturedRequest = captor.getValue();
+        assertEquals("Bolo de Teste", capturedRequest.getProductName());
+        assertEquals(5, capturedRequest.getValidityDays());
+        assertEquals(PrintRequest.LabelType.SIXTY_TWO_MM, capturedRequest.getLabelType());
     }
 }

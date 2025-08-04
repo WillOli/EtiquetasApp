@@ -1,18 +1,18 @@
-package espacovista.service.strategies;
+package br.com.espacovista.service.strategies;
 
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import service.strategies.ILabelStrategy;
 import service.strategies.SimpleLayoutStrategy;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SimpleLayoutStrategyTest {
+public class SimpleLayoutStrategyTest {
 
     @Test
     @DisplayName("Deve gerar ZPL para Etiqueta Simples Padrão (80x25mm) com comandos essenciais")
-    void generateZpl_forSimpleLayout_shouldContainEssentialCommands() {
+    public void generateZpl_forSimpleLayout_shouldContainEssentialCommands() {
         // Arrange (Preparação)
         // Cria uma instância da estratégia específica que queremos testar.
         ILabelStrategy strategy = new SimpleLayoutStrategy("TESTE-ZPL", 1);

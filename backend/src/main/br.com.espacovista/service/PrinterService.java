@@ -26,7 +26,8 @@ public class PrinterService {
     public void printLabels(PrintRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
-        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().toString());
+        // Converte o enum para String antes de passar para o método final
+        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
     }
 
     /**
@@ -35,11 +36,14 @@ public class PrinterService {
     public void printValidadeLabel(ValidadePrintRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
-        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType());
+        // --- CORREÇÃO APLICADA AQUI ---
+        // Converte o enum para String usando .name() antes de passar para o método final.
+        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
     }
 
     /**
      * Método centralizado e final para enviar o ZPL para a impressora.
+     * Este método continua esperando uma String para o tipo da etiqueta, pois é usado para logging.
      */
     private void sendZplToPrinter(String zpl, int requestedQuantity, String labelType) {
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
