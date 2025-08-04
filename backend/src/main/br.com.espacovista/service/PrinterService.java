@@ -2,17 +2,18 @@ package service;
 
 import model.PrintRequest;
 import model.ValidadePrintRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.strategies.ILabelStrategy;
+
 import javax.print.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class PrinterService {
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    // Cria uma instância do logger para esta classe
+    private static final Logger logger = LoggerFactory.getLogger(PrinterService.class);
 
     public static class PrinterServiceException extends RuntimeException {
         public PrinterServiceException(String message, Throwable cause) {
@@ -20,35 +21,23 @@ public class PrinterService {
         }
     }
 
-    /**
-     * Ponto de entrada para impressão de Etiqueta Simples.
-     */
     public void printLabels(PrintRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
-        // Converte o enum para String antes de passar para o método final
         sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
     }
 
-    /**
-     * Ponto de entrada para impressão de Etiqueta de Validade.
-     */
     public void printValidadeLabel(ValidadePrintRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
-        // --- CORREÇÃO APLICADA AQUI ---
-        // Converte o enum para String usando .name() antes de passar para o método final.
         sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
     }
 
-    /**
-     * Método centralizado e final para enviar o ZPL para a impressora.
-     * Este método continua esperando uma String para o tipo da etiqueta, pois é usado para logging.
-     */
     private void sendZplToPrinter(String zpl, int requestedQuantity, String labelType) {
         PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
         if (defaultService == null) {
-            log("[ERRO GRAVE] Nenhuma impressora padrão encontrada no sistema.");
+            // Log de erro grave
+            logger.error("Nenhuma impressora padrão encontrada no sistema.");
             throw new PrinterServiceException("Nenhuma impressora padrão foi encontrada no servidor.", null);
         }
         try {
@@ -57,23 +46,15 @@ public class PrinterService {
             Doc doc = new SimpleDoc(is, flavor, null);
             DocPrintJob job = defaultService.createPrintJob();
 
-            log(String.format("[IMPRESSÃO] Tipo: %s, Impressora: %s, Quantidade: %d", labelType, defaultService.getName(), requestedQuantity));
+            // Log de informação com parâmetros
+            logger.info("Enviando impressão. Tipo: {}, Impressora: {}, Quantidade: {}", labelType, defaultService.getName(), requestedQuantity);
 
             job.print(doc, null);
-            log("[STATUS] Impressão enviada com sucesso.");
+            logger.info("Impressão enviada com sucesso para a fila da impressora.");
         } catch (Exception e) {
-            log("[ERRO] Falha ao enviar para impressora: " + e.getMessage());
+            // Log de erro com a exceção completa para diagnóstico
+            logger.error("Falha ao enviar ZPL para a impressora.", e);
             throw new PrinterServiceException("Erro ao comunicar com a impressora.", e);
-        }
-    }
-
-    private void log(String message) {
-        String timestampedMessage = String.format("[%s] %s", FORMATTER.format(LocalDateTime.now()), message);
-        System.out.println(timestampedMessage);
-        try (FileWriter writer = new FileWriter("logs/impressao.log", true)) {
-            writer.write(timestampedMessage + System.lineSeparator());
-        } catch (IOException e) {
-            System.err.println("Falha ao escrever no arquivo de log: " + e.getMessage());
         }
     }
 }

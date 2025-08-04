@@ -5,9 +5,13 @@ import controller.PrintController;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.bundled.CorsPlugin;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.PrinterService;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         var printerService = new PrinterService();
         var printController = new PrintController(printerService);
@@ -24,10 +28,9 @@ public class Main {
             });
         }).start(port);
 
-        System.out.println("Servidor iniciado na porta " + port);
-        System.out.println("Acesse http://localhost:" + port + "/web/index.html para usar a aplicação.");
+        logger.info("Servidor iniciado na porta {}", port);
+        logger.info("Acesse http://localhost:{}/web/index.html para usar a aplicação.", port);
 
-        // ALTERAÇÃO: Adicionada a nova rota
         app.post("/print", printController::handlePrintRequest);
         app.post("/print-validade", printController::handleValidadePrintRequest);
         app.get("/", ctx -> ctx.result("Servidor de impressão Espaço Vista está no ar!"));
