@@ -18,8 +18,23 @@ public class Main {
         int port = AppConfig.getServerPort();
 
         Javalin app = Javalin.create(config -> {
+            // --- ALTERAÇÃO DE SEGURANÇA NO CORS ---
             config.registerPlugin(new CorsPlugin(cors -> {
-                cors.addRule(it -> it.anyHost());
+                // Em vez de permitir qualquer host (anyHost), restringimos a origens específicas.
+                // Isso garante que apenas o seu frontend possa fazer requisições para esta API.
+                cors.addRule(it -> {
+                    // Adicione aqui o endereço onde seu frontend está rodando durante o desenvolvimento.
+                    // Exemplos comuns: http://localhost:5500 (Live Server), http://localhost:3000 (React), http://127.0.0.1:5500
+                    it.allowHost("http://localhost:5500");
+                    it.allowHost("http://127.0.0.1:5500");
+
+
+                    // Em produção, você adicionaria o domínio real do seu site.
+                    // ex: it.allowHost("https://www.seusite.com.br");
+
+                    // Permite que o frontend envie os cabeçalhos necessários (opcional, mas bom ter).
+                    it.allowCredentials = true;
+                });
             }));
             config.staticFiles.add(staticFiles -> {
                 staticFiles.hostedPath = "/web";
