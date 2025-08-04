@@ -18,6 +18,9 @@ public class ValidadeLayoutStrategy implements ILabelStrategy {
         LocalDate manufacturingDate = LocalDate.parse(request.getMfgDate());
         String formattedMfgDate = manufacturingDate.format(displayFormatter);
 
+        int days = request.getValidityDays();
+        String prazoText = (days == 1 ) ? days + " dia" : days + "dias";
+
         int fontSize = 28;
         int textMargin = 30;
         int valueMargin = 200;
@@ -41,6 +44,10 @@ public class ValidadeLayoutStrategy implements ILabelStrategy {
             int yPosValidade = 150;
             zplBuilder.append("^FO").append(textMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FDValidade:^FS\n");
             zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(request.getValidityDays() + " dias").append("^FS\n");
+            zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosValidade + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
+
+            // Usa a nova variável com o texto formatado
+            zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(prazoText).append("^FS\n");
             zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosValidade + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
 
             zplBuilder.append("^XZ\n");

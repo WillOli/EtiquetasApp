@@ -57,7 +57,7 @@ body {
     background-color: var(--btn-secondary);
     color: var(--text-primary);
     border-color: #D1D5DB;
-}
+}   
 .btn-secondary:hover {
     background-color: var(--btn-secondary-hover);
 }

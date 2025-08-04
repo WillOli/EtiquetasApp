@@ -30,8 +30,10 @@ public class ValidadeStandardStrategy extends AbstractTwoColumnStrategy {
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate manufacturingDate = LocalDate.parse(request.getMfgDate());
         String formattedMfgDate = manufacturingDate.format(displayFormatter);
-        String prazoText = request.getValidityDays() + " dias";
         String productName = request.getProductName();
+
+        int days = request.getValidityDays();
+        String prazoText = (days == 1) ? days + " dia" : days + " dias";
 
         // Define as constantes de layout
         int fontSize = 22;
