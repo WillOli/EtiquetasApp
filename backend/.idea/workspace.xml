@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="" />
+    <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test/br/com/espacovista/service/strategies/ValidadeStandardStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,45 +41,46 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.application.Main.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrintControllerIntegrationTest (1).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrintControllerIntegrationTest (2).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrintControllerIntegrationTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PrinterServiceTest (1).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrinterServiceTest (2).executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PrinterServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrinterServiceTest.testGenerate62mmLabelZPL_UsesFieldBlockCommand.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.SimpleLayoutStrategyTest (1).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.SimpleLayoutStrategyTest (2).executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.SimpleLayoutStrategyTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.application in espaco-vista-printer.executor&quot;: &quot;Debug&quot;,
-    &quot;Maven.espaco-vista-printer [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.espaco-vista-printer [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.espaco-vista-printer [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.espaco-vista-printer [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.espaco-vista-printer [validate].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/Data-e-Validade&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;0.23217922&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Debug",
+    "Application.application.Main.executor": "Debug",
+    "JUnit.PrintControllerIntegrationTest (1).executor": "Debug",
+    "JUnit.PrintControllerIntegrationTest (2).executor": "Debug",
+    "JUnit.PrintControllerIntegrationTest.executor": "Debug",
+    "JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200.executor": "Debug",
+    "JUnit.PrinterServiceTest (1).executor": "Debug",
+    "JUnit.PrinterServiceTest (2).executor": "Run",
+    "JUnit.PrinterServiceTest.executor": "Run",
+    "JUnit.PrinterServiceTest.printLabels_shouldNotThrowException_whenTextIsNull.executor": "Debug",
+    "JUnit.PrinterServiceTest.testGenerate62mmLabelZPL_UsesFieldBlockCommand.executor": "Debug",
+    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands (1).executor": "Debug",
+    "JUnit.PrinterServiceTest.testGenerateStandardLabelZPL_ContainsEssentialCommands.executor": "Coverage",
+    "JUnit.SimpleLayoutStrategyTest (1).executor": "Debug",
+    "JUnit.SimpleLayoutStrategyTest (2).executor": "Debug",
+    "JUnit.SimpleLayoutStrategyTest.executor": "Run",
+    "JUnit.ValidadeStandardStrategyTest.executor": "Debug",
+    "JUnit.application in espaco-vista-printer.executor": "Debug",
+    "Maven.espaco-vista-printer [clean].executor": "Run",
+    "Maven.espaco-vista-printer [install].executor": "Run",
+    "Maven.espaco-vista-printer [package].executor": "Run",
+    "Maven.espaco-vista-printer [test].executor": "Run",
+    "Maven.espaco-vista-printer [validate].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "feat/Data-e-Validade",
+    "last_directory_selection": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations",
+    "last_opened_file_path": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner",
+    "settings.editor.splitter.proportion": "0.23217922"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\vista\OneDrive\Área de Trabalho\Desenvolvimento\app-impressora-etiquetas\backend\test\java" />
@@ -85,7 +91,7 @@
       <recent name="service" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.ValidadeStandardStrategyTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="application.Main" />
       <module name="espaco-vista-printer" />
@@ -95,21 +101,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PrintControllerIntegrationTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="espaco-vista-printer" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="espacovista.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="espacovista.controller" />
-      <option name="MAIN_CLASS_NAME" value="espacovista.controller.PrintControllerIntegrationTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -129,17 +120,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SimpleLayoutStrategyTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="espaco-vista-printer" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="espacovista.service.strategies.*" />
+          <option name="PATTERN" value="br.com.espacovista.controller.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="espacovista.service.strategies" />
-      <option name="MAIN_CLASS_NAME" value="espacovista.service.strategies.SimpleLayoutStrategyTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="br.com.espacovista.controller" />
+      <option name="MAIN_CLASS_NAME" value="br.com.espacovista.controller.PrintControllerIntegrationTest" />
+      <option name="METHOD_NAME" value="postToPrint_withValidRequest_shouldReturn200" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -159,6 +151,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ValidadeStandardStrategyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="espaco-vista-printer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.espacovista.service.strategies.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="br.com.espacovista.service.strategies" />
+      <option name="MAIN_CLASS_NAME" value="br.com.espacovista.service.strategies.ValidadeStandardStrategyTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,11 +177,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ValidadeStandardStrategyTest" />
         <item itemvalue="JUnit.SimpleLayoutStrategyTest (2)" />
         <item itemvalue="JUnit.PrintControllerIntegrationTest" />
-        <item itemvalue="JUnit.SimpleLayoutStrategyTest (1)" />
-        <item itemvalue="JUnit.PrintControllerIntegrationTest (2)" />
+        <item itemvalue="JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>

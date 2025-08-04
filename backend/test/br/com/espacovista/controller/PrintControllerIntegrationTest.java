@@ -85,7 +85,7 @@ class PrintControllerIntegrationTest {
         int serverPort = app.port();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:" + serverPort + "/print-validade"))
+                .uri(URI.create("hValidadeStandardStrategyTestttp://localhost:" + serverPort + "/print-validade"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestJson))
                 .build();
