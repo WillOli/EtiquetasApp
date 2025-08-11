@@ -21,13 +21,15 @@
     --info-border: #E5E7EB;
 }
 
-body {
+html, body {
     font-family: 'Inter', 'Arial', sans-serif;
+    width: 100%;
 }
 
 /* ========== COMPONENTES: BOTÕES ========== */
 .btn, .btn-numeric, .btn-danger, .btn-secondary, .btn-primary {
-    padding: 0.75rem;
+    padding: 1rem;
+    font-size: 1.125rem;
     border-radius: 0.5rem;
     font-weight: 600;
     cursor: pointer;
@@ -36,7 +38,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
     border: 1px solid transparent;
     touch-action: manipulation;
 }

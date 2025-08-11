@@ -46,11 +46,16 @@ class PrintControllerIntegrationTest {
         app.stop();
     }
 
-    // Teste para /print (sem alterações necessárias aqui)
     @Test
     @DisplayName("POST /print deve retornar 200 OK para um pedido de Etiqueta Simples válido")
     void postToPrint_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
-        PrintRequest payload = new PrintRequest("TESTE-SIMPLES", 1, "STANDARD");
+        // --- CORREÇÃO APLICADA AQUI ---
+        // Cria o objeto usando o construtor padrão e os setters.
+        PrintRequest payload = new PrintRequest();
+        payload.setText("TESTE-SIMPLES");
+        payload.setQuantity(1);
+        payload.setLabelType("STANDARD");
+
         String requestJson = gson.toJson(payload);
         int serverPort = app.port();
 
@@ -59,7 +64,6 @@ class PrintControllerIntegrationTest {
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestJson))
                 .build();
-
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         assertEquals(200, response.statusCode());
@@ -68,7 +72,6 @@ class PrintControllerIntegrationTest {
         assertEquals("TESTE-SIMPLES", captor.getValue().getText());
     }
 
-    // --- TESTE ATUALIZADO ---
     @Test
     @DisplayName("POST /print-validade deve retornar 200 OK e chamar o serviço com os dados corretos")
     void postToPrintValidade_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
@@ -78,14 +81,13 @@ class PrintControllerIntegrationTest {
         payload.setMfgDate("2025-08-04");
         payload.setValidityDays(5);
         payload.setQuantity(2);
-        // O payload agora usa o enum diretamente.
         payload.setLabelType(PrintRequest.LabelType.SIXTY_TWO_MM);
 
         String requestJson = gson.toJson(payload);
         int serverPort = app.port();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("hValidadeStandardStrategyTestttp://localhost:" + serverPort + "/print-validade"))
+                .uri(URI.create("http://localhost:" + serverPort + "/print-validade"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestJson))
                 .build();

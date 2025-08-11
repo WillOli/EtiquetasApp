@@ -6,34 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeLayoutStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeLayoutStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeStandardStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ValidadeStandardStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/model/PrintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/model/PrintRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/modal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/utils/textUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/utils/textUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/modal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/strategies/ValidadeLayoutStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/strategies/ValidadeLayoutStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/strategies/ValidadeStandardStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/strategies/ValidadeStandardStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/GRUPO-VISTA.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/LOGO-ESPACO-VISTA1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo_V.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/modalUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/printUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/quantityUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest$LabelType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/PrintRequest$LabelType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/api.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/script/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/modal.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/script.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/utils/textUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/script/utils/textUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/controller/PrintControllerIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/controller/PrintControllerIntegrationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +47,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-server/11.0.20/jetty-server-11.0.20-sources.jar!/org/eclipse/jetty/server/session/DefaultSessionIdManager.java" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/main/br.com.espacovista/application/Main.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -94,9 +89,11 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/Data-e-Validade",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations",
     "last_opened_file_path": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend",
     "project.structure.last.edited": "Modules",
@@ -190,15 +187,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>

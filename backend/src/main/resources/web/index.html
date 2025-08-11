@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<body class="bg-[var(--bg-primary)] min-h-screen flex flex-col font-sans"> <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Aplicativo para impressão de etiquetas - Espaço Vista" />
     <title>Espaço Vista - Impressão de Etiquetas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/web/css/style.css" />
-    <link rel="icon" href="/web/img/Logo_V.png" type="image/png" />
+    <link rel="icon" href="/img/Logo_V.png" type="image/png" />
 </head>
-<body class="bg-[var(--bg-primary)] min-h-screen flex flex-col font-sans">
-<header class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 mb-4 flex justify-center items-center shadow-md">
+<body class="bg-[var(--bg-primary)] h-full flex flex-col font-sans">
+<header class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 flex justify-center items-center shadow-md">
     <img src="/web/img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-12 sm:h-14" />
 </header>
 
-<main class="w-full max-w-2xl mx-auto px-4 flex-grow">
+<main class="w-full max-w-2xl mx-auto px-4 flex-grow flex flex-col">
     <div class="flex flex-col gap-4 h-full">
         <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-4 sm:p-6 flex flex-col h-full" aria-label="Área de impressão de etiquetas">
 
@@ -26,29 +25,32 @@
                 </div>
             </div>
 
-            <!-- Formulário de Etiqueta Simples -->
             <div id="simpleForm">
-                <div class="mb-3">
-                    <textarea id="labelText" rows="2" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help"></textarea>
-                    <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões abaixo para preencher rapidamente.</small>
-                </div>
-                <div class="mt-2 flex flex-wrap gap-2">
-                    <button class="btn-numeric" data-value="1">1</button>
-                    <button class="btn-numeric" data-value="2">2</button>
-                    <button class="btn-numeric" data-value="3">3</button>
-                    <button class="btn-numeric" data-value="4">4</button>
-                    <button class="btn-numeric" data-value="5">5</button>
-                    <button class="btn-numeric" data-value="6">6</button>
-                    <button class="btn-numeric" data-value="7">7</button>
-                    <button class="btn-numeric" data-value="8">8</button>
-                    <button class="btn-numeric" data-value="9">9</button>
-                    <button class="btn-numeric" data-value="0">0</button>
-                    <button id="btn-special" class="btn">- ESPECIAL</button>
-                    <button id="btn-clear" class="btn-danger">Apagar</button>
+                <div class="flex flex-col sm:flex-row gap-4 sm:items-start">
+
+                    <div class="flex-grow">
+                        <textarea id="labelText" class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help" rows="3"></textarea>
+                        <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões ao lado para preencher rapidamente.</small>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 w-full sm:w-auto">
+                        <button class="btn-numeric" data-value="1">1</button>
+                        <button class="btn-numeric" data-value="2">2</button>
+                        <button class="btn-numeric" data-value="3">3</button>
+                        <button class="btn-numeric" data-value="4">4</button>
+                        <button class="btn-numeric" data-value="5">5</button>
+                        <button class="btn-numeric" data-value="6">6</button>
+                        <button class="btn-numeric" data-value="7">7</button>
+                        <button class="btn-numeric" data-value="8">8</button>
+                        <button class="btn-numeric" data-value="9">9</button>
+                        <button id="btn-special" class="btn col-span-2">- ESPECIAL</button>
+                        <button class="btn-numeric" data-value="0">0</button>
+                        <button id="btn-clear" class="btn-danger col-span-3">Apagar</button>
+                    </div>
+
                 </div>
             </div>
 
-            <!-- Formulário de Etiqueta de Validade -->
             <div id="validityForm" class="hidden">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="mb-3 col-span-1 sm:col-span-2">
@@ -65,7 +67,6 @@
                             <div class="flex items-center gap-2">
                                 <input type="number" id="validityDays" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: 30" value="1">
                                 <button id="validityDropdownBtn" type="button" class="bg-gray-200 p-2 rounded-md hover:bg-gray-300" aria-label="Abrir opções de prazo">▼</button>
-                                <!-- ID ADICIONADO AQUI -->
                                 <span id="validityUnitLabel" class="text-[var(--text-primary)] font-medium w-10">dia</span>
                             </div>
                             <div id="validityDropdownPanel" class="hidden absolute z-10 mt-1 w-full bg-[var(--bg-content)] border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
@@ -77,7 +78,6 @@
 
             <hr class="my-4">
 
-            <!-- Controles Comuns -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="mb-3">
                     <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
@@ -95,7 +95,7 @@
                 <span id="duplicate-info-text" aria-live="polite"></span>
             </p>
 
-            <div class="mt-auto pt-20 flex flex-col sm:flex-row gap-2">
+            <div class="mt-auto pt-6 flex flex-col sm:flex-row gap-2">
                 <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2 py-2 text-lg" role="button">
                     <span id="printButtonText">Imprimir Etiquetas</span>
                     <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -108,7 +108,7 @@
     </div>
 </main>
 
-<footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 mt-4 text-center">
+<footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 text-center">
     <p>&copy; 2025 Espaço Vista. Todos os direitos reservados.</p>
 </footer>
 

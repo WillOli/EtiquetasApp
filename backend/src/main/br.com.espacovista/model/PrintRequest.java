@@ -1,36 +1,17 @@
 package model;
 
 public class PrintRequest {
-    private final String text;
-    private final int quantity;
-    private final LabelType labelType;
+
+    private String text;
+    private int quantity;
+    private LabelType labelType;
 
     public enum LabelType {
         STANDARD,
         SIXTY_TWO_MM
     }
 
-    // --- CONSTRUTOR CORRIGIDO ---
-    // O nome do parâmetro agora é 'labelType' para combinar perfeitamente com o JSON do frontend.
-    public PrintRequest(String text, int quantity, String labelType) {
-        this.text = text;
-        this.quantity = quantity;
-
-        LabelType tempType;
-        try {
-            // Garante que labelType não seja nulo antes de toUpperCase()
-            if (labelType == null || labelType.trim().isEmpty()) {
-                tempType = LabelType.STANDARD; // Define um padrão se o campo estiver ausente ou vazio
-            } else {
-                tempType = LabelType.valueOf(labelType.toUpperCase());
-            }
-        } catch (IllegalArgumentException e) {
-            System.err.println("[AVISO] Valor de labelType inválido recebido: '" + labelType + "'. Usando padrão.");
-            tempType = LabelType.STANDARD; // Define um padrão em caso de valor inválido (ex: "MINI")
-        }
-        this.labelType = tempType;
-    }
-
+    // --- GETTERS ---
     public String getText() {
         return text;
     }
@@ -40,6 +21,35 @@ public class PrintRequest {
     }
 
     public LabelType getLabelType() {
-        return labelType;
+        return (labelType == null) ? LabelType.STANDARD : labelType;
+    }
+
+    // --- SETTERS ---
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * ✅ CORREÇÃO: A lógica de conversão está DENTRO do setter.
+     * Este método recebe a String do JSON e a converte para o Enum antes de atribuir.
+     */
+    public void setLabelType(String labelTypeStr) {
+        LabelType tempType;
+        try {
+            if (labelTypeStr == null || labelTypeStr.trim().isEmpty()) {
+                tempType = LabelType.STANDARD;
+            } else {
+                tempType = LabelType.valueOf(labelTypeStr.toUpperCase());
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println("[AVISO] Valor de labelType inválido recebido: '" + labelTypeStr + "'. Usando padrão.");
+            tempType = LabelType.STANDARD;
+        }
+        // Atribui o Enum convertido, não a String original
+        this.labelType = tempType;
     }
 }
