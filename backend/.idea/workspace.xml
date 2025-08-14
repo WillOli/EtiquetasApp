@@ -6,28 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/espaco-vista-printer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/espaco-vista-printer.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/model/PrintRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/model/PrintRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/css/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/GRUPO-VISTA.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/LOGO-ESPACO-VISTA1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo V.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/img/Logo_V.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/modalUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/printUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/quantityUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/main/resources/web/script/utils/textUtils.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest$LabelType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/PrintRequest$LabelType.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/controller/PrintControllerIntegrationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/controller/PrintControllerIntegrationTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/br/com/espacovista/controller/PrintControllerIntegrationTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +74,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feature/layout-etiqueta-simples",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend/target/generated-test-sources/test-annotations",
     "last_opened_file_path": "C:/Users/vista/OneDrive/Área de Trabalho/Desenvolvimento/app-impressora-etiquetas/backend",
@@ -193,8 +175,8 @@
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ValidadeStandardStrategyTest" />
         <item itemvalue="JUnit.SimpleLayoutStrategyTest (2)" />
-        <item itemvalue="JUnit.PrintControllerIntegrationTest" />
         <item itemvalue="JUnit.PrintControllerIntegrationTest.postToPrint_withValidRequest_shouldReturn200" />
+        <item itemvalue="JUnit.PrintControllerIntegrationTest" />
       </list>
     </recent_temporary>
   </component>
