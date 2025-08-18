@@ -11,6 +11,10 @@ public class PrintRequest {
         SIXTY_TWO_MM
     }
 
+    public PrintRequest() {
+
+    }
+
     // --- GETTERS ---
     public String getText() {
         return text;
@@ -32,6 +36,7 @@ public class PrintRequest {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
 
     /**
      * ✅ CORREÇÃO: A lógica de conversão está DENTRO do setter.
