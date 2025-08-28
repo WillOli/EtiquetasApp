@@ -21,9 +21,10 @@
 
             <div class="mb-4">
                 <label class="block text-sm font-medium text-[var(--text-primary)] mb-2">Qual tipo de etiqueta você quer imprimir?</label>
-                <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap">
                     <button id="btnModeSimple" class="btn-primary w-full sm:w-auto">Etiqueta Simples</button>
                     <button id="btnModeValidity" class="btn-secondary w-full sm:w-auto">Etiqueta de Validade</button>
+                    <button id="btnModeImmediate" class="btn-accent w-full sm:w-auto">Consumo Imediato</button>
                 </div>
             </div>
 
@@ -70,6 +71,14 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="immediateForm" class="hidden">
+                <div class="mb-3">
+                    <label for="immediateProductName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
+                    <input type="text" id="immediateProductName" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Bolo de Chocolate">
+                    <small class="text-gray-500 block mt-1 text-xs">Esta etiqueta será marcada como "CONSUMO IMEDIATO" automaticamente.</small>
                 </div>
             </div>
 

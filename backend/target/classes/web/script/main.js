@@ -6,15 +6,18 @@
 const API_BASE_URL = 'http://localhost:8081';
 
 const appState = {
-    mode: 'SIMPLE', // 'SIMPLE' ou 'VALIDITY'
+    mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY' ou 'IMMEDIATE_CONSUMPTION'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     const ui = {
         btnModeSimple: document.getElementById('btnModeSimple'),
         btnModeValidity: document.getElementById('btnModeValidity'),
+        btnModeImmediate: document.getElementById('btnModeImmediate'),
         simpleForm: document.getElementById('simpleForm'),
         validityForm: document.getElementById('validityForm'),
+        immediateForm: document.getElementById('immediateForm'),
+        immediateProductName: document.getElementById('immediateProductName'),
         labelText: document.getElementById('labelText'),
         numericButtons: document.querySelectorAll('.btn-numeric'),
         btnSpecial: document.getElementById('btn-special'),
@@ -48,10 +51,9 @@ function setupInitialState(ui) {
 }
 
 function attachEventListeners(ui) {
-    // Usamos optional chaining (?.) para tornar o código mais resiliente.
-    // Se um elemento não for encontrado, ele não tentará adicionar um listener e não quebrará a aplicação.
     ui.btnModeSimple?.addEventListener('click', () => switchMode('SIMPLE', ui));
     ui.btnModeValidity?.addEventListener('click', () => switchMode('VALIDITY', ui));
+    ui.btnModeImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION', ui));
 
     ui.numericButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -98,16 +100,33 @@ function updateValidityUnitLabel(ui) {
 
 function switchMode(mode, ui) {
     appState.mode = mode;
-    const isSimpleMode = mode === 'SIMPLE';
-
-    ui.simpleForm?.classList.toggle('hidden', !isSimpleMode);
-    ui.validityForm?.classList.toggle('hidden', isSimpleMode);
-
-    ui.btnModeSimple?.classList.toggle('btn-primary', isSimpleMode);
-    ui.btnModeSimple?.classList.toggle('btn-secondary', !isSimpleMode);
-
-    ui.btnModeValidity?.classList.toggle('btn-primary', !isSimpleMode);
-    ui.btnModeValidity?.classList.toggle('btn-secondary', isSimpleMode);
+    
+    // Reset button states
+    ui.btnModeSimple?.classList.remove('btn-primary');
+    ui.btnModeSimple?.classList.add('btn-secondary');
+    ui.btnModeValidity?.classList.remove('btn-primary');
+    ui.btnModeValidity?.classList.add('btn-secondary');
+    ui.btnModeImmediate?.classList.remove('btn-primary');
+    ui.btnModeImmediate?.classList.add('btn-secondary');
+    
+    // Hide all forms
+    ui.simpleForm?.classList.add('hidden');
+    ui.validityForm?.classList.add('hidden');
+    ui.immediateForm?.classList.add('hidden');
+    
+    if (mode === 'SIMPLE') {
+        ui.btnModeSimple?.classList.remove('btn-secondary');
+        ui.btnModeSimple?.classList.add('btn-primary');
+        ui.simpleForm?.classList.remove('hidden');
+    } else if (mode === 'VALIDITY') {
+        ui.btnModeValidity?.classList.remove('btn-secondary');
+        ui.btnModeValidity?.classList.add('btn-primary');
+        ui.validityForm?.classList.remove('hidden');
+    } else if (mode === 'IMMEDIATE_CONSUMPTION') {
+        ui.btnModeImmediate?.classList.remove('btn-secondary');
+        ui.btnModeImmediate?.classList.add('btn-primary');
+        ui.immediateForm?.classList.remove('hidden');
+    }
 }
 
 function updateDuplicateInfo(ui) {
@@ -156,7 +175,7 @@ function handlePrintAction(ui) {
         }
         endpoint = '/print';
         payload = { text, quantity, labelType };
-    } else { // 'VALIDITY'
+    } else if (appState.mode === 'VALIDITY') {
         const productName = ui.productName.value.trim();
         const mfgDate = ui.mfgDate.value;
         const validityDays = parseInt(ui.validityDays.value);
@@ -175,6 +194,15 @@ function handlePrintAction(ui) {
         }
         endpoint = '/print-validade';
         payload = { productName, mfgDate, validityDays, quantity, labelType };
+    } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
+        const productName = ui.immediateProductName.value.trim();
+        
+        if (!productName) {
+            showModal('O nome do produto não pode estar vazio.', 'error');
+            return;
+        }
+        endpoint = '/print-consumo-imediato';
+        payload = { productName, quantity, labelType };
     }
 
     sendRequest(endpoint, payload, ui);
