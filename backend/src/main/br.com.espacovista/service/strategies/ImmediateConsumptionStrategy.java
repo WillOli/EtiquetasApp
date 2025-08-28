@@ -1,6 +1,6 @@
 package service.strategies;
 
-import model.ImmediateConsumptionRequest;
+import model.ImmediateConsumptionRequest; // Certifique-se que o import para o seu modelo está correto
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import static service.ZplConstants.*;
@@ -15,62 +15,65 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
 
     @Override
     protected String generateLabelContent(int startX, int column) {
+        // --- Dados ---
         String productName = request.getProductName();
         String internalDateCode = generateInternalDateCode();
-        
-        int fontSize = 22;
-        int textMargin = 15;
-        int valueMargin = 130;
-        int baseLineWidth = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM - (textMargin * 2);
-        int offsetX = 5;
 
-        // Lógica de compensação para a coluna da direita
-        int currentLineWidth = baseLineWidth;
-        int currentValueMargin = valueMargin;
-        if (column == 1) {
-            currentLineWidth += 10;
-            currentValueMargin += 10;
-        }
+        // Juntamos o rótulo e o valor em uma única string para cada linha
+        String productLineText = "Produto: " + productName;
+        String codeLineText = "Cod: " + internalDateCode;
 
-        int yPos = 25;
-        int lineSpacing = 50;
+        // --- PAINEL DE CONTROLE DE LAYOUT ---
+        // Ajuste estes valores para refinar o layout
+        int offsetX = 15; // Margem geral nas laterais da etiqueta
+        int labelWidth = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM - (offsetX * 2); // Largura útil para o texto
+        int mainFontSize = 22; // Tamanho da fonte para Produto e Consumo
+        int codeFontSize = 20; // Tamanho da fonte para o código
+
+        int yPos = 30; // Posição Y (vertical) da primeira linha
+        int lineSpacing = 50; // Espaço vertical entre as linhas
+        // --- FIM DO PAINEL ---
 
         StringBuilder contentBuilder = new StringBuilder();
 
-        // --- Linha 1: Produto ---
-        contentBuilder.append(generateLine("Produto:", productName, startX + offsetX, yPos, fontSize, textMargin, currentValueMargin, currentLineWidth));
+        // --- Linha 1: Produto (Centralizado) ---
+        contentBuilder.append(createCenteredLine(productLineText, startX + offsetX, yPos, labelWidth, mainFontSize));
+        contentBuilder.append(createDividerLine(startX + offsetX, yPos + mainFontSize + 5, labelWidth));
         yPos += lineSpacing;
 
-        // --- Linha 2: Consumo Imediato ---
-        contentBuilder.append(generateLine("", "CONSUMO IMEDIATO", startX + offsetX, yPos, fontSize + 2, textMargin, textMargin, currentLineWidth));
+        // --- Linha 2: Consumo Imediato (Centralizado) ---
+        contentBuilder.append(createCenteredLine("CONSUMO IMEDIATO", startX + offsetX, yPos, labelWidth, mainFontSize));
+        contentBuilder.append(createDividerLine(startX + offsetX, yPos + mainFontSize + 5, labelWidth));
         yPos += lineSpacing;
 
-        // --- Linha 3: Código interno (invisível ao consumidor) ---
-        contentBuilder.append(generateLine("Cod:", internalDateCode, startX + offsetX, yPos, 12, textMargin, currentValueMargin, currentLineWidth));
+        // --- Linha 3: Código (Centralizado) ---
+        contentBuilder.append(createCenteredLine(codeLineText, startX + offsetX, yPos, labelWidth, codeFontSize));
+        contentBuilder.append(createDividerLine(startX + offsetX, yPos + codeFontSize + 5, labelWidth));
 
         return contentBuilder.toString();
     }
 
     /**
-     * Gera código interno de data no formato 0000MMDD
-     * Os primeiros 4 zeros são constantes, seguidos do mês e dia atuais
+     * Gera o código ZPL para uma linha de texto centralizada.
+     */
+    private String createCenteredLine(String text, int x, int y, int width, int fontSize) {
+        return String.format("^FO%d,%d^A0N,%d,%d^FB%d,1,0,C,0^FD%s^FS", x, y, fontSize, fontSize, width, text);
+    }
+
+    /**
+     * Gera o código ZPL para uma linha divisória.
+     */
+    private String createDividerLine(int x, int y, int width) {
+        return String.format("^FO%d,%d^GB%d,2,2^FS\n", x, y, width);
+    }
+
+    /**
+     * Gera código interno de data no formato 0000MMDD.
      */
     private String generateInternalDateCode() {
         LocalDate today = LocalDate.now();
+        // A data da foto é 28 de agosto, então o código está correto.
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
         return "0000" + today.format(formatter);
-    }
-
-    private String generateLine(String label, String value, int startX, int yPos, int fontSize, int textMargin, int valueMargin, int lineWidth) {
-        StringBuilder line = new StringBuilder();
-        
-        if (!label.isEmpty()) {
-            line.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + textMargin, yPos, fontSize, fontSize, label));
-        }
-        
-        line.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + valueMargin, yPos, fontSize, fontSize, value));
-        line.append(String.format("^FO%d,%d^GB%d,2,2^FS\n", startX + textMargin, yPos + fontSize + 5, lineWidth));
-        
-        return line.toString();
     }
 }

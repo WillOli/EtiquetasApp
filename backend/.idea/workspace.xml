@@ -6,14 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/application/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/controller/PrintController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/controller/PrintController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterStrategyFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/PrinterStrategyFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/web/script/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/web/script/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/web/script/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ImmediateConsumptionStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ImmediateConsumptionStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/strategies/ImmediateConsumptionStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/strategies/ImmediateConsumptionStrategy.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
