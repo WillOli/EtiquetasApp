@@ -15,40 +15,40 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
 
     @Override
     protected String generateLabelContent(int startX, int column) {
-        // --- Dados ---
+        // --- Dados
         String productName = request.getProductName();
         String internalDateCode = generateInternalDateCode();
 
-        // Juntamos o rótulo e o valor em uma única string para cada linha
-        String productLineText = "Produto: " + productName;
-        String codeLineText = "Cod: " + internalDateCode;
-
-        // --- PAINEL DE CONTROLE DE LAYOUT ---
-        // Ajuste estes valores para refinar o layout
-        int offsetX = 15; // Margem geral nas laterais da etiqueta
-        int labelWidth = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM - (offsetX * 2); // Largura útil para o texto
-        int mainFontSize = 22; // Tamanho da fonte para Produto e Consumo
-        int codeFontSize = 20; // Tamanho da fonte para o código
-
-        int yPos = 30; // Posição Y (vertical) da primeira linha
-        int lineSpacing = 50; // Espaço vertical entre as linhas
-        // --- FIM DO PAINEL ---
+        // --- PAINEL DE CONTROLE DE LAYOUT
+        int borderSize = 3;
+        int margin = 10;
+        int textOffset = 15;
+        int labelWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM;
+        int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
+        int contentWidth = labelWidthDots - (margin * 2);
 
         StringBuilder contentBuilder = new StringBuilder();
 
-        // --- Linha 1: Produto (Centralizado) ---
-        contentBuilder.append(createCenteredLine(productLineText, startX + offsetX, yPos, labelWidth, mainFontSize));
-        contentBuilder.append(createDividerLine(startX + offsetX, yPos + mainFontSize + 5, labelWidth));
-        yPos += lineSpacing;
+        // --- Seção 1: Moldura da Etiqueta
+        contentBuilder.append("^FX Etiqueta com Borda\n");
+        contentBuilder.append(String.format("^FO%d,%d^GB%d,%d,%d^FS\n",
+                startX + margin, margin, contentWidth, labelHeightDots - (margin * 2), borderSize));
 
-        // --- Linha 2: Consumo Imediato (Centralizado) ---
-        contentBuilder.append(createCenteredLine("CONSUMO IMEDIATO", startX + offsetX, yPos, labelWidth, mainFontSize));
-        contentBuilder.append(createDividerLine(startX + offsetX, yPos + mainFontSize + 5, labelWidth));
-        yPos += lineSpacing;
+        // --- Seção 2: Linha 1 - Produto (Ajustado)
+        contentBuilder.append("^FX Seção do Produto\n");
+        contentBuilder.append(createCenteredLine(productName, startX + textOffset, 40, contentWidth - textOffset, 35));
 
-        // --- Linha 3: Código (Centralizado) ---
-        contentBuilder.append(createCenteredLine(codeLineText, startX + offsetX, yPos, labelWidth, codeFontSize));
-        contentBuilder.append(createDividerLine(startX + offsetX, yPos + codeFontSize + 5, labelWidth));
+        // --- Seção 3: Linha 2 - Consumo Imediato (Ajustado)
+        contentBuilder.append("^FX Seção de Consumo Imediato\n");
+        contentBuilder.append(createCenteredLine("CONSUMO IMEDIATO", startX + textOffset, 90, contentWidth - textOffset, 20));
+
+        // --- Seção 4: Linha divisória
+        contentBuilder.append("^FX Linha divisória\n");
+        contentBuilder.append(String.format("^FO%d,%d^GB%d,2,2^FS\n", startX + textOffset, 120, contentWidth - textOffset));
+
+        // --- Seção 5: Código no canto inferior direito
+        contentBuilder.append("^FX Seção de Código (canto inferior direito)\n");
+        contentBuilder.append(String.format("^FO%d,%d^A0N,20,20^FD%s^FS\n", startX + 220, 195, internalDateCode));
 
         return contentBuilder.toString();
     }
