@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a84d52fe-99bf-4df8-a3fe-729012d1b568" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ImmediateConsumptionStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/br.com.espacovista/service/strategies/ImmediateConsumptionStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config/AppConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/controller/PrintController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/ImmediateConsumptionRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest$LabelType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/PrintRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/model/ValidadePrintRequest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService$PrinterServiceException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/PrinterStrategyFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/service/ZplConstants.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/controller/PrintControllerIntegrationTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/service/strategies/SimpleLayoutStrategyTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/br/com/espacovista/service/strategies/ValidadeStandardStrategyTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/service/strategies/ImmediateConsumptionStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/service/strategies/ImmediateConsumptionStrategy.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
