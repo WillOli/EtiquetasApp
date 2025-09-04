@@ -1,5 +1,6 @@
 package service;
 
+import model.ImmediateConsumptionRequest;
 import model.PrintRequest;
 import model.ValidadePrintRequest;
 import org.slf4j.Logger;
@@ -28,6 +29,12 @@ public class PrinterService {
     }
 
     public void printValidadeLabel(ValidadePrintRequest request) {
+        ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
+        String zpl = strategy.generateZpl();
+        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
+    }
+
+    public void printImmediateConsumptionLabel(ImmediateConsumptionRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
         sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());

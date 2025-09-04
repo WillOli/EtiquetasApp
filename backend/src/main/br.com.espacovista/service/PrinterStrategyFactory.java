@@ -2,6 +2,7 @@ package service;
 
 import model.PrintRequest;
 import model.ValidadePrintRequest;
+import model.ImmediateConsumptionRequest;
 import service.strategies.*;
 
 public class PrinterStrategyFactory {
@@ -30,5 +31,12 @@ public class PrinterStrategyFactory {
         } else {
             return new ValidadeStandardStrategy(request);
         }
+    }
+
+    /**
+     * Retorna a estratégia correta para uma requisição de etiqueta de consumo imediato.
+     */
+    public static ILabelStrategy getStrategy(ImmediateConsumptionRequest request) {
+        return new ImmediateConsumptionStrategy(request);
     }
 }

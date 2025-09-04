@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.com.espacovista.controller.PrintControllerIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.121 s -- in br.com.espacovista.controller.PrintControllerIntegrationTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.455 s -- in br.com.espacovista.controller.PrintControllerIntegrationTest

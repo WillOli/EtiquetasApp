@@ -42,6 +42,7 @@ public class Main {
         // As rotas da API continuam as mesmas.
         app.post("/print", printController::handlePrintRequest);
         app.post("/print-validade", printController::handleValidadePrintRequest);
+        app.post("/print-consumo-imediato", printController::handleImmediateConsumptionRequest);
         app.get("/", ctx -> ctx.result("Servidor de impressão Espaço Vista está no ar!"));
     }
 }

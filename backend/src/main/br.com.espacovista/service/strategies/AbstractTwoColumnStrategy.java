@@ -18,6 +18,7 @@ public abstract class AbstractTwoColumnStrategy implements ILabelStrategy {
         this.quantity = quantity * 2;
     }
 
+
     /**
      * Método final que gera o ZPL completo.
      * Este método não pode ser sobrescrito pelas classes filhas.

@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import io.javalin.http.Context;
+import model.ImmediateConsumptionRequest;
 import model.PrintRequest;
 import model.ValidadePrintRequest;
 import org.slf4j.Logger;
@@ -69,6 +70,29 @@ public class PrintController {
 
             // --- ALTERAÇÃO DE SEGURANÇA ---
             // Retorna uma mensagem genérica para o cliente.
+            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
+        }
+    }
+
+    public void handleImmediateConsumptionRequest(Context ctx) {
+        try {
+            ImmediateConsumptionRequest request = gson.fromJson(ctx.body(), ImmediateConsumptionRequest.class);
+            logger.info("Recebida requisição para /print-consumo-imediato: {}", ctx.body());
+
+            if (request == null || request.getProductName() == null || request.getProductName().trim().isEmpty()) {
+                logger.warn("Requisição /print-consumo-imediato inválida: nome do produto vazio.");
+                ctx.status(400).result("Erro: Nome do produto não pode ser vazio.");
+                return;
+            }
+
+            printerService.printImmediateConsumptionLabel(request);
+            ctx.status(200).result("Etiqueta de consumo imediato enviada com sucesso!");
+
+        } catch (JsonSyntaxException e) {
+            logger.warn("Erro de sintaxe no JSON recebido em /print-consumo-imediato.", e);
+            ctx.status(400).result("Erro: Formato do JSON inválido.");
+        } catch (Exception e) {
+            logger.error("Erro interno no servidor ao processar /print-consumo-imediato.", e);
             ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
         }
     }
