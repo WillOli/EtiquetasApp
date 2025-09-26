@@ -28,7 +28,7 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
 
         // --- Seção 1: Produto (Rótulo e Nome)
         contentBuilder.append("^FX Seção do Produto\n");
-        contentBuilder.append(createLine(startX + 55, 40, fontSizeProduct, productName));
+        contentBuilder.append(createLine(startX + 30, 40, fontSizeProduct, productName));
 
         // --- Seção 2: Consumo Imediato
         contentBuilder.append("^FX Seção de Consumo Imediato\n");
