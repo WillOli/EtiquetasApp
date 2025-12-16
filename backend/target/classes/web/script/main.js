@@ -9,7 +9,188 @@ const appState = {
     mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY' ou 'IMMEDIATE_CONSUMPTION'
 };
 
+// =========================================================================
+// INÍCIO: NOVAS VARIÁVEIS E FUNÇÕES PARA AUTOCOMPLETE PROFISSIONAL (BUSCA OTIMIZADA)
+// =========================================================================
+
+// 1. LISTAS DE EXIBIÇÃO (Apenas nomes formatados que o usuário deve ver)
+const VALIDITY_DISPLAY_LIST = [
+    // Carne Bovina
+    "Isca de Filé",
+    "Roast beef",
+    "Parmê de Filé",
+    "Filé surprise",
+    
+    // Frango
+    "Isca de Frango",
+    "Frango grelhado",
+    "Parmê de Frango",
+    "Frango empanado",
+    
+    // Peixe
+    "Salmão posta",
+    "Hambúrguer salmão 100g",
+    "Hambúrguer salmão 50g",
+    
+    // Hambúrgueres de Carne
+    "Hambúrguer 160g",
+    "Hambúrguer 140g",
+    "Hambúrguer 100g",
+    "Hambúrguer 50g",
+    
+    // Hambúrgueres de Frango
+    "Hambúrguer frango 100g",
+    "Hambúrguer frango 50g",
+];
+
+const IMMEDIATE_DISPLAY_LIST = [
+    // Doces
+    "Bolo de coco",
+    "Brownie",
+    "Chargito",
+    "Cheesecake",
+    "Cookie de Nutella",
+    "Cookie red velvet",
+    "Cookie tradicional",
+    "Mousse de chocolate",
+    "Pão de mel",
+    "Pavê de doce de leite",
+    "Surpresa cookie",
+    "Surpresa de Nutella",
+    
+    // Salgados/Acompanhamentos/Bebidas
+    "Alho poró",
+    "Chips de batata doce",
+    "Crocante de batata doce",
+    "Croutons",
+    "Farofa de bacon",
+    "Farofa crocante",
+    "Molho de ervas",
+    "Molho especial",
+    "Mostarda e mel",
+    "Parmesão",
+    "Suco de laranja",
+];
+
+/**
+ * Normaliza uma string removendo acentos, cedilha e convertendo para minúsculas.
+ * @param {string} str - String a ser normalizada.
+ * @returns {string} String normalizada.
+ */
+function normalizeString(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+/**
+ * Cria um Mapa de Busca onde a chave é o termo de busca simplificado 
+ * e o valor é o nome original formatado.
+ * @param {string[]} displayList - Lista de nomes formatados.
+ * @returns {Map<string, string>} Mapa {termo_simplificado: nome_original}.
+ */
+function createSearchMap(displayList) {
+    const searchMap = new Map();
+    displayList.forEach(product => {
+        // A chave de busca será a versão normalizada
+        const searchKey = normalizeString(product); 
+        // Armazenamos o nome original como valor
+        searchMap.set(searchKey, product); 
+        
+        // Adiciona o nome original (minúsculo) como segunda chave de busca
+        searchMap.set(product.toLowerCase(), product); 
+    });
+    return searchMap;
+}
+
+// 2. CRIA OS MAPAS DE BUSCA (Estes são usados na função setupAutocomplete)
+const VALIDITY_SEARCH_MAP = createSearchMap(VALIDITY_DISPLAY_LIST);
+const IMMEDIATE_SEARCH_MAP = createSearchMap(IMMEDIATE_DISPLAY_LIST);
+
+
+// =========================================================================
+// FUNÇÃO DE AUTOCOMPLETE (REVISADA: USA O MAPA DE BUSCA)
+// =========================================================================
+
+function setupAutocomplete(inputId, listId, sourceMap) { 
+    const inputElement = document.getElementById(inputId);
+    const suggestionsList = document.getElementById(listId);
+
+    if (!inputElement || !suggestionsList || sourceMap.size === 0) return;
+
+    // Função para filtrar e renderizar a lista
+    const renderSuggestions = () => {
+        const query = normalizeString(inputElement.value); // NORMALIZA A BUSCA DO USUÁRIO
+        suggestionsList.innerHTML = '';
+        
+        // Oculta a lista se a busca estiver vazia e o foco não estiver no elemento
+        if (query.length === 0 && inputElement !== document.activeElement) {
+            suggestionsList.classList.add('hidden');
+            return;
+        }
+
+        const suggestedProducts = new Set(); // Usamos um Set para garantir unicidade dos nomes
+        
+        // Itera sobre todas as chaves no mapa de busca
+        sourceMap.forEach((originalName, searchKey) => {
+            // Verifica se a chave de busca (normalizada) inclui a query do usuário (normalizada)
+            if (searchKey.includes(query)) {
+                suggestedProducts.add(originalName); // Adiciona APENAS o nome original/formatado
+            }
+        });
+        
+        const filtered = Array.from(suggestedProducts);
+
+        // Renderiza a lista se houver itens
+        if (filtered.length > 0) {
+            filtered.forEach(product => {
+                const li = document.createElement('li');
+                li.className = 'p-2 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm';
+                li.textContent = product; // Exibe o nome formatado
+                
+                li.addEventListener('click', () => {
+                    inputElement.value = product;
+                    suggestionsList.classList.add('hidden');
+                    inputElement.dispatchEvent(new Event('input')); 
+                });
+                
+                suggestionsList.appendChild(li);
+            });
+            suggestionsList.classList.remove('hidden');
+        } else {
+            suggestionsList.classList.add('hidden');
+        }
+    };
+
+    // Eventos 
+    inputElement.addEventListener('input', renderSuggestions);
+
+    inputElement.addEventListener('focus', () => {
+        // Quando foca, mostra todos os itens (filtrando pela query vazia, que é o padrão)
+        renderSuggestions();
+    });
+
+    document.addEventListener('click', (event) => {
+        // Oculta a lista se o clique for fora do input ou da lista
+        if (!inputElement.contains(event.target) && !suggestionsList.contains(event.target)) {
+            suggestionsList.classList.add('hidden');
+        }
+    });
+}
+
+// =========================================================================
+// FIM: NOVAS VARIÁVEIS E FUNÇÕES PARA AUTOCOMPLETE PROFISSIONAL
+// =========================================================================
+
 document.addEventListener('DOMContentLoaded', () => {
+    // -----------------------------------------------------------------
+    // INICIALIZAÇÃO DO NOVO AUTOCOMPLETE (USANDO OS MAPAS DE BUSCA)
+    // -----------------------------------------------------------------
+    // Campo de Validade (VALIDITY) usa o mapa VALIDITY_SEARCH_MAP
+    setupAutocomplete('productName', 'productSuggestions', VALIDITY_SEARCH_MAP); 
+    
+    // Campo de Consumo Imediato (IMMEDIATE) usa o mapa IMMEDIATE_SEARCH_MAP
+    setupAutocomplete('immediateProductName', 'immediateProductSuggestions', IMMEDIATE_SEARCH_MAP);
+    // -----------------------------------------------------------------
+
     const ui = {
         btnModeSimple: document.getElementById('btnModeSimple'),
         btnModeValidity: document.getElementById('btnModeValidity'),
