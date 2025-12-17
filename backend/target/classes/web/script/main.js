@@ -281,7 +281,28 @@ function updateValidityUnitLabel(ui) {
 
 function switchMode(mode, ui) {
     appState.mode = mode;
+
     
+    // Limpa o texto da Etiqueta Simples
+    if (ui.labelText) ui.labelText.value = '';
+
+    // Limpa os campos da Etiqueta de Validade
+    if (ui.productName) ui.productName.value = '';
+    if (ui.mfgDate) ui.mfgDate.value = new Date().toISOString().split('T')[0]; // Reseta para hoje
+    if (ui.validityDays) {
+        ui.validityDays.value = 1;
+        updateValidityUnitLabel(ui); // Garante que o texto mude para "1 dia"
+    }
+
+    // Limpa o campo de Consumo Imediato
+    if (ui.immediateProductName) ui.immediateProductName.value = '';
+
+    // Esconde as listas de sugestões do autocomplete (se estiverem abertas)
+    document.getElementById('productSuggestions')?.classList.add('hidden');
+    document.getElementById('immediateProductSuggestions')?.classList.add('hidden');
+
+    // --- FIM DO AJUSTE ---
+
     // Reset button states
     ui.btnModeSimple?.classList.remove('btn-primary');
     ui.btnModeSimple?.classList.add('btn-secondary');
