@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/EtiquetasApp.iml" filepath="$PROJECT_DIR$/.idea/EtiquetasApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/espaco-vista-printer.iml" filepath="$PROJECT_DIR$/backend/espaco-vista-printer.iml" />
     </modules>
   </component>
 </project>

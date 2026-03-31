@@ -301,8 +301,6 @@ function switchMode(mode, ui) {
     document.getElementById('productSuggestions')?.classList.add('hidden');
     document.getElementById('immediateProductSuggestions')?.classList.add('hidden');
 
-    // --- FIM DO AJUSTE ---
-
     // Reset button states
     ui.btnModeSimple?.classList.remove('btn-primary');
     ui.btnModeSimple?.classList.add('btn-secondary');
