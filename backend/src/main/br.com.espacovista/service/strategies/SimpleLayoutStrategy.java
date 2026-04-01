@@ -1,53 +1,29 @@
 package service.strategies;
 
-import static service.ZplConstants.*;
-
 public class SimpleLayoutStrategy implements ILabelStrategy {
     private final String text;
+    private final String sector; // [cite: 19]
     private final int quantity;
 
-    public SimpleLayoutStrategy(String text, int quantity) {
+    public SimpleLayoutStrategy(String text, String sector, int quantity) {
         this.text = text;
+        this.sector = sector; // [cite: 20]
         this.quantity = quantity;
     }
 
     @Override
     public String generateZpl() {
-        // Usando as constantes para definir a área total da etiqueta
-        int labelWidthDots = LABEL_WIDTH_MM_SIXTY_TWO_MM * DOTS_PER_MM; // ~480 a 500 dots
-        int labelHeightDots = LABEL_HEIGHT_MM_SIXTY_TWO_MM * DOTS_PER_MM; // ~240 a 300 dots
+        StringBuilder zpl = new StringBuilder();
+        // [cite: 24, 25]
+        String infoSetor = (this.sector != null && !this.sector.isEmpty()) ? this.sector.toUpperCase() : "GERAL";
 
-        // Ajuste de fonte: se o nome for curto, usamos 80. Se for longo, 60.
-        int fontHeightNome = (this.text.length() > 12) ? 60 : 80;
-
-        StringBuilder zplBuilder = new StringBuilder();
-
-        for (int i = 0; i < this.quantity; i++) {
-            zplBuilder.append("^XA\n");
-            zplBuilder.append("^CI28\n"); // Suporte para acentos
-            zplBuilder.append("^PW").append(labelWidthDots).append("\n");
-            zplBuilder.append("^LL").append(labelHeightDots).append("\n");
-
-            // --- 1. NOME DIGITADO (Variável) ---
-            // FO0,80 -> Posição vertical um pouco acima do meio
-            zplBuilder.append("^FO0,80")
-                    .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
-                    .append("^FB").append(labelWidthDots).append(",1,0,C,0") // 1 linha, Centralizado
-                    .append("^FD").append(this.text.toUpperCase()).append("^FS\n");
-
-            // --- 2. LINHA DIVISORA (Estético) ---
-            // Desenha uma linha de 300 dots de largura no centro
-            zplBuilder.append("^FO150,165^GB300,2,2^FS\n");
-
-            // --- 3. GRUPO VISTA (Fixo) ---
-            // FO0,185 -> Posição vertical na parte inferior
-            zplBuilder.append("^FO0,185")
-                    .append("^A0N,35,35") // Fonte menor para o rodapé
-                    .append("^FB").append(labelWidthDots).append(",1,0,C,0")
-                    .append("^FDGRUPO VISTA^FS\n");
-
-            zplBuilder.append("^XZ\n");
+        for (int i = 0; i < quantity; i++) {
+            zpl.append("^XA\n^CI28\n^PW480\n^LL240\n");
+            zpl.append("^FO345,65^GFA,1800,1800,15,000000..."); // Sua logo [cite: 22]
+            zpl.append("^FO30,85^A0N,70,70^FB300,1,0,L,0^FD").append(this.text.toUpperCase()).append("^FS\n"); // Nome [cite: 23]
+            zpl.append("^FO30,155^A0N,30,30^FB300,1,0,L,0^FDVISTA - ").append(infoSetor).append("^FS\n"); // Setor [cite: 25]
+            zpl.append("^XZ\n");
         }
-        return zplBuilder.toString();
+        return zpl.toString();
     }
 }

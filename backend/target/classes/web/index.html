@@ -15,132 +15,179 @@
     <img src="/web/img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-12 sm:h-14" />
 </header>
 
-<main class="w-full max-w-2xl mx-auto px-4 flex-grow flex flex-col">
+<main class="w-full max-w-2xl mx-auto px-4 flex-grow flex flex-col mt-6">
     <div class="flex flex-col gap-4 h-full">
-        <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-4 flex flex-col h-full" aria-label="Área de impressão de etiquetas">
+        <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-6 flex flex-col h-full">
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium text-[var(--text-primary)] mb-2">Qual tipo de etiqueta você quer imprimir?</label>
+            <div class="mb-6">
+                <label class="block text-sm font-bold text-[var(--text-primary)] mb-3">O QUE VOCÊ DESEJA IMPRIMIR?</label>
                 <div class="flex gap-2 flex-wrap">
-                    <button id="btnModeSimple" class="btn-primary w-full sm:w-auto">Etiqueta Simples</button>
-                    <button id="btnModeValidity" class="btn-secondary w-full sm:w-auto">Etiqueta de Validade</button>
-                    <button id="btnModeImmediate" class="btn-accent w-full sm:w-auto">Consumo Imediato</button>
+                    <button id="btnModeSimple" class="btn-primary flex-1 py-3 border-b-4 border-blue-800">COLABORADORES</button>
+                    <button id="btnModeValidity" class="btn-secondary flex-1 py-3">VALIDADE</button>
+                    <button id="btnModeImmediate" class="btn-accent flex-1 py-3">CONSUMO IMEDIATO</button>
                 </div>
             </div>
 
             <div id="simpleForm" class="flex flex-col gap-4">
+                <div class="relative">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Colaborador</label>
+                    <input type="text" id="labelText" list="colaboradoresAtivos"
+                           class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-blue-500 uppercase"
+                           placeholder="Busque pelo nome..." oninput="atualizarSetorAutomatico()">
+
+                    <datalist id="colaboradoresAtivos"></datalist>
+                </div>
+
                 <div>
-                    <textarea id="labelText" class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Digite o texto da etiqueta" aria-describedby="text-help" rows="3"></textarea>
-                    <small id="text-help" class="text-gray-500 block mt-1 text-xs">Use os botões abaixo para preencher rapidamente.</small>
-                </div>
-                <div class="grid grid-cols-3 gap-2 w-full">
-                    <button class="btn-numeric" data-value="1">1</button>
-                    <button class="btn-numeric" data-value="2">2</button>
-                    <button class="btn-numeric" data-value="3">3</button>
-                    <button class="btn-numeric" data-value="4">4</button>
-                    <button class="btn-numeric" data-value="5">5</button>
-                    <button class="btn-numeric" data-value="6">6</button>
-                    <button class="btn-numeric" data-value="7">7</button>
-                    <button class="btn-numeric" data-value="8">8</button>
-                    <button class="btn-numeric" data-value="9">9</button>
-                    <button id="btn-special" class="btn col-span-2">- ESPECIAL</button>
-                    <button class="btn-numeric" data-value="0">0</button>
-                    <button id="btn-clear" class="btn-danger col-span-3">Apagar</button>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Setor / Cargo</label>
+                    <input type="text" id="labelSector" readonly
+                           class="w-full border border-gray-200 rounded-md bg-gray-100 p-3 text-blue-800 font-bold"
+                           placeholder="Setor aparecerá aqui...">
                 </div>
             </div>
 
-            <div id="validityForm" class="hidden">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    
-                    <div class="mb-3 col-span-1 sm:col-span-2 relative" id="productNameContainer">
-                        <label for="productName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
-                        <input 
-                            type="text" 
-                            id="productName" 
-                            class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" 
-                            placeholder="Ex: Bolo de Chocolate"
-                            autocomplete="off"
-                        >
-                        <ul 
-                            id="productSuggestions" 
-                            class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden"
-                        >
-                            </ul>
-                    </div>
-                    <div class="mb-3">
-                        <label for="mfgDate" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Data de Fabricação</label>
-                        <input type="date" id="mfgDate" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
-                    </div>
-                    <div class="mb-3">
-                        <label for="validityDays" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Prazo</label>
-                        <div class="relative">
-                            <div class="flex items-center gap-2">
-                                <input type="number" id="validityDays" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: 30" value="1">
-                                <button id="validityDropdownBtn" type="button" class="bg-gray-200 p-2 rounded-md hover:bg-gray-300" aria-label="Abrir opções de prazo">▼</button>
-                                <span id="validityUnitLabel" class="text-[var(--text-primary)] font-medium w-10">dia</span>
-                            </div>
-                            <div id="validityDropdownPanel" class="hidden absolute z-10 mt-1 w-full bg-[var(--bg-content)] border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="validityForm" class="hidden"></div>
+            <div id="immediateForm" class="hidden"></div>
 
-            <div id="immediateForm" class="hidden">
-                
-                <div class="mb-3 relative" id="immediateProductNameContainer">
-                    <label for="immediateProductName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
-                    <input 
-                        type="text" 
-                        id="immediateProductName" 
-                        class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" 
-                        placeholder="Ex: Bolo de Chocolate"
-                        autocomplete="off"
-                    >
-                    <small class="text-gray-500 block mt-1 text-xs">Esta etiqueta será marcada como "CONSUMO IMEDIATO" automaticamente.</small>
-                    <ul 
-                        id="immediateProductSuggestions" 
-                        class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden"
-                    >
-                        </ul>
-                </div>
-                </div>
+            <hr class="my-6">
 
-            <hr class="my-2">
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="mb-3">
-                    <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
-                    <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" />
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="labelQuantity" class="block text-sm font-medium text-gray-700 mb-1">Qtd. Etiquetas</label>
+                    <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md p-3 text-center text-lg" />
                 </div>
-                <div class="mb-3">
-                    <label for="labelType" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Tipo de Etiqueta</label>
-                    <select id="labelType" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                <div>
+                    <label for="labelType" class="block text-sm font-medium text-gray-700 mb-1">Tamanho</label>
+                    <select id="labelType" class="w-full border border-gray-300 rounded-md p-3">
                         <option value="SIXTY_TWO_MM">Padrão (80mm x 25mm)</option>
-                        <option value="STANDARD">Etiqueta Dupla (40mm x 25mm)</option>
+                        <option value="STANDARD">Dupla (40mm x 25mm)</option>
                     </select>
                 </div>
             </div>
-            <p class="duplicate-info mt-2 text-[var(--text-primary)] font-medium flex items-center gap-2 text-xs sm:text-sm">
-                <span id="duplicate-info-text" aria-live="polite"></span>
-            </p>
 
-            <div class="mt-auto pt-4 flex flex-col sm:flex-row gap-2">
-                <button id="printButton" class="btn-primary w-full flex items-center justify-center gap-2 py-2 text-lg" role="button">
-                    <span id="printButtonText">Imprimir Etiquetas</span>
-                    <svg id="spinner" class="w-5 h-5 text-white animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+            <div class="mt-8">
+                <button id="printButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-xl transition-all active:scale-95">
+                    <span id="printButtonText">IMPRIMIR AGORA</span>
                 </button>
             </div>
         </section>
     </div>
 </main>
 
-<footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-3 text-center">
-    <p>&copy; 2025 Espaço Vista. Todos os direitos reservados.</p>
+<footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-4 text-center mt-6">
+    <p>&copy; 2026 Espaço Vista. Gestão IT: Eduardo Melo</p>
 </footer>
+
+<script>
+        // 1. DATABASE COMPLETO
+        const bancoDeDadosVista = {
+            "ADELYANE CRISTINA DO NASCIMENTO": "EXPEDIÇÃO",
+            "ALINE CARDOSO DA SILVA": "EXPEDIÇÃO",
+            "ANA CLARA DE AGUIAR RODRIGUES": "EXPEDIÇÃO",
+            "ANA CLARA DE JESUS": "EXPEDIÇÃO",
+            "ANA LUÍZA SILVEIRA DE SOUZA OLIVEIRA": "EXPEDIÇÃO",
+            "ANDERSON HENRIQUE MUNIZ": "COZINHA",
+            "ANDERSON SEIXAS FIALHO": "ESPAÇO VISTA",
+            "ANDRÉA FERREIRA DE SOUSA RIBEIRO": "RH",
+            "ANTÔNIO MARCOS DA SILVA TEIXEIRA": "COZINHA",
+            "ARTHUR GOUVEIA CAMPOS BORGES": "RESTAURANTE",
+            "ARTUR HENRIQUE SANTOS OLIVEIRA": "COZINHA",
+            "BRUNO LEONARDO LOPES DOS SANTOS": "ESPAÇO VISTA",
+            "CAROLAINE MARIA LIMA DE LIMA": "COZINHA",
+            "CAROLLYNE VITÓRIA CORDEIRO": "EXPEDIÇÃO",
+            "DANILO JOSÉ DE SOUSA SANTANA": "COZINHA",
+            "DERIVAL MACEDO": "COZINHA",
+            "EDUARDA ESTEFANY ALVES MARTINS SILVA": "CONFEITARIA",
+            "EDUARDO MARTINS PIRES": "COZINHA",
+            "FABRÍCIO FRANCISCO DA SILVA": "EVENTOS",
+            "GABRIELLE LICCIARDI RODRIGUES": "EXPEDIÇÃO",
+            "GEOVAN FERREIRA CAMPOS": "COZINHA",
+            "GUILHERME HENRIQUE DE SOUZA SANTOS": "COZINHA",
+            "ISABELA RIBEIRO DA SILVA": "EXPEDIÇÃO",
+            "JOÃO MARCOS SILVA E SOUZA": "COZINHA",
+            "JOSÉ CARLOS JUNIO RIBEIRO ALVES": "EXPEDIÇÃO",
+            "KEROLAYNE KELLY JUNIA FERNANDES SANTANA": "EXPEDIÇÃO",
+            "LARISSA FIDELES FORTUNATO": "ESTOQUE",
+            "LAYSLA LARISSA GOMES FELÍCIO": "EXPEDIÇÃO",
+            "LEIDISON JUNIO SANTOS ALMEIDA": "EXPEDIÇÃO",
+            "LÍVIA RAFAELA - RAPHAEL OLIVEIRA DE SOUZA": "EXPEDIÇÃO",
+            "LUCAS TEIXEIRA LOPES DA SILVA": "COZINHA",
+            "LORENA BINOTTO FELIPPE PINHEIRO": "COMERCIAL",
+            "LUIZ CLÁUDIO SOARES OTONI": "ESTOQUE",
+            "LUÍZA GOMES DOS SANTOS": "EXPEDIÇÃO",
+            "MAGNO DIEGO MAGALHÃES": "EVENTOS",
+            "MARCELLA CRISTINA NORMANDIA CARVALHO": "CONFEITARIA",
+            "MÁRCIO AMARAL DE OLIVEIRA": "COZINHA",
+            "MARCOS DE SOUZA SILVA": "COZINHA",
+            "MARCOS MENDONÇA TORRES": "COZINHA",
+            "MARCOS VINÍCIOS MOREIRA BRITO": "ESTOQUE",
+            "MARCOS VINÍCIUS RODRIGUES ALVES": "EVENTOS",
+            "MARIA DAS GRAÇAS DE PAULA FREITAS": "COZINHA",
+            "MATHEUS RODRIGUES SILVA": "EXPEDIÇÃO",
+            "MAYARA CARDOSO DE SÁ": "EXPEDIÇÃO",
+            "MICHELE VENÂNCIO DE FREITAS": "COZINHA",
+            "MICOL MAINA FRANÇA": "COZINHA",
+            "MILENA GOMES DA SILVA COELHO FERNANDES": "EXPEDIÇÃO",
+            "NEIDELENE ALMEIDA": "EVENTOS",
+            "NELRA LUIZA DO NASCIMENTO": "COZINHA",
+            "PATRICIA ROCHA RODRIGUES": "FINANCEIRO",
+            "PEDRO HENRIQUE BARROS LIMA": "RESTAURANTE",
+            "PRISCILLA STEPHANIE GUIMARÃES": "PRODUÇÃO",
+            "RAFAEL OLIVEIRA SANTOS": "RESTAURANTE",
+            "RENATA ALMEIDA SILVA": "COZINHA",
+            "RODOLFO EDUARDO DOS SANTOS MELO": "COZINHA",
+            "RONILDA MARIA DONATO": "EVENTOS",
+            "SIRLEY DA SILVA": "COZINHA",
+            "TAINÁ LUIZA MIRANDA DE JESUS": "EXPEDIÇÃO",
+            "TALIA LUIZ DOS SANTOS": "COZINHA",
+            "TAYNARA ALESSANDRA DO NASCIMENTO": "COZINHA",
+            "VANDERLEI VENCESLAU": "COZINHA",
+            "WILLIAM DE OLIVEIRA SILVA": "T.I."
+        };
+
+        // 2. FUNÇÃO PARA POPULAR A LISTA (CORRIGIDA)
+        function carregarDatalist() {
+        const list = document.getElementById('colaboradoresAtivos');
+        if (!list) return;
+        list.innerHTML = ""; // Limpa antes de carregar
+        Object.keys(bancoDeDadosVista).sort().forEach(nome => {
+            const opt = document.createElement('option');
+            opt.value = nome;
+            list.appendChild(opt);
+        });
+        console.log("Lista de colaboradores carregada: " + Object.keys(bancoDeDadosVista).length + " nomes.");
+    }
+
+    // Inicializa a lista
+    window.addEventListener('load', carregarDatalist);
+
+    // 3. LOGICA DE BUSCA E SETOR
+    function atualizarSetorAutomatico() {
+        const input = document.getElementById('labelText');
+        const campoSetor = document.getElementById('labelSector');
+        const nomeSelecionado = input.value.trim().toUpperCase();
+
+        const setor = bancoDeDadosVista[nomeSelecionado];
+
+        if (setor) {
+            campoSetor.value = setor;
+
+            // Lógica de encurtamento para a etiqueta
+            const partes = nomeSelecionado.split(' ');
+            const primeiro = partes[0];
+            const repetidos = Object.keys(bancoDeDadosVista).filter(n => n.startsWith(primeiro));
+
+            if (repetidos.length > 1) {
+                input.value = primeiro + (partes[1] ? " " + partes[1] : "");
+            } else {
+                input.value = primeiro;
+            }
+        }
+    }
+
+    // Vincula o evento oninput ao campo
+    document.getElementById('labelText').addEventListener('input', atualizarSetorAutomatico);
+</script>
 
 <script type="module" src="/web/script/main.js"></script>
 

@@ -9,12 +9,19 @@ public class PrinterStrategyFactory {
 
     /**
      * Retorna a estratégia correta para uma requisição de etiqueta simples.
+     * Ajustado para passar o setor (cargo) para a estratégia de layout.
      */
     public static ILabelStrategy getStrategy(PrintRequest request) {
-        // A lógica aqui permanece a mesma.
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
-            return new SimpleLayoutStrategy(request.getText(), request.getQuantity());
+            // O ERRO ESTAVA AQUI: Faltava o request.getSector() no meio
+            return new SimpleLayoutStrategy(
+                    request.getText(),
+                    request.getSector(), // <-- ADICIONE ESTA LINHA
+                    request.getQuantity()
+            );
         } else {
+            // Se a Standard também foi atualizada, adicione o setor aqui também.
+            // Caso contrário, mantenha como está.
             return new SimpleStandardStrategy(request.getText(), request.getQuantity());
         }
     }
@@ -23,9 +30,7 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta de validade.
      */
     public static ILabelStrategy getStrategy(ValidadePrintRequest request) {
-        // --- CÓDIGO SIMPLIFICADO ---
-        // A conversão manual foi removida. Agora acessamos o tipo diretamente.
-        // A biblioteca Gson lida com a conversão do JSON ("STANDARD") para o enum (LabelType.STANDARD) automaticamente.
+        // A biblioteca Gson lida com a conversão do JSON para o enum automaticamente.
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return new ValidadeLayoutStrategy(request);
         } else {
