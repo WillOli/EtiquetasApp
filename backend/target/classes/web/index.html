@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Aplicativo para impressão de etiquetas - Espaço Vista" />
     <title>Espaço Vista - Impressão de Etiquetas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/web/css/style.css" />
@@ -22,32 +21,30 @@
             <div class="mb-6">
                 <label class="block text-sm font-bold text-[var(--text-primary)] mb-3">O QUE VOCÊ DESEJA IMPRIMIR?</label>
                 <div class="flex gap-2 flex-wrap">
-                    <button id="btnModeSimple" class="btn-primary flex-1 py-3 border-b-4 border-blue-800">COLABORADORES</button>
-                    <button id="btnModeValidity" class="btn-secondary flex-1 py-3">VALIDADE</button>
-                    <button id="btnModeImmediate" class="btn-accent flex-1 py-3">CONSUMO IMEDIATO</button>
+                    <button id="btnModeSimple" class="btn-primary flex-1 py-3 border-b-4 border-blue-800">COLABORADORES / DIREÇÃO</button>
                 </div>
             </div>
 
             <div id="simpleForm" class="flex flex-col gap-4">
                 <div class="relative">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Colaborador</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome do Colaborador / Diretor</label>
                     <input type="text" id="labelText" list="colaboradoresAtivos"
                            class="w-full border border-gray-300 rounded-md shadow-sm text-lg p-3 focus:ring-2 focus:ring-blue-500 uppercase"
-                           placeholder="Busque pelo nome..." oninput="atualizarSetorAutomatico()">
+                           placeholder="Busque pelo nome..."
+                           oninput="atualizarSetorAutomatico()"
+                           onfocus="this.value = '';"
+                           onmousedown="this.value = '';">
 
                     <datalist id="colaboradoresAtivos"></datalist>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Setor / Cargo</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Empresa / Setor</label>
                     <input type="text" id="labelSector" readonly
                            class="w-full border border-gray-200 rounded-md bg-gray-100 p-3 text-blue-800 font-bold"
                            placeholder="Setor aparecerá aqui...">
                 </div>
             </div>
-
-            <div id="validityForm" class="hidden"></div>
-            <div id="immediateForm" class="hidden"></div>
 
             <hr class="my-6">
 
@@ -60,7 +57,6 @@
                     <label for="labelType" class="block text-sm font-medium text-gray-700 mb-1">Tamanho</label>
                     <select id="labelType" class="w-full border border-gray-300 rounded-md p-3">
                         <option value="SIXTY_TWO_MM">Padrão (80mm x 25mm)</option>
-                        <option value="STANDARD">Dupla (40mm x 25mm)</option>
                     </select>
                 </div>
             </div>
@@ -75,118 +71,104 @@
 </main>
 
 <footer class="w-full bg-[var(--bg-header)] text-[var(--text-header)] py-4 text-center mt-6">
-    <p>&copy; 2026 Espaço Vista. Gestão IT: Eduardo Melo</p>
+    <p>&copy; 2026 Espaço Vista. Gestão IT</p>
 </footer>
 
 <script>
-        // 1. DATABASE COMPLETO
-        const bancoDeDadosVista = {
-            "ADELYANE CRISTINA DO NASCIMENTO": "EXPEDIÇÃO",
-            "ALINE CARDOSO DA SILVA": "EXPEDIÇÃO",
-            "ANA CLARA DE AGUIAR RODRIGUES": "EXPEDIÇÃO",
-            "ANA CLARA DE JESUS": "EXPEDIÇÃO",
-            "ANA LUÍZA SILVEIRA DE SOUZA OLIVEIRA": "EXPEDIÇÃO",
-            "ANDERSON HENRIQUE MUNIZ": "COZINHA",
-            "ANDERSON SEIXAS FIALHO": "ESPAÇO VISTA",
-            "ANDRÉA FERREIRA DE SOUSA RIBEIRO": "RH",
-            "ANTÔNIO MARCOS DA SILVA TEIXEIRA": "COZINHA",
-            "ARTHUR GOUVEIA CAMPOS BORGES": "RESTAURANTE",
-            "ARTUR HENRIQUE SANTOS OLIVEIRA": "COZINHA",
-            "BRUNO LEONARDO LOPES DOS SANTOS": "ESPAÇO VISTA",
-            "CAROLAINE MARIA LIMA DE LIMA": "COZINHA",
-            "CAROLLYNE VITÓRIA CORDEIRO": "EXPEDIÇÃO",
-            "DANILO JOSÉ DE SOUSA SANTANA": "COZINHA",
-            "DERIVAL MACEDO": "COZINHA",
-            "EDUARDA ESTEFANY ALVES MARTINS SILVA": "CONFEITARIA",
-            "EDUARDO MARTINS PIRES": "COZINHA",
-            "FABRÍCIO FRANCISCO DA SILVA": "EVENTOS",
-            "GABRIELLE LICCIARDI RODRIGUES": "EXPEDIÇÃO",
-            "GEOVAN FERREIRA CAMPOS": "COZINHA",
-            "GUILHERME HENRIQUE DE SOUZA SANTOS": "COZINHA",
-            "ISABELA RIBEIRO DA SILVA": "EXPEDIÇÃO",
-            "JOÃO MARCOS SILVA E SOUZA": "COZINHA",
-            "JOSÉ CARLOS JUNIO RIBEIRO ALVES": "EXPEDIÇÃO",
-            "KEROLAYNE KELLY JUNIA FERNANDES SANTANA": "EXPEDIÇÃO",
-            "LARISSA FIDELES FORTUNATO": "ESTOQUE",
-            "LAYSLA LARISSA GOMES FELÍCIO": "EXPEDIÇÃO",
-            "LEIDISON JUNIO SANTOS ALMEIDA": "EXPEDIÇÃO",
-            "LÍVIA RAFAELA - RAPHAEL OLIVEIRA DE SOUZA": "EXPEDIÇÃO",
-            "LUCAS TEIXEIRA LOPES DA SILVA": "COZINHA",
-            "LORENA BINOTTO FELIPPE PINHEIRO": "COMERCIAL",
-            "LUIZ CLÁUDIO SOARES OTONI": "ESTOQUE",
-            "LUÍZA GOMES DOS SANTOS": "EXPEDIÇÃO",
-            "MAGNO DIEGO MAGALHÃES": "EVENTOS",
-            "MARCELLA CRISTINA NORMANDIA CARVALHO": "CONFEITARIA",
-            "MÁRCIO AMARAL DE OLIVEIRA": "COZINHA",
-            "MARCOS DE SOUZA SILVA": "COZINHA",
-            "MARCOS MENDONÇA TORRES": "COZINHA",
-            "MARCOS VINÍCIOS MOREIRA BRITO": "ESTOQUE",
-            "MARCOS VINÍCIUS RODRIGUES ALVES": "EVENTOS",
-            "MARIA DAS GRAÇAS DE PAULA FREITAS": "COZINHA",
-            "MATHEUS RODRIGUES SILVA": "EXPEDIÇÃO",
-            "MAYARA CARDOSO DE SÁ": "EXPEDIÇÃO",
-            "MICHELE VENÂNCIO DE FREITAS": "COZINHA",
-            "MICOL MAINA FRANÇA": "COZINHA",
-            "MILENA GOMES DA SILVA COELHO FERNANDES": "EXPEDIÇÃO",
-            "NEIDELENE ALMEIDA": "EVENTOS",
-            "NELRA LUIZA DO NASCIMENTO": "COZINHA",
-            "PATRICIA ROCHA RODRIGUES": "FINANCEIRO",
-            "PEDRO HENRIQUE BARROS LIMA": "RESTAURANTE",
-            "PRISCILLA STEPHANIE GUIMARÃES": "PRODUÇÃO",
-            "RAFAEL OLIVEIRA SANTOS": "RESTAURANTE",
-            "RENATA ALMEIDA SILVA": "COZINHA",
-            "RODOLFO EDUARDO DOS SANTOS MELO": "COZINHA",
-            "RONILDA MARIA DONATO": "EVENTOS",
-            "SIRLEY DA SILVA": "COZINHA",
-            "TAINÁ LUIZA MIRANDA DE JESUS": "EXPEDIÇÃO",
-            "TALIA LUIZ DOS SANTOS": "COZINHA",
-            "TAYNARA ALESSANDRA DO NASCIMENTO": "COZINHA",
-            "VANDERLEI VENCESLAU": "COZINHA",
-            "WILLIAM DE OLIVEIRA SILVA": "T.I."
-        };
+    const bancoDeDadosVista = {
+        "ADELYANE CRISTINA DO NASCIMENTO": "EXPEDIÇÃO",
+        "AELSON TEIXEIRA": "GRUPO VISTA",
+        "ALINE CARDOSO DA SILVA": "EXPEDIÇÃO",
+        "ANA CLARA DE AGUIAR RODRIGUES": "EXPEDIÇÃO",
+        "ANA CLARA DE JESUS": "EXPEDIÇÃO",
+        "ANA LUÍZA SILVEIRA DE SOUZA OLIVEIRA": "EXPEDIÇÃO",
+        "ANDERSON HENRIQUE MUNIZ": "COZINHA",
+        "ANDERSON SEIXAS FIALHO": "ESPAÇO VISTA",
+        "ANDRÉA FERREIRA DE SOUSA RIBEIRO": "RH",
+        "ANTÔNIO MARCOS DA SILVA TEIXEIRA": "COZINHA",
+        "ARTHUR GOUVEIA CAMPOS BORGES": "RESTAURANTE",
+        "ARTUR HENRIQUE SANTOS OLIVEIRA": "COZINHA",
+        "BRUNO LEONARDO LOPES DOS SANTOS": "ESPAÇO VISTA",
+        "CAROLAINE MARIA LIMA DE LIMA": "COZINHA",
+        "CAROLLYNE VITÓRIA CORDEIRO": "EXPEDIÇÃO",
+        "DANILO JOSÉ DE SOUSA SANTANA": "COZINHA",
+        "DERIVAL MACEDO": "COZINHA",
+        "EDUARDA ESTEFANY ALVES MARTINS SILVA": "CONFEITARIA",
+        "EDUARDO LAGE": "GRUPO VISTA",
+        "EDUARDO MARTINS PIRES": "COZINHA",
+        "FABRÍCIO FRANCISCO DA SILVA": "EVENTOS",
+        "GABRIEL ROCHA": "GRUPO VISTA",
+        "GABRIELLE LICCIARDI RODRIGUES": "EXPEDIÇÃO",
+        "GEOVAN FERREIRA CAMPOS": "COZINHA",
+        "GUILHERME HENRIQUE DE SOUZA SANTOS": "COZINHA",
+        "ISABELA RIBEIRO DA SILVA": "EXPEDIÇÃO",
+        "JOÃO MARCOS SILVA E SOUZA": "COZINHA",
+        "JOSÉ CARLOS JUNIO RIBEIRO ALVES": "EXPEDIÇÃO",
+        "KEROLAYNE KELLY JUNIA FERNANDES SANTANA": "EXPEDIÇÃO",
+        "LARISSA FIDELES FORTUNATO": "ESTOQUE",
+        "LAYSLA LARISSA GOMES FELÍCIO": "EXPEDIÇÃO",
+        "LEIDISON JUNIO SANTOS ALMEIDA": "EXPEDIÇÃO",
+        "LÍVIA RAFAELA RAPHAEL OLIVEIRA DE SOUZA": "EXPEDIÇÃO",
+        "LORENA BINOTTO FELIPPE PINHEIRO": "COMERCIAL",
+        "LUCAS TEIXEIRA LOPES DA SILVA": "COZINHA",
+        "LUIZ CLÁUDIO SOARES OTONI": "ESTOQUE",
+        "LUÍZA GOMES DOS SANTOS": "EXPEDIÇÃO",
+        "MAGNO DIEGO MAGALHÃES": "EVENTOS",
+        "MARCELLA CRISTINA NORMANDIA CARVALHO": "CONFEITARIA",
+        "MÁRCIO AMARAL DE OLIVEIRA": "COZINHA",
+        "MARCOS DE SOUZA SILVA": "COZINHA",
+        "MARCOS MENDONÇA TORRES": "COZINHA",
+        "MARCOS VINICIUS MOREIRA BRITO": "ESTOQUE",
+        "MARCOS VINICIUS RODRIGUES ALVES": "EVENTOS",
+        "MARIA DAS GRAÇAS DE PAULA FREITAS": "COZINHA",
+        "MATHEUS RODRIGUES SILVA": "EXPEDIÇÃO",
+        "MAYARA CARDOSO DE SÁ": "EXPEDIÇÃO",
+        "MICHELE VENÂNCIO DE FREITAS": "COZINHA",
+        "MICOL MAINA FRANÇA": "COZINHA",
+        "MILENA GOMES DA SILVA COELHO FERNANDES": "EXPEDIÇÃO",
+        "NEIDELENE ALMEIDA": "EVENTOS",
+        "NELRA LUIZA DO NASCIMENTO": "COZINHA",
+        "PATRICIA ROCHA RODRIGUES": "FINANCEIRO",
+        "PEDRO HENRIQUE BARROS LIMA": "RESTAURANTE",
+        "PRISCILLA STEPHANIE GUIMARÃES": "PRODUÇÃO",
+        "RAFAEL OLIVEIRA SANTOS": "RESTAURANTE",
+        "RENATA ALMEIDA SILVA": "COZINHA",
+        "RODOLFO EDUARDO DOS SANTOS MELO": "COZINHA",
+        "RONILDA MARIA DONATO": "EVENTOS",
+        "SIRLEY DA SILVA": "COZINHA",
+        "TAINÁ LUIZA MIRANDA DE JESUS": "EXPEDIÇÃO",
+        "TALIA LUIZ DOS SANTOS": "COZINHA",
+        "TAYNARA ALESSANDRA DO NASCIMENTO": "COZINHA",
+        "VANDERLEI VENCESLAU": "COZINHA",
+        "WILLIAM DE OLIVEIRA SILVA": "T.I."
+    };
 
-        // 2. FUNÇÃO PARA POPULAR A LISTA (CORRIGIDA)
-        function carregarDatalist() {
+    function carregarDatalist() {
         const list = document.getElementById('colaboradoresAtivos');
         if (!list) return;
-        list.innerHTML = ""; // Limpa antes de carregar
+        list.innerHTML = "";
+        // Ordena as chaves do objeto em ordem alfabética antes de criar os options
         Object.keys(bancoDeDadosVista).sort().forEach(nome => {
             const opt = document.createElement('option');
             opt.value = nome;
             list.appendChild(opt);
         });
-        console.log("Lista de colaboradores carregada: " + Object.keys(bancoDeDadosVista).length + " nomes.");
     }
 
-    // Inicializa a lista
     window.addEventListener('load', carregarDatalist);
 
-    // 3. LOGICA DE BUSCA E SETOR
     function atualizarSetorAutomatico() {
         const input = document.getElementById('labelText');
         const campoSetor = document.getElementById('labelSector');
-        const nomeSelecionado = input.value.trim().toUpperCase();
+        const nomeBusca = input.value.trim().toUpperCase();
 
-        const setor = bancoDeDadosVista[nomeSelecionado];
+        if (nomeBusca === "") return;
 
+        const setor = bancoDeDadosVista[nomeBusca];
         if (setor) {
             campoSetor.value = setor;
-
-            // Lógica de encurtamento para a etiqueta
-            const partes = nomeSelecionado.split(' ');
-            const primeiro = partes[0];
-            const repetidos = Object.keys(bancoDeDadosVista).filter(n => n.startsWith(primeiro));
-
-            if (repetidos.length > 1) {
-                input.value = primeiro + (partes[1] ? " " + partes[1] : "");
-            } else {
-                input.value = primeiro;
-            }
         }
     }
-
-    // Vincula o evento oninput ao campo
-    document.getElementById('labelText').addEventListener('input', atualizarSetorAutomatico);
 </script>
 
 <script type="module" src="/web/script/main.js"></script>

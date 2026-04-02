@@ -1,188 +1,119 @@
 /**
  * @file main.js
- * @description Lógica principal para a aplicação de impressão de etiquetas do Espaço Vista.
+ * @description Integração final entre o Frontend dinâmico e o Servidor Java.
  */
 
 const API_BASE_URL = 'http://localhost:8081';
 
 const appState = {
-    mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY' ou 'IMMEDIATE_CONSUMPTION'
+    mode: 'SIMPLE',
 };
 
-// 1. LISTAS DE EXIBIÇÃO PARA VALIDADE E CONSUMO IMEDIATO
-const VALIDITY_DISPLAY_LIST = ["Isca de Filé", "Roast beef", "Parmê de Filé", "Filé surprise", "Isca de Frango", "Frango grelhado", "Salmão posta", "Hambúrguer 160g", "Hambúrguer 100g"];
-const IMMEDIATE_DISPLAY_LIST = ["Bolo de coco", "Brownie", "Chargito", "Cheesecake", "Cookie de Nutella", "Mousse de chocolate", "Pão de mel", "Chips de batata doce", "Croutons", "Suco de laranja"];
-
-function normalizeString(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-}
-
-function createSearchMap(displayList) {
-    const searchMap = new Map();
-    displayList.forEach(product => {
-        searchMap.set(normalizeString(product), product);
-        searchMap.set(product.toLowerCase(), product);
-    });
-    return searchMap;
-}
-
-const VALIDITY_SEARCH_MAP = createSearchMap(VALIDITY_DISPLAY_LIST);
-const IMMEDIATE_SEARCH_MAP = createSearchMap(IMMEDIATE_DISPLAY_LIST);
-
 // =========================================================================
-// FUNÇÃO DE AUTOCOMPLETE
+// FUNÇÃO DE IMPRESSÃO (O CORAÇÃO DO ENVIO)
 // =========================================================================
+async function handlePrintAction() {
+    const labelQuantity = document.getElementById('labelQuantity');
+    const labelType = document.getElementById('labelType');
+    const labelText = document.getElementById('labelText');
+    const labelSector = document.getElementById('labelSector');
 
-function setupAutocomplete(inputId, listId, sourceMap) {
-    const inputElement = document.getElementById(inputId);
-    const suggestionsList = document.getElementById(listId);
-    if (!inputElement || !suggestionsList) return;
+    const quantity = parseInt(labelQuantity.value) || 1;
+    const type = labelType.value;
 
-    const renderSuggestions = () => {
-        const query = normalizeString(inputElement.value);
-        suggestionsList.innerHTML = '';
-        if (query.length === 0) { suggestionsList.classList.add('hidden'); return; }
-        const suggested = new Set();
-        sourceMap.forEach((originalName, searchKey) => {
-            if (searchKey.includes(query)) suggested.add(originalName);
-        });
-        const filtered = Array.from(suggested);
-        if (filtered.length > 0) {
-            filtered.forEach(product => {
-                const li = document.createElement('li');
-                li.className = 'p-2 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm';
-                li.textContent = product;
-                li.onclick = () => { inputElement.value = product; suggestionsList.classList.add('hidden'); };
-                suggestionsList.appendChild(li);
-            });
-            suggestionsList.classList.remove('hidden');
-        } else { suggestionsList.classList.add('hidden'); }
-    };
-    inputElement.addEventListener('input', renderSuggestions);
-}
+    if (quantity < 1) {
+        alert('A quantidade deve ser de no mínimo 1.');
+        return;
+    }
 
-// =========================================================================
-// INICIALIZAÇÃO
-// =========================================================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    setupAutocomplete('productName', 'productSuggestions', VALIDITY_SEARCH_MAP);
-    setupAutocomplete('immediateProductName', 'immediateProductSuggestions', IMMEDIATE_SEARCH_MAP);
-
-    const ui = {
-        btnModeSimple: document.getElementById('btnModeSimple'),
-        btnModeValidity: document.getElementById('btnModeValidity'),
-        btnModeImmediate: document.getElementById('btnModeImmediate'),
-        simpleForm: document.getElementById('simpleForm'),
-        validityForm: document.getElementById('validityForm'),
-        immediateForm: document.getElementById('immediateForm'),
-        labelText: document.getElementById('labelText'),
-        labelSector: document.getElementById('labelSector'), // CAMPO DO SETOR
-        productName: document.getElementById('productName'),
-        mfgDate: document.getElementById('mfgDate'),
-        validityDays: document.getElementById('validityDays'),
-        labelQuantity: document.getElementById('labelQuantity'),
-        labelType: document.getElementById('labelType'),
-        printButton: document.getElementById('printButton'),
-        printButtonText: document.getElementById('printButtonText'),
-        spinner: document.getElementById('spinner'),
-        duplicateInfoText: document.getElementById('duplicate-info-text'),
-        numericButtons: document.querySelectorAll('.btn-numeric'),
-        btnSpecial: document.getElementById('btn-special'),
-        btnClear: document.getElementById('btn-clear'),
-        validityDropdownBtn: document.getElementById('validityDropdownBtn'),
-        validityDropdownPanel: document.getElementById('validityDropdownPanel'),
-        validityUnitLabel: document.getElementById('validityUnitLabel'),
-    };
-
-    attachEventListeners(ui);
-    setupInitialState(ui);
-});
-
-function setupInitialState(ui) {
-    if (ui.mfgDate) ui.mfgDate.value = new Date().toISOString().split('T')[0];
-    switchMode('SIMPLE', ui);
-}
-
-function attachEventListeners(ui) {
-    ui.btnModeSimple?.addEventListener('click', () => switchMode('SIMPLE', ui));
-    ui.btnModeValidity?.addEventListener('click', () => switchMode('VALIDITY', ui));
-    ui.btnModeImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION', ui));
-    ui.printButton?.addEventListener('click', () => handlePrintAction(ui));
-
-    // Listeners Numéricos (Etiqueta Simples)
-    ui.numericButtons.forEach(button => {
-        button.addEventListener('click', () => { if (ui.labelText) ui.labelText.value += button.dataset.value; });
-    });
-    ui.btnClear?.addEventListener('click', () => { if (ui.labelText) ui.labelText.value = ''; });
-}
-
-function switchMode(mode, ui) {
-    appState.mode = mode;
-    [ui.simpleForm, ui.validityForm, ui.immediateForm].forEach(f => f?.classList.add('hidden'));
-    if (mode === 'SIMPLE') ui.simpleForm?.classList.remove('hidden');
-    else if (mode === 'VALIDITY') ui.validityForm?.classList.remove('hidden');
-    else if (mode === 'IMMEDIATE_CONSUMPTION') ui.immediateForm?.classList.remove('hidden');
-}
-
-// =========================================================================
-// FUNÇÃO DE IMPRESSÃO (CORREÇÃO DO SETOR E NOME CURTO)
-// =========================================================================
-
-function handlePrintAction(ui) {
-    const quantity = parseInt(ui.labelQuantity.value) || 1;
-    const labelType = ui.labelType.value;
     let endpoint = '';
     let payload = {};
 
     if (appState.mode === 'SIMPLE') {
-        const text = ui.labelText.value.trim();
-        const sector = ui.labelSector.value.trim(); // CAPTURA O SETOR
+        const text = labelText.value.trim();
+        const sector = labelSector.value.trim();
 
         if (!text) {
-            alert('O texto da etiqueta não pode estar vazio.');
+            alert('O nome do colaborador não pode estar vazio.');
             return;
         }
 
         endpoint = '/print';
-        // O PAYLOAD AGORA INCLUI O SECTOR
-        payload = { text, sector, quantity, labelType };
-    } else if (appState.mode === 'VALIDITY') {
-        endpoint = '/print-validade';
+        // GARANTIA: Enviamos o texto (nome curto) e o setor que está na tela
         payload = {
-            productName: ui.productName.value,
-            mfgDate: ui.mfgDate.value,
-            validityDays: parseInt(ui.validityDays.value),
-            quantity,
-            labelType
+            text: text,
+            sector: sector,
+            quantity: quantity,
+            labelType: type
         };
-    } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
-        endpoint = '/print-consumo-imediato';
-        payload = { productName: ui.immediateProductName.value, quantity, labelType };
     }
+    // Outros modos (Validade/Consumo) seguem aqui...
 
-    sendRequest(endpoint, payload, ui);
+    sendRequest(endpoint, payload);
 }
 
-async function sendRequest(endpoint, payload, ui) {
-    setButtonLoading(true, ui);
+// =========================================================================
+// COMUNICAÇÃO COM O SERVIDOR
+// =========================================================================
+async function sendRequest(endpoint, payload) {
+    const btn = document.getElementById('printButton');
+    const btnText = document.getElementById('printButtonText');
+
+    // Feedback visual de carregamento
+    btn.disabled = true;
+    btnText.textContent = 'Enviando...';
+
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-        if (response.ok) alert("Impressão enviada com sucesso!");
+
+        const result = await response.text();
+
+        if (response.ok) {
+            alert('Etiqueta enviada para a impressora!');
+        } else {
+            throw new Error(result || 'Erro no servidor.');
+        }
     } catch (error) {
-        console.error("Erro:", error);
+        console.error('Erro na impressão:', error);
+        alert('Erro ao imprimir: ' + error.message);
     } finally {
-        setButtonLoading(false, ui);
+        btn.disabled = false;
+        btnText.textContent = 'IMPRIMIR AGORA';
     }
 }
 
-function setButtonLoading(isLoading, ui) {
-    if (!ui.printButton) return;
-    ui.printButton.disabled = isLoading;
-    ui.spinner?.classList.toggle('hidden', !isLoading);
-    ui.printButtonText.textContent = isLoading ? 'Imprimindo...' : 'Imprimir Etiquetas';
+// =========================================================================
+// INICIALIZAÇÃO DOS EVENTOS
+// =========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const printBtn = document.getElementById('printButton');
+    if (printBtn) {
+        printBtn.addEventListener('click', handlePrintAction);
+    }
+
+    // Gerenciamento de Modos (Simples, Validade, Consumo)
+    const btnSimple = document.getElementById('btnModeSimple');
+    const btnValidity = document.getElementById('btnModeValidity');
+    const btnImmediate = document.getElementById('btnModeImmediate');
+
+    btnSimple?.addEventListener('click', () => switchMode('SIMPLE'));
+    btnValidity?.addEventListener('click', () => switchMode('VALIDITY'));
+    btnImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION'));
+});
+
+function switchMode(mode) {
+    appState.mode = mode;
+    const simpleForm = document.getElementById('simpleForm');
+    const validityForm = document.getElementById('validityForm');
+    const immediateForm = document.getElementById('immediateForm');
+
+    // Esconde todos e mostra o selecionado
+    [simpleForm, validityForm, immediateForm].forEach(f => f?.classList.add('hidden'));
+
+    if (mode === 'SIMPLE') simpleForm?.classList.remove('hidden');
+    // Adicionar lógica para outros forms conforme necessário
 }
