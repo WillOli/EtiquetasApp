@@ -6,6 +6,10 @@ public class PrintRequest {
     private int quantity;
     private LabelType labelType;
 
+    private String setor;
+    private String dataFabricacao;
+    private String dataValidade;
+
     public enum LabelType {
         STANDARD,
         SIXTY_TWO_MM
@@ -57,4 +61,12 @@ public class PrintRequest {
         // Atribui o Enum convertido, não a String original
         this.labelType = tempType;
     }
+
+    // --- GETTERS E SETTERS DOS NOVOS CAMPOS ---
+    public String getSetor() { return setor; }
+    public void setSetor(String setor) { this.setor = setor; }
+    public String getDataFabricacao() { return dataFabricacao; }
+    public void setDataFabricacao(String dataFabricacao) { this.dataFabricacao = dataFabricacao; }
+    public String getDataValidade() { return dataValidade; }
+    public void setDataValidade(String dataValidade) { this.dataValidade = dataValidade; }
 }

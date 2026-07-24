@@ -11,9 +11,17 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta simples.
      */
     public static ILabelStrategy getStrategy(PrintRequest request) {
-        // A lógica aqui permanece a mesma.
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
-            return new SimpleLayoutStrategy(request.getText(), request.getQuantity());
+
+            long proximoRegistro = SequenceManager.getNextSequenceAndIncrement(request.getQuantity());
+            return new SimpleLayoutStrategy(
+                    request.getText(),
+                    request.getQuantity(),
+                    request.getSetor(),
+                    request.getDataFabricacao(),
+                    request.getDataValidade(),
+                    proximoRegistro // Número temporário até o passo seguinte
+            );
         } else {
             return new SimpleStandardStrategy(request.getText(), request.getQuantity());
         }

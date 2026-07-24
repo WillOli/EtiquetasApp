@@ -25,6 +25,10 @@ public class PrinterService {
     public void printLabels(PrintRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
+
+        // ✅ ADICIONE ESSA LINHA PARA IMPRIMIR O ZPL NO CONSOLE DO INTELLIJ:
+        System.out.println("\n=== ZPL GERADO PELO SISTEMA ===\n" + zpl + "\n===============================\n");
+
         sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
     }
 
