@@ -3,62 +3,64 @@
  * @description Lógica principal para a aplicação de impressão de etiquetas do Espaço Vista.
  */
 
-const API_BASE_URL = 'http://localhost:8081';
+const API_BASE_URL = 'http://localhost:8080';
 
 const appState = {
     mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY' ou 'IMMEDIATE_CONSUMPTION'
 };
 
 // =========================================================================
-// INÍCIO: NOVAS VARIÁVEIS E FUNÇÕES PARA AUTOCOMPLETE PROFISSIONAL (BUSCA OTIMIZADA)
+// LISTAS DE EXIBIÇÃO E AUTOCOMPLETE OTIMIZADO (SEPARADAS POR ABA)
 // =========================================================================
 
-// 1. LISTAS DE EXIBIÇÃO (Apenas nomes formatados que o usuário deve ver)
+// 1. Lista exclusiva para Etiqueta de Validade (Carnes, Peixes e Hambúrgueres)
 const VALIDITY_DISPLAY_LIST = [
     // Carne Bovina
     "Isca de Filé",
     "Roast beef",
     "Parmê de Filé",
     "Filé surprise",
-    
+
     // Frango
     "Isca de Frango",
     "Frango grelhado",
     "Parmê de Frango",
     "Frango empanado",
-    
+
     // Peixe
     "Salmão posta",
     "Hambúrguer salmão 100g",
     "Hambúrguer salmão 50g",
-    
+
     // Hambúrgueres de Carne
     "Hambúrguer 160g",
     "Hambúrguer 140g",
     "Hambúrguer 100g",
     "Hambúrguer 50g",
-    
+
     // Hambúrgueres de Frango
     "Hambúrguer frango 100g",
     "Hambúrguer frango 50g",
 ];
 
-const IMMEDIATE_DISPLAY_LIST = [
-    // Doces
-    "Bolo de coco",
+// 2. Lista EXCLUSIVA para Etiqueta Simples (Os 12 Doces da Confeitaria)
+const SIMPLE_DISPLAY_LIST = [
     "Brownie",
-    "Chargito",
-    "Cheesecake",
-    "Cookie de Nutella",
-    "Cookie red velvet",
-    "Cookie tradicional",
-    "Mousse de chocolate",
+    "Bolo de coco",
+    "Cheesescake",
     "Pão de mel",
-    "Pavê de doce de leite",
-    "Surpresa cookie",
-    "Surpresa de Nutella",
-    
-    // Salgados/Acompanhamentos/Bebidas
+    "Chargito",
+    "Surpresa Nutella",
+    "Surpresa Cookie",
+    "Pavê doce de leite",
+    "Mousse Chocolate",
+    "Cookie Nutella",
+    "Cookie Red",
+    "Cookie Tradicional"
+];
+
+// 3. Lista exclusiva para Consumo Imediato (Acompanhamentos, Molhos e Bebidas)
+const IMMEDIATE_DISPLAY_LIST = [
     "Alho poró",
     "Chips de batata doce",
     "Crocante de batata doce",
@@ -72,86 +74,62 @@ const IMMEDIATE_DISPLAY_LIST = [
     "Suco de laranja",
 ];
 
-/**
- * Normaliza uma string removendo acentos, cedilha e convertendo para minúsculas.
- * @param {string} str - String a ser normalizada.
- * @returns {string} String normalizada.
- */
 function normalizeString(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
-/**
- * Cria um Mapa de Busca onde a chave é o termo de busca simplificado 
- * e o valor é o nome original formatado.
- * @param {string[]} displayList - Lista de nomes formatados.
- * @returns {Map<string, string>} Mapa {termo_simplificado: nome_original}.
- */
 function createSearchMap(displayList) {
     const searchMap = new Map();
     displayList.forEach(product => {
-        // A chave de busca será a versão normalizada
-        const searchKey = normalizeString(product); 
-        // Armazenamos o nome original como valor
-        searchMap.set(searchKey, product); 
-        
-        // Adiciona o nome original (minúsculo) como segunda chave de busca
-        searchMap.set(product.toLowerCase(), product); 
+        const searchKey = normalizeString(product);
+        searchMap.set(searchKey, product);
+        searchMap.set(product.toLowerCase(), product);
     });
     return searchMap;
 }
 
-// 2. CRIA OS MAPAS DE BUSCA (Estes são usados na função setupAutocomplete)
+// Mapas de busca individuais para cada aba
 const VALIDITY_SEARCH_MAP = createSearchMap(VALIDITY_DISPLAY_LIST);
+const SIMPLE_SEARCH_MAP = createSearchMap(SIMPLE_DISPLAY_LIST);
 const IMMEDIATE_SEARCH_MAP = createSearchMap(IMMEDIATE_DISPLAY_LIST);
 
-
-// =========================================================================
-// FUNÇÃO DE AUTOCOMPLETE (REVISADA: USA O MAPA DE BUSCA)
-// =========================================================================
-
-function setupAutocomplete(inputId, listId, sourceMap) { 
+function setupAutocomplete(inputId, listId, sourceMap) {
     const inputElement = document.getElementById(inputId);
     const suggestionsList = document.getElementById(listId);
 
     if (!inputElement || !suggestionsList || sourceMap.size === 0) return;
 
-    // Função para filtrar e renderizar a lista
     const renderSuggestions = () => {
-        const query = normalizeString(inputElement.value); // NORMALIZA A BUSCA DO USUÁRIO
+        const query = normalizeString(inputElement.value);
         suggestionsList.innerHTML = '';
-        
-        // Oculta a lista se a busca estiver vazia e o foco não estiver no elemento
+
         if (query.length === 0 && inputElement !== document.activeElement) {
             suggestionsList.classList.add('hidden');
             return;
         }
 
-        const suggestedProducts = new Set(); // Usamos um Set para garantir unicidade dos nomes
-        
-        // Itera sobre todas as chaves no mapa de busca
+        const suggestedProducts = new Set();
+
         sourceMap.forEach((originalName, searchKey) => {
-            // Verifica se a chave de busca (normalizada) inclui a query do usuário (normalizada)
             if (searchKey.includes(query)) {
-                suggestedProducts.add(originalName); // Adiciona APENAS o nome original/formatado
+                suggestedProducts.add(originalName);
             }
         });
-        
+
         const filtered = Array.from(suggestedProducts);
 
-        // Renderiza a lista se houver itens
         if (filtered.length > 0) {
             filtered.forEach(product => {
                 const li = document.createElement('li');
                 li.className = 'p-2 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm';
-                li.textContent = product; // Exibe o nome formatado
-                
+                li.textContent = product;
+
                 li.addEventListener('click', () => {
                     inputElement.value = product;
                     suggestionsList.classList.add('hidden');
-                    inputElement.dispatchEvent(new Event('input')); 
+                    inputElement.dispatchEvent(new Event('input'));
                 });
-                
+
                 suggestionsList.appendChild(li);
             });
             suggestionsList.classList.remove('hidden');
@@ -160,16 +138,10 @@ function setupAutocomplete(inputId, listId, sourceMap) {
         }
     };
 
-    // Eventos 
     inputElement.addEventListener('input', renderSuggestions);
-
-    inputElement.addEventListener('focus', () => {
-        // Quando foca, mostra todos os itens (filtrando pela query vazia, que é o padrão)
-        renderSuggestions();
-    });
+    inputElement.addEventListener('focus', renderSuggestions);
 
     document.addEventListener('click', (event) => {
-        // Oculta a lista se o clique for fora do input ou da lista
         if (!inputElement.contains(event.target) && !suggestionsList.contains(event.target)) {
             suggestionsList.classList.add('hidden');
         }
@@ -177,19 +149,26 @@ function setupAutocomplete(inputId, listId, sourceMap) {
 }
 
 // =========================================================================
-// FIM: NOVAS VARIÁVEIS E FUNÇÕES PARA AUTOCOMPLETE PROFISSIONAL
+// HELPER PARA CONVERSÃO DE DATAS (AAAA-MM-DD -> DD/MM/AAAA)
+// =========================================================================
+function formatDateToBR(dateStr) {
+    if (!dateStr) return "";
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
+}
+
+// =========================================================================
+// INICIALIZAÇÃO DA INTERFACE
 // =========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // -----------------------------------------------------------------
-    // INICIALIZAÇÃO DO NOVO AUTOCOMPLETE (USANDO OS MAPAS DE BUSCA)
-    // -----------------------------------------------------------------
-    // Campo de Validade (VALIDITY) usa o mapa VALIDITY_SEARCH_MAP
-    setupAutocomplete('productName', 'productSuggestions', VALIDITY_SEARCH_MAP); 
-    
-    // Campo de Consumo Imediato (IMMEDIATE) usa o mapa IMMEDIATE_SEARCH_MAP
+    // Vincula cada aba com sua respectiva lista exclusiva
+    setupAutocomplete('productName', 'productSuggestions', VALIDITY_SEARCH_MAP);
     setupAutocomplete('immediateProductName', 'immediateProductSuggestions', IMMEDIATE_SEARCH_MAP);
-    // -----------------------------------------------------------------
+    setupAutocomplete('labelText', 'simpleProductSuggestions', SIMPLE_SEARCH_MAP);
 
     const ui = {
         btnModeSimple: document.getElementById('btnModeSimple'),
@@ -198,17 +177,25 @@ document.addEventListener('DOMContentLoaded', () => {
         simpleForm: document.getElementById('simpleForm'),
         validityForm: document.getElementById('validityForm'),
         immediateForm: document.getElementById('immediateForm'),
-        immediateProductName: document.getElementById('immediateProductName'),
+
+        // Campos da Etiqueta Simples
         labelText: document.getElementById('labelText'),
-        numericButtons: document.querySelectorAll('.btn-numeric'),
-        btnSpecial: document.getElementById('btn-special'),
-        btnClear: document.getElementById('btn-clear'),
+        labelSetor: document.getElementById('labelSetor'),
+        labelFabDate: document.getElementById('labelFabDate'),
+        labelValDate: document.getElementById('labelValDate'),
+
+        // Campos da Validade
         productName: document.getElementById('productName'),
         mfgDate: document.getElementById('mfgDate'),
         validityDays: document.getElementById('validityDays'),
         validityDropdownBtn: document.getElementById('validityDropdownBtn'),
         validityDropdownPanel: document.getElementById('validityDropdownPanel'),
-        validityUnitLabel: document.getElementById('validityUnitLabel'), // Seletor para o rótulo "dia/dias"
+        validityUnitLabel: document.getElementById('validityUnitLabel'),
+
+        // Campos do Consumo Imediato
+        immediateProductName: document.getElementById('immediateProductName'),
+
+        // Campos Globais
         labelQuantity: document.getElementById('labelQuantity'),
         labelType: document.getElementById('labelType'),
         duplicateInfoText: document.getElementById('duplicate-info-text'),
@@ -222,12 +209,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupInitialState(ui) {
-    if (ui.mfgDate) {
-        ui.mfgDate.value = new Date().toISOString().split('T')[0];
-    }
+    const hojeStr = new Date().toISOString().split('T')[0]; // Formato AAAA-MM-DD
+
+    // Preenche as datas com o dia atual automaticamente
+    if (ui.mfgDate) ui.mfgDate.value = hojeStr;
+    if (ui.labelFabDate) ui.labelFabDate.value = hojeStr;
+    if (ui.labelValDate) ui.labelValDate.value = hojeStr; // Preenche validade inicial para não ir vazia
+
     populateValidityDropdown([1, 2, 3, 5, 7, 10, 15, 30], ui);
     updateDuplicateInfo(ui);
-    updateValidityUnitLabel(ui); // Chama a função para definir o estado inicial
+    updateValidityUnitLabel(ui);
     switchMode('SIMPLE', ui);
 }
 
@@ -235,20 +226,6 @@ function attachEventListeners(ui) {
     ui.btnModeSimple?.addEventListener('click', () => switchMode('SIMPLE', ui));
     ui.btnModeValidity?.addEventListener('click', () => switchMode('VALIDITY', ui));
     ui.btnModeImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION', ui));
-
-    ui.numericButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (ui.labelText) ui.labelText.value += button.dataset.value;
-        });
-    });
-    ui.btnSpecial?.addEventListener('click', () => {
-        if (ui.labelText && !ui.labelText.value.includes(' - ESPECIAL ')) {
-            ui.labelText.value += ' - ESPECIAL ';
-        }
-    });
-    ui.btnClear?.addEventListener('click', () => {
-        if (ui.labelText) ui.labelText.value = '';
-    });
 
     ui.validityDropdownBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -258,62 +235,57 @@ function attachEventListeners(ui) {
         ui.validityDropdownPanel?.classList.add('hidden');
     });
 
-    // Listener para atualizar o rótulo "dia/dias" quando o utilizador digita
     ui.validityDays?.addEventListener('input', () => updateValidityUnitLabel(ui));
-
     ui.labelQuantity?.addEventListener('input', () => updateDuplicateInfo(ui));
     ui.labelType?.addEventListener('change', () => updateDuplicateInfo(ui));
 
     ui.printButton?.addEventListener('click', () => handlePrintAction(ui));
 }
 
-/**
- * Atualiza o texto "dia" ou "dias" com base no valor do input.
- * @param {object} ui - O objeto contendo referências aos elementos da UI.
- */
 function updateValidityUnitLabel(ui) {
-    if (!ui.validityDays || !ui.validityUnitLabel) return; // Verificação de segurança
-
+    if (!ui.validityDays || !ui.validityUnitLabel) return;
     const days = Number(ui.validityDays.value);
-    // Se o valor for 1, mostra "dia". Para todos os outros casos (0, 2, 3...), mostra "dias".
     ui.validityUnitLabel.textContent = (days === 1) ? 'dia' : 'dias';
 }
 
 function switchMode(mode, ui) {
     appState.mode = mode;
 
-    
-    // Limpa o texto da Etiqueta Simples
-    if (ui.labelText) ui.labelText.value = '';
+    const hojeStr = new Date().toISOString().split('T')[0];
 
-    // Limpa os campos da Etiqueta de Validade
+    // Limpa e reseta os campos das 3 abas para evitar resíduos de digitação
+    if (ui.labelText) ui.labelText.value = '';
+    if (ui.labelSetor) ui.labelSetor.value = 'CONFEITARIA';
+    if (ui.labelFabDate) ui.labelFabDate.value = hojeStr;
+    if (ui.labelValDate) ui.labelValDate.value = hojeStr; // Mantém preenchido por padrão
+
     if (ui.productName) ui.productName.value = '';
-    if (ui.mfgDate) ui.mfgDate.value = new Date().toISOString().split('T')[0]; // Reseta para hoje
+    if (ui.mfgDate) ui.mfgDate.value = hojeStr;
     if (ui.validityDays) {
         ui.validityDays.value = 1;
-        updateValidityUnitLabel(ui); // Garante que o texto mude para "1 dia"
+        updateValidityUnitLabel(ui);
     }
-
-    // Limpa o campo de Consumo Imediato
     if (ui.immediateProductName) ui.immediateProductName.value = '';
 
-    // Esconde as listas de sugestões do autocomplete (se estiverem abertas)
+    // Oculta quaisquer menus flutuantes que estejam abertos
     document.getElementById('productSuggestions')?.classList.add('hidden');
     document.getElementById('immediateProductSuggestions')?.classList.add('hidden');
+    document.getElementById('simpleProductSuggestions')?.classList.add('hidden');
 
-    // Reset button states
+    // Atualiza botões superiores
     ui.btnModeSimple?.classList.remove('btn-primary');
     ui.btnModeSimple?.classList.add('btn-secondary');
     ui.btnModeValidity?.classList.remove('btn-primary');
     ui.btnModeValidity?.classList.add('btn-secondary');
     ui.btnModeImmediate?.classList.remove('btn-primary');
     ui.btnModeImmediate?.classList.add('btn-secondary');
-    
-    // Hide all forms
+
+    // Oculta todos os formulários
     ui.simpleForm?.classList.add('hidden');
     ui.validityForm?.classList.add('hidden');
     ui.immediateForm?.classList.add('hidden');
-    
+
+    // Exibe apenas a aba selecionada
     if (mode === 'SIMPLE') {
         ui.btnModeSimple?.classList.remove('btn-secondary');
         ui.btnModeSimple?.classList.add('btn-primary');
@@ -337,24 +309,6 @@ function updateDuplicateInfo(ui) {
     ui.duplicateInfoText.textContent = `Quantidade solicitada: ${quantity}, Total impresso: ${totalPrinted}`;
 }
 
-function populateValidityDropdown(daysArray, ui) {
-    if (!ui.validityDropdownPanel || !ui.validityDays) return;
-    ui.validityDropdownPanel.innerHTML = '';
-    daysArray.forEach(day => {
-        const item = document.createElement('a');
-        item.href = '#';
-        item.textContent = (day === 1) ? `${day} dia` : `${day} dias`;
-        item.className = 'block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer';
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            ui.validityDays.value = day;
-            updateValidityUnitLabel(ui); // Atualiza o rótulo ao selecionar
-            ui.validityDropdownPanel.classList.add('hidden');
-        });
-        ui.validityDropdownPanel.appendChild(item);
-    });
-}
-
 function handlePrintAction(ui) {
     const quantity = parseInt(ui.labelQuantity.value) || 0;
     const labelType = ui.labelType.value;
@@ -369,12 +323,51 @@ function handlePrintAction(ui) {
 
     if (appState.mode === 'SIMPLE') {
         const text = ui.labelText.value.trim();
+        const setor = ui.labelSetor.value.trim() || "CONFEITARIA";
+
+        // Captura direta e segura das datas
+        const fabInput = document.getElementById('labelFabDate');
+        const valInput = document.getElementById('labelValDate');
+        const dataFabricacao = fabInput ? formatDateToBR(fabInput.value) : "";
+        const dataValidade = valInput ? formatDateToBR(valInput.value) : "";
+
         if (!text) {
-            showModal('O texto da etiqueta não pode estar vazio.', 'error');
+            showModal('O nome do produto não pode estar vazio.', 'error');
             return;
         }
+        if (!dataFabricacao) {
+            showModal('A data de fabricação é obrigatória.', 'error');
+            return;
+        }
+        if (!dataValidade) {
+            showModal('A data de validade é obrigatória.', 'error');
+            return;
+        }
+
+        // Número de registro padrão para sair igual à foto do Postman
+        const registro = "00001";
+
         endpoint = '/print';
-        payload = { text, quantity, labelType };
+
+        // ENVIO BLINDADO: Enviamos as datas e o registro sob múltiplas variações de chaves.
+        // Assim, independentemente do nome do campo na sua classe Java (PrintRequest), ele receberá o dado!
+        payload = {
+            text: text,
+            setor: setor,
+            dataFabricacao: dataFabricacao,
+            dataValidade: dataValidade,
+            registro: registro,
+            // Variações e Aliases de segurança:
+            mfgDate: dataFabricacao,
+            validityDate: dataValidade,
+            dataFab: dataFabricacao,
+            dataVal: dataValidade,
+            lote: registro,
+            quantity: quantity,
+            labelType: labelType
+        };
+
+        console.log("JSON disparado pelo navegador:", JSON.stringify(payload));
     } else if (appState.mode === 'VALIDITY') {
         const productName = ui.productName.value.trim();
         const mfgDate = ui.mfgDate.value;
@@ -394,9 +387,10 @@ function handlePrintAction(ui) {
         }
         endpoint = '/print-validade';
         payload = { productName, mfgDate, validityDays, quantity, labelType };
+
     } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
         const productName = ui.immediateProductName.value.trim();
-        
+
         if (!productName) {
             showModal('O nome do produto não pode estar vazio.', 'error');
             return;
@@ -440,7 +434,40 @@ function setButtonLoading(isLoading, ui) {
 
 function showModal(message, type = 'success') {
     document.getElementById('alertModalContainer')?.remove();
-    const modalHTML = `...`; // O código do modal permanece o mesmo
+
+    // Limpa qualquer temporizador anterior para evitar conflitos
+    if (window.modalTimeout) {
+        clearTimeout(window.modalTimeout);
+    }
+
+    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+    const modalHTML = `
+        <div id="alertModalContainer" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                <div class="${bgColor} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 font-bold text-xl">
+                    ${type === 'success' ? '✓' : '✕'}
+                </div>
+                <p class="text-gray-800 text-base mb-4 font-medium">${message}</p>
+                <button onclick="fecharModalManual()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 w-full font-bold">
+                    OK
+                </button>
+            </div>
+        </div>
+    `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
-    // ...
+
+    // Função global auxiliar para fechar manualmente se o usuário clicar em OK antes dos 3 segundos
+    window.fecharModalManual = () => {
+        if (window.modalTimeout) {
+            clearTimeout(window.modalTimeout);
+        }
+        document.getElementById('alertModalContainer')?.remove();
+    };
+
+    // Se for mensagem de sucesso, configura o timer de 3 segundos (3000 ms) para fechar sozinho
+    if (type === 'success') {
+        window.modalTimeout = setTimeout(() => {
+            document.getElementById('alertModalContainer')?.remove();
+        }, 3000);
+    }
 }

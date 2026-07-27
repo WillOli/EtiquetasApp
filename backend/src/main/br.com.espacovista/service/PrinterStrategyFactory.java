@@ -11,11 +11,29 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta simples.
      */
     public static ILabelStrategy getStrategy(PrintRequest request) {
-        // A lógica aqui permanece a mesma.
+        // 1. Geramos o número sequencial antes do if/else para que AMBOS os tipos de etiqueta tenham registro
+        long proximoRegistro = SequenceManager.getNextSequenceAndIncrement(request.getQuantity());
+
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
-            return new SimpleLayoutStrategy(request.getText(), request.getQuantity());
+            return new SimpleLayoutStrategy(
+                    request.getText(),
+                    request.getQuantity(),
+                    request.getSetor(),
+                    request.getDataFabricacao(),
+                    request.getDataValidade(),
+                    proximoRegistro
+            );
         } else {
-            return new SimpleStandardStrategy(request.getText(), request.getQuantity());
+            // ✅ CORREÇÃO: Agora formatamos o registro e repassamos TODOS os dados para a Etiqueta Dupla!
+            String regFormatado = String.format("%05d", proximoRegistro);
+            return new SimpleStandardStrategy(
+                    request.getText(),
+                    request.getSetor(),
+                    request.getDataFabricacao(),
+                    request.getDataValidade(),
+                    regFormatado,
+                    request.getQuantity()
+            );
         }
     }
 
@@ -23,9 +41,6 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta de validade.
      */
     public static ILabelStrategy getStrategy(ValidadePrintRequest request) {
-        // --- CÓDIGO SIMPLIFICADO ---
-        // A conversão manual foi removida. Agora acessamos o tipo diretamente.
-        // A biblioteca Gson lida com a conversão do JSON ("STANDARD") para o enum (LabelType.STANDARD) automaticamente.
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return new ValidadeLayoutStrategy(request);
         } else {

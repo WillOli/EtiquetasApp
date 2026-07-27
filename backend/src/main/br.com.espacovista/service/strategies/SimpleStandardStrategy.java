@@ -3,46 +3,71 @@ package service.strategies;
 import static service.ZplConstants.*;
 
 /**
- * Estratégia para imprimir uma etiqueta de texto simples em um layout de duas colunas.
- * Herda a lógica de layout de AbstractTwoColumnStrategy.
+ * Estratégia para imprimir a Etiqueta Dupla (Padrão / Standard).
+ * Adaptada para utilizar EXATAMENTE as mesmas dimensões, fontes e coordenadas
+ * da SimpleLayoutStrategy (Etiqueta Simples), garantindo alinhamento idêntico.
  */
 public class SimpleStandardStrategy extends AbstractTwoColumnStrategy {
 
     private final String text;
+    private final String setor;
+    private final String dataFabricacao;
+    private final String dataValidade;
+    private final String registro;
+
+    // Construtor completo
+    public SimpleStandardStrategy(String text, String setor, String dataFabricacao, String dataValidade, String registro, int quantity) {
+        super(quantity);
+        this.text = (text != null) ? text : "";
+        this.setor = (setor != null) ? setor : "";
+        this.dataFabricacao = (dataFabricacao != null) ? dataFabricacao : "";
+        this.dataValidade = (dataValidade != null) ? dataValidade : "";
+        this.registro = (registro != null) ? registro : "";
+    }
+
+    // Construtores de compatibilidade
+    public SimpleStandardStrategy(String text, String setor, String dataFabricacao, String dataValidade, int quantity) {
+        this(text, setor, dataFabricacao, dataValidade, "", quantity);
+    }
 
     public SimpleStandardStrategy(String text, int quantity) {
-        // Passa a quantidade para o construtor da classe pai.
-        super(quantity);
-        this.text = text;
+        this(text, "CONFEITARIA", "", "", "", quantity);
     }
 
     /**
-     * Implementa o método abstrato para gerar o conteúdo específico desta etiqueta.
+     * Gera o conteúdo ZPL adotando as mesmas dimensões e coordenadas da Etiqueta Simples.
      */
     @Override
     protected String generateLabelContent(int startX, int column) {
-        int labelWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM;
-        int fontHeight = FONT_HEIGHT_STANDARD - 10;
+        // Ajuste das colunas idêntico
+        int offsetX = (column == 0) ? 5 : 340;
+        int fontHeightNome = (this.text.length() > 16) ? 24 : 28;
 
-        // Lógica de posicionamento que era específica desta classe.
-        int globalLeftShift = 10;
-        int posX;
-        if (column == 0) {
-            posX = 20 - globalLeftShift; // Posição para a coluna da esquerda
-        } else {
-            posX = (startX - 15) - globalLeftShift; // Posição para a coluna da direita
+        StringBuilder contentBuilder = new StringBuilder();
+
+        contentBuilder.append("^FO").append(offsetX).append(",25")
+                .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
+                .append("^FB340,1,0,C,0^FD").append(this.text.toUpperCase()).append("^FS\n");
+
+        if (!this.setor.isEmpty()) {
+            contentBuilder.append("^FO").append(offsetX).append(",65")
+                    .append("^A0N,22,22^FB340,1,0,C,0^FDSETOR: ").append(this.setor.toUpperCase()).append("^FS\n");
         }
 
-        // Adiciona uma pequena margem vertical
-        int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
-        int posY = (labelHeightDots - fontHeight) / 2 + 10;
+        if (!this.dataFabricacao.isEmpty()) {
+            contentBuilder.append("^FO").append(offsetX).append(",100")
+                    .append("^A0N,20,20^FB340,1,0,C,0^FDFAB.: ").append(this.dataFabricacao).append("^FS\n");
+        }
 
-        // Usa um StringBuilder para construir o fragmento ZPL.
-        StringBuilder contentBuilder = new StringBuilder();
-        contentBuilder.append("^FO").append(posX).append(",").append(posY)
-                .append("^A0N,").append(fontHeight).append(",").append(fontHeight)
-                .append("^FB").append(labelWidthDots).append(",3,0,C,0")
-                .append("^FD").append(this.text).append("^FS\n");
+        if (!this.dataValidade.isEmpty()) {
+            contentBuilder.append("^FO").append(offsetX).append(",130")
+                    .append("^A0N,20,20^FB340,1,0,C,0^FDVAL.: ").append(this.dataValidade).append("^FS\n");
+        }
+
+        if (!this.registro.isEmpty()) {
+            contentBuilder.append("^FO").append(offsetX).append(",160")
+                    .append("^A0N,20,20^FB340,1,0,C,0^FDREG.: ").append(this.registro).append("^FS\n");
+        }
 
         return contentBuilder.toString();
     }
