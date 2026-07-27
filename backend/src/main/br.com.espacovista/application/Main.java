@@ -13,33 +13,32 @@ public class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        // Reintroduzimos o AppConfig para ler a porta do arquivo de propriedades.
-        // Isso mantém o código flexível.
+        // Leitura dinâmica da porta definida no arquivo de propriedades
         int port = AppConfig.getServerPort();
 
-        // Inicializa os componentes principais.
+        // Inicializa os componentes principais do sistema
         var printerService = new PrinterService();
         var printController = new PrintController(printerService);
 
         Javalin app = Javalin.create(config -> {
-            // Mantemos a configuração de CORS mais simples (anyHost) por enquanto,
-            // pois sabemos que ela funciona e não causa problemas durante o desenvolvimento.
+            // Configuração de CORS liberada para evitar bloqueios no navegador durante o desenvolvimento
             config.registerPlugin(new CorsPlugin(cors -> {
                 cors.addRule(it -> it.anyHost());
             }));
 
-            // A configuração dos arquivos estáticos, que está correta, é mantida.
+            // ✅ ALTERAÇÃO PRINCIPAL: Mudamos para Location.EXTERNAL lendo direto da pasta do projeto.
+            // Isso resolve o erro de "directory does not exist" e permite atualizar o HTML/JS sem reiniciar o Java!
             config.staticFiles.add(staticFiles -> {
                 staticFiles.hostedPath = "/web";
-                staticFiles.directory = "/web";
-                staticFiles.location = Location.CLASSPATH;
+                staticFiles.directory = "src/main/resources/web";
+                staticFiles.location = Location.EXTERNAL;
             });
         }).start(port);
 
         logger.info("Servidor iniciado com sucesso na porta {}", port);
         logger.info("Acesse http://localhost:{}/web/index.html para usar a aplicação.", port);
 
-        // As rotas da API continuam as mesmas.
+        // Mapeamento das rotas da nossa API de impressão
         app.post("/print", printController::handlePrintRequest);
         app.post("/print-validade", printController::handleValidadePrintRequest);
         app.post("/print-consumo-imediato", printController::handleImmediateConsumptionRequest);

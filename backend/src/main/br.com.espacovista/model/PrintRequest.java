@@ -9,6 +9,7 @@ public class PrintRequest {
     private String setor;
     private String dataFabricacao;
     private String dataValidade;
+    private String registro; // ✅ Adicionado para suportar o número sequencial
 
     public enum LabelType {
         STANDARD,
@@ -41,10 +42,8 @@ public class PrintRequest {
         this.quantity = quantity;
     }
 
-
     /**
-     * ✅ CORREÇÃO: A lógica de conversão está DENTRO do setter.
-     * Este método recebe a String do JSON e a converte para o Enum antes de atribuir.
+     * ✅ Mantido: A lógica de conversão segura para o Enum.
      */
     public void setLabelType(String labelTypeStr) {
         LabelType tempType;
@@ -58,15 +57,19 @@ public class PrintRequest {
             System.err.println("[AVISO] Valor de labelType inválido recebido: '" + labelTypeStr + "'. Usando padrão.");
             tempType = LabelType.STANDARD;
         }
-        // Atribui o Enum convertido, não a String original
         this.labelType = tempType;
     }
 
-    // --- GETTERS E SETTERS DOS NOVOS CAMPOS ---
+    // --- GETTERS E SETTERS DOS CAMPOS COMPLEMENTARES ---
     public String getSetor() { return setor; }
     public void setSetor(String setor) { this.setor = setor; }
+
     public String getDataFabricacao() { return dataFabricacao; }
     public void setDataFabricacao(String dataFabricacao) { this.dataFabricacao = dataFabricacao; }
+
     public String getDataValidade() { return dataValidade; }
     public void setDataValidade(String dataValidade) { this.dataValidade = dataValidade; }
+
+    public String getRegistro() { return registro; }
+    public void setRegistro(String registro) { this.registro = registro; }
 }

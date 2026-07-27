@@ -39,21 +39,22 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
                 int itemAtual = i + col;
                 if (itemAtual >= this.quantity) break;
 
-                int offsetX = (col == 0) ? 25 : 405;
+                // Ajuste das colunas para centralizar sem cortar nas bordas
+                int offsetX = (col == 0) ? 20 : 430;
                 long regAtual = this.numeroImpressao + itemAtual;
                 String regFormatado = String.format("%05d", regAtual);
 
                 zplBuilder.append("^FO").append(offsetX).append(",25")
                         .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
-                        .append("^FB360,1,0,C,0^FD").append(this.text.toUpperCase()).append("^FS\n");
+                        .append("^FB340,1,0,C,0^FD").append(this.text.toUpperCase()).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",65")
-                        .append("^A0N,22,22^FB360,1,0,C,0^FDSETOR: ").append(this.setor.toUpperCase()).append("^FS\n");
+                        .append("^A0N,22,22^FB340,1,0,C,0^FDSETOR: ").append(this.setor.toUpperCase()).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",100")
-                        .append("^A0N,20,20^FB360,1,0,C,0^FDFAB.: ").append(this.dataFabricacao).append("^FS\n");
+                        .append("^A0N,20,20^FB340,1,0,C,0^FDFAB.: ").append(this.dataFabricacao).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",130")
-                        .append("^A0N,20,20^FB360,1,0,C,0^FDVAL.: ").append(this.dataValidade).append("^FS\n");
+                        .append("^A0N,20,20^FB340,1,0,C,0^FDVAL.: ").append(this.dataValidade).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",160")
-                        .append("^A0N,20,20^FB360,1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
+                        .append("^A0N,20,20^FB340,1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
             }
             zplBuilder.append("^XZ\n");
         }
