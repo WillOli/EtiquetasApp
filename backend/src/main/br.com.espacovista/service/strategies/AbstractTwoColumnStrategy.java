@@ -5,7 +5,7 @@ import static service.ZplConstants.*;
  * Classe base abstrata para estratégias de impressão que usam um layout de duas colunas.
  * Encapsula a lógica comum de iteração, cálculo de posição e comandos de página ZPL.
  */
-public abstract class AbstractTwoColumnStrategy implements ILabelStrategy {
+public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
 
     private final int quantity;
 
