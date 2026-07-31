@@ -3,7 +3,7 @@
 Desenvolvido por <a href="https://br.linkedin.com/in/william-silva-oliveira" target="_blank" rel="noopener noreferrer">William Silva Oliveira</a>
 
 Visão Geral da Arquitetura
-O projeto é uma aplicação full-stack voltada para a automação de impressões (provavelmente via ZPL para impressoras térmicas, evidenciado pelas classes de estratégia e constantes ZPL), estruturada da seguinte forma:
+O projeto é uma aplicação full-stack voltada para a automação de impressões (via ZPL para impressoras térmicas, evidenciado pelas classes de estratégia e constantes ZPL), estruturada da seguinte forma:
 
 Backend: Desenvolvido em Java com o framework Spring Boot (espaco-vista-printer), estruturado em camadas (controller, service, model, config) com arquitetura baseada em estratégias (PrinterStrategyFactory, ILabelStrategy) para lidar com diferentes tipos de layouts de etiquetas (Simple, Validade, ImmediateConsumption).
 
