@@ -1,6 +1,8 @@
 package service.strategies;
 
 import model.ImmediateConsumptionRequest;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
     private final ImmediateConsumptionRequest request;
@@ -15,12 +17,16 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
         // --- Afasta mais da borda apenas se for a coluna da direita (column > 0)
         int currentX = (column > 0) ? startX + 15 : startX;
 
-        // --- Dados da Requisição atualizados
+        // --- Dados da Requisição e Sistema
         String productName = request.getProductName() != null ? request.getProductName() : "";
-        String dataFabricacao = request.getDataFabricacao() != null ? request.getDataFabricacao() : "";
+
+        // Data de fabricação gerada automaticamente pelo sistema (data atual)
+        String dataFabricacao = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        // Validade preenchida pelo usuário (ou em branco se não informada)
         String validade = request.getValidade() != null ? request.getValidade() : "";
 
-        // --- PAINEL DE CONTROLE DE LAYOUT (Com fontes maiores e bem distribuídas)
+        // --- PAINEL DE CONTROLE DE LAYOUT
         int fontSizeTitle = 22;
         int fontSizeText = 19;
 

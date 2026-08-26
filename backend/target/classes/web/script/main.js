@@ -266,6 +266,8 @@ function switchMode(mode, ui) {
         updateValidityUnitLabel(ui);
     }
     if (ui.immediateProductName) ui.immediateProductName.value = '';
+    if (ui.immediateFabDate) ui.immediateFabDate.value = hojeStr;
+    if (ui.immediateValDate) ui.immediateValDate.value = ''; // Limpa ou define vazio conforme regra
 
     // Oculta quaisquer menus flutuantes que estejam abertos
     document.getElementById('productSuggestions')?.classList.add('hidden');
@@ -328,6 +330,13 @@ function handlePrintAction(ui) {
         // Captura direta e segura das datas
         const fabInput = document.getElementById('labelFabDate');
         const valInput = document.getElementById('labelValDate');
+
+        // Validação: A validade não pode ser anterior à fabricação
+        if (fabInput?.value && valInput?.value && valInput.value < fabInput.value) {
+            showModal('A data de validade não pode ser anterior à data de fabricação.', 'error');
+            return;
+        }
+
         const dataFabricacao = fabInput ? formatDateToBR(fabInput.value) : "";
         const dataValidade = valInput ? formatDateToBR(valInput.value) : "";
 
@@ -350,7 +359,6 @@ function handlePrintAction(ui) {
         endpoint = '/print';
 
         // ENVIO BLINDADO: Enviamos as datas e o registro sob múltiplas variações de chaves.
-        // Assim, independentemente do nome do campo na sua classe Java (PrintRequest), ele receberá o dado!
         payload = {
             text: text,
             setor: setor,
@@ -368,6 +376,7 @@ function handlePrintAction(ui) {
         };
 
         console.log("JSON disparado pelo navegador:", JSON.stringify(payload));
+
     } else if (appState.mode === 'VALIDITY') {
         const productName = ui.productName.value.trim();
         const mfgDate = ui.mfgDate.value;
@@ -391,12 +400,34 @@ function handlePrintAction(ui) {
     } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
         const productName = ui.immediateProductName.value.trim();
 
+        // Captura das datas do formulário de consumo imediato
+        const fabInput = document.getElementById('immediateFabDate');
+        const valInput = document.getElementById('immediateValDate');
+
+        // Validação: A validade (se preenchida) não pode ser anterior à fabricação
+        if (fabInput?.value && valInput?.value && valInput.value < fabInput.value) {
+            showModal('A data de validade não pode ser anterior à data de fabricação.', 'error');
+            return;
+        }
+
+        const dataFabricacao = fabInput ? formatDateToBR(fabInput.value) : "";
+        const dataValidade = valInput ? formatDateToBR(valInput.value) : "";
+
         if (!productName) {
             showModal('O nome do produto não pode estar vazio.', 'error');
             return;
         }
+
         endpoint = '/print-consumo-imediato';
-        payload = { productName, quantity, labelType };
+
+        // Payload enviado ao backend contendo o produto e as datas formatadas
+        payload = {
+            productName: productName,
+            dataFabricacao: dataFabricacao,
+            validade: dataValidade,
+            quantity: quantity,
+            labelType: labelType
+        };
     }
 
     sendRequest(endpoint, payload, ui);
