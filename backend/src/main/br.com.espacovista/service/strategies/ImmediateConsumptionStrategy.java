@@ -1,9 +1,6 @@
 package service.strategies;
 
 import model.ImmediateConsumptionRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import static service.ZplConstants.*;
 
 public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
     private final ImmediateConsumptionRequest request;
@@ -15,28 +12,27 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
 
     @Override
     protected String generateLabelContent(int startX, int column) {
-        // --- Dados
-        String productName = request.getProductName();
-        String internalDateCode = generateInternalDateCode();
+        // --- Afasta mais da borda apenas se for a coluna da direita (column > 0)
+        int currentX = (column > 0) ? startX + 15 : startX;
 
-        // --- PAINEL DE CONTROLE DE LAYOUT
-        int fontSizeProduct = 28;
-        int fontSizeConsumo = 25;
-        int fontSizeCod = 18;
+        // --- Dados da Requisição atualizados
+        String productName = request.getProductName() != null ? request.getProductName() : "";
+        String dataFabricacao = request.getDataFabricacao() != null ? request.getDataFabricacao() : "";
+        String validade = request.getValidade() != null ? request.getValidade() : "";
+
+        // --- PAINEL DE CONTROLE DE LAYOUT (Com fontes maiores e bem distribuídas)
+        int fontSizeTitle = 22;
+        int fontSizeText = 19;
 
         StringBuilder contentBuilder = new StringBuilder();
 
-        // --- Seção 1: Produto (Rótulo e Nome)
-        contentBuilder.append("^FX Seção do Produto\n");
-        contentBuilder.append(createLine(startX + 30, 40, fontSizeProduct, productName));
+        // --- Título da Etiqueta (CONSUMO IMEDIATO)
+        contentBuilder.append(createLine(currentX + 10, 15, fontSizeTitle, "CONSUMO IMEDIATO"));
 
-        // --- Seção 2: Consumo Imediato
-        contentBuilder.append("^FX Seção de Consumo Imediato\n");
-        contentBuilder.append(createLine(startX + 55, 90, fontSizeConsumo, "CONSUMO IMEDIATO"));
-
-        // --- Seção 3: Código
-        contentBuilder.append("^FX Seção de Código\n");
-        contentBuilder.append(createLine(startX + 215, 160, fontSizeCod, internalDateCode));
+        // --- Campos essenciais distribuídos verticalmente
+        contentBuilder.append(createLine(currentX + 10, 55, fontSizeText, "Produto: " + productName));
+        contentBuilder.append(createLine(currentX + 10, 95, fontSizeText, "Data de Fabricação: " + dataFabricacao));
+        contentBuilder.append(createLine(currentX + 10, 135, fontSizeText, "Validade: " + validade));
 
         return contentBuilder.toString();
     }
@@ -46,11 +42,5 @@ public class ImmediateConsumptionStrategy extends AbstractTwoColumnStrategy {
      */
     private String createLine(int x, int y, int fontSize, String text) {
         return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", x, y, fontSize, fontSize, text);
-    }
-
-    private String generateInternalDateCode() {
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
-        return "00" + today.format(formatter);
     }
 }

@@ -101,4 +101,5 @@ public class SimpleStandardStrategy extends AbstractTwoColumnStrategy {
 
         return contentBuilder.toString();
     }
+
 }
