@@ -41,7 +41,7 @@ public class PrinterService {
     public void printImmediateConsumptionLabel(ImmediateConsumptionRequest request) {
         ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
         String zpl = strategy.generateZpl();
-        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
+        sendZplToPrinter(zpl, request.getQuantity(), "IMMEDIATE_CONSUMPTION");
     }
 
     private void sendZplToPrinter(String zpl, int requestedQuantity, String labelType) {

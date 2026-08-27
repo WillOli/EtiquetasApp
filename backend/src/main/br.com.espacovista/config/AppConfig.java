@@ -25,7 +25,7 @@ public class AppConfig {
     }
 
     public static int getServerPort() {
-        String portStr = properties.getProperty("server.port", "8080");
+        String portStr = properties.getProperty("server.port", "8081");
         try {
             return Integer.parseInt(portStr);
         } catch (NumberFormatException e) {

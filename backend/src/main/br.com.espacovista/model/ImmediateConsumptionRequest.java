@@ -1,38 +1,41 @@
 package model;
 
-import model.PrintRequest.LabelType;
-
 public class ImmediateConsumptionRequest {
     private String productName;
+    private String dataFabricacao;
+    private String validade;
     private int quantity;
-    private LabelType labelType;
 
-    public ImmediateConsumptionRequest() {
-    }
-
-    // --- GETTERS ---
+    // Getters e Setters
     public String getProductName() {
         return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getDataFabricacao() {
+        return dataFabricacao;
+    }
+
+    public void setDataFabricacao(String dataFabricacao) {
+        this.dataFabricacao = dataFabricacao;
+    }
+
+    public String getValidade() {
+        return validade;
+    }
+
+    public void setValidade(String validade) {
+        this.validade = validade;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public LabelType getLabelType() {
-        return (labelType == null) ? LabelType.STANDARD : labelType;
-    }
-
-    // --- SETTERS ---
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public void setLabelType(LabelType labelType) {
-        this.labelType = labelType;
     }
 }
