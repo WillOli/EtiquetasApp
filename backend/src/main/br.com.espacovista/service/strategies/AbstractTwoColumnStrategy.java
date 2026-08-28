@@ -6,7 +6,6 @@ import static service.ZplConstants.*;
  * Encapsula a lógica comum de iteração, cálculo de posição e comandos de página ZPL.
  */
 public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
-
     private final int quantity;
 
     /**

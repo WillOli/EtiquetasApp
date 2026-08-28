@@ -52,6 +52,10 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta de consumo imediato.
      */
     public static ILabelStrategy getStrategy(ImmediateConsumptionRequest request) {
-        return new ImmediateConsumptionStrategy(request);
+        if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
+            return new ImmediateConsumptionLayoutStrategy(request);
+        } else {
+            return new ImmediateConsumptionStandardStrategy(request);
+        }
     }
 }
