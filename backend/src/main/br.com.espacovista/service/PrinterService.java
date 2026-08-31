@@ -2,6 +2,7 @@ package service;
 
 import model.ImmediateConsumptionRequest;
 import model.PrintRequest;
+import model.ProductionRequest;
 import model.ValidadePrintRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,4 +69,16 @@ public class PrinterService {
             throw new PrinterServiceException("Erro ao comunicar com a impressora.", e);
         }
     }
+
+    public void printProductionLabel(ProductionRequest request) {
+        ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
+        String zpl = strategy.generateZpl();
+
+        // Opcional: imprime no console do IntelliJ para validação rápida, igual aos demais
+        System.out.println("\n=== ZPL PRODUÇÃO GERADO ===\n" + zpl + "\n===========================\n");
+
+        sendZplToPrinter(zpl, request.getQuantity(), request.getLabelType().name());
+    }
+
+
 }
