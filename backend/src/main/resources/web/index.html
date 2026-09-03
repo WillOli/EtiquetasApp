@@ -26,6 +26,7 @@
                     <button id="btnModeSimple" class="btn-primary w-full sm:w-auto">Etiqueta Simples</button>
                     <button id="btnModeValidity" class="btn-secondary w-full sm:w-auto">Etiqueta de Validade</button>
                     <button id="btnModeImmediate" class="btn-accent w-full sm:w-auto">Consumo Imediato</button>
+                    <button id="btnModeProduction" class="btn-secondary w-full sm:w-auto">Etiqueta de Produção</button>
                 </div>
             </div>
 
@@ -121,6 +122,36 @@
                     </div>
                 </div>
 
+            </div>
+
+            <!-- 4. ETIQUETA DE PRODUÇÃO -->
+            <div id="producao-section" class="hidden flex flex-col gap-4">
+                <div class="input-group">
+                    <label for="prod-product-name" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
+                    <input type="text" id="prod-product-name" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Frango Picado Temperado">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="prod-data-prep" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Data de Preparação / Manipulação</label>
+                        <input type="date" id="prod-data-prep" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="prod-data-val" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Data de Validade</label>
+                        <input type="date" id="prod-data-val" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="prod-hora-prep" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Horário de Preparo</label>
+                        <input type="time" id="prod-hora-prep" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+                    <div>
+                        <label for="prod-hora-desc" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Horário de Descarte</label>
+                        <input type="time" id="prod-hora-desc" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+                </div>
             </div>
 
             <hr class="my-4">

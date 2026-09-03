@@ -6,72 +6,31 @@
 const API_BASE_URL = 'http://localhost:8081';
 
 const appState = {
-    mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY' ou 'IMMEDIATE_CONSUMPTION'
+    mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY', 'IMMEDIATE_CONSUMPTION' ou 'PRODUCTION'
 };
 
 // =========================================================================
 // LISTAS DE EXIBIÇÃO E AUTOCOMPLETE OTIMIZADO (SEPARADAS POR ABA)
 // =========================================================================
 
-// 1. Lista exclusiva para Etiqueta de Validade (Carnes, Peixes e Hambúrgueres)
 const VALIDITY_DISPLAY_LIST = [
-    // Carne Bovina
-    "Isca de Filé",
-    "Roast beef",
-    "Parmê de Filé",
-    "Filé surprise",
-
-    // Frango
-    "Isca de Frango",
-    "Frango grelhado",
-    "Parmê de Frango",
-    "Frango empanado",
-
-    // Peixe
-    "Salmão posta",
-    "Hambúrguer salmão 100g",
-    "Hambúrguer salmão 50g",
-
-    // Hambúrgueres de Carne
-    "Hambúrguer 160g",
-    "Hambúrguer 140g",
-    "Hambúrguer 100g",
-    "Hambúrguer 50g",
-
-    // Hambúrgueres de Frango
-    "Hambúrguer frango 100g",
-    "Hambúrguer frango 50g",
+    "Isca de Filé", "Roast beef", "Parmê de Filé", "Filé surprise",
+    "Isca de Frango", "Frango grelhado", "Parmê de Frango", "Frango empanado",
+    "Salmão posta", "Hambúrguer salmão 100g", "Hambúrguer salmão 50g",
+    "Hambúrguer 160g", "Hambúrguer 140g", "Hambúrguer 100g", "Hambúrguer 50g",
+    "Hambúrguer frango 100g", "Hambúrguer frango 50g",
 ];
 
-// 2. Lista EXCLUSIVA para Etiqueta Simples (Os 12 Doces da Confeitaria)
 const SIMPLE_DISPLAY_LIST = [
-    "Brownie",
-    "Bolo de coco",
-    "Cheesescake",
-    "Pão de mel",
-    "Chargito",
-    "Surpresa Nutella",
-    "Surpresa Cookie",
-    "Pavê doce de leite",
-    "Mousse Chocolate",
-    "Cookie Nutella",
-    "Cookie Red",
-    "Cookie Tradicional"
+    "Brownie", "Bolo de coco", "Cheesescake", "Pão de mel",
+    "Chargito", "Surpresa Nutella", "Surpresa Cookie", "Pavê doce de leite",
+    "Mousse Chocolate", "Cookie Nutella", "Cookie Red", "Cookie Tradicional"
 ];
 
-// 3. Lista exclusiva para Consumo Imediato (Acompanhamentos, Molhos e Bebidas)
 const IMMEDIATE_DISPLAY_LIST = [
-    "Alho poró",
-    "Chips de batata doce",
-    "Crocante de batata doce",
-    "Croutons",
-    "Farofa de bacon",
-    "Farofa crocante",
-    "Molho de ervas",
-    "Molho especial",
-    "Mostarda e mel",
-    "Parmesão",
-    "Suco de laranja",
+    "Alho poró", "Chips de batata doce", "Crocante de batata doce",
+    "Croutons", "Farofa de bacon", "Farofa crocante", "Molho de ervas",
+    "Molho especial", "Mostarda e mel", "Parmesão", "Suco de laranja",
 ];
 
 function normalizeString(str) {
@@ -88,7 +47,6 @@ function createSearchMap(displayList) {
     return searchMap;
 }
 
-// Mapas de busca individuais para cada aba
 const VALIDITY_SEARCH_MAP = createSearchMap(VALIDITY_DISPLAY_LIST);
 const SIMPLE_SEARCH_MAP = createSearchMap(SIMPLE_DISPLAY_LIST);
 const IMMEDIATE_SEARCH_MAP = createSearchMap(IMMEDIATE_DISPLAY_LIST);
@@ -109,7 +67,6 @@ function setupAutocomplete(inputId, listId, sourceMap) {
         }
 
         const suggestedProducts = new Set();
-
         sourceMap.forEach((originalName, searchKey) => {
             if (searchKey.includes(query)) {
                 suggestedProducts.add(originalName);
@@ -148,9 +105,6 @@ function setupAutocomplete(inputId, listId, sourceMap) {
     });
 }
 
-// =========================================================================
-// HELPER PARA CONVERSÃO DE DATAS (AAAA-MM-DD -> DD/MM/AAAA)
-// =========================================================================
 function formatDateToBR(dateStr) {
     if (!dateStr) return "";
     const parts = dateStr.split('-');
@@ -165,7 +119,6 @@ function formatDateToBR(dateStr) {
 // =========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Vincula cada aba com sua respectiva lista exclusiva
     setupAutocomplete('productName', 'productSuggestions', VALIDITY_SEARCH_MAP);
     setupAutocomplete('immediateProductName', 'immediateProductSuggestions', IMMEDIATE_SEARCH_MAP);
     setupAutocomplete('labelText', 'simpleProductSuggestions', SIMPLE_SEARCH_MAP);
@@ -174,17 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
         btnModeSimple: document.getElementById('btnModeSimple'),
         btnModeValidity: document.getElementById('btnModeValidity'),
         btnModeImmediate: document.getElementById('btnModeImmediate'),
+        btnModeProduction: document.getElementById('btnModeProduction'),
+
         simpleForm: document.getElementById('simpleForm'),
         validityForm: document.getElementById('validityForm'),
         immediateForm: document.getElementById('immediateForm'),
+        producaoSection: document.getElementById('producao-section'),
 
-        // Campos da Etiqueta Simples
         labelText: document.getElementById('labelText'),
         labelSetor: document.getElementById('labelSetor'),
         labelFabDate: document.getElementById('labelFabDate'),
         labelValDate: document.getElementById('labelValDate'),
 
-        // Campos da Validade
         productName: document.getElementById('productName'),
         mfgDate: document.getElementById('mfgDate'),
         validityDays: document.getElementById('validityDays'),
@@ -192,16 +146,20 @@ document.addEventListener('DOMContentLoaded', () => {
         validityDropdownPanel: document.getElementById('validityDropdownPanel'),
         validityUnitLabel: document.getElementById('validityUnitLabel'),
 
-        // Campos do Consumo Imediato
         immediateProductName: document.getElementById('immediateProductName'),
 
-        // Campos Globais
         labelQuantity: document.getElementById('labelQuantity'),
         labelType: document.getElementById('labelType'),
         duplicateInfoText: document.getElementById('duplicate-info-text'),
         printButton: document.getElementById('printButton'),
         printButtonText: document.getElementById('printButtonText'),
         spinner: document.getElementById('spinner'),
+
+        prodProductName: document.getElementById('prod-product-name'),
+        prodDataPrep: document.getElementById('prod-data-prep'),
+        prodDataVal: document.getElementById('prod-data-val'),
+        prodHoraPrep: document.getElementById('prod-hora-prep'),
+        prodHoraDesc: document.getElementById('prod-hora-desc'),
     };
 
     attachEventListeners(ui);
@@ -209,12 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupInitialState(ui) {
-    const hojeStr = new Date().toISOString().split('T')[0]; // Formato AAAA-MM-DD
+    const hojeStr = new Date().toISOString().split('T')[0];
 
-    // Preenche as datas com o dia atual automaticamente
     if (ui.mfgDate) ui.mfgDate.value = hojeStr;
     if (ui.labelFabDate) ui.labelFabDate.value = hojeStr;
-    if (ui.labelValDate) ui.labelValDate.value = hojeStr; // Preenche validade inicial para não ir vazia
+    if (ui.labelValDate) ui.labelValDate.value = hojeStr;
+    if (ui.prodDataPrep) ui.prodDataPrep.value = hojeStr;
+    if (ui.prodDataVal) ui.prodDataVal.value = hojeStr;
 
     populateValidityDropdown([1, 2, 3, 5, 7, 10, 15, 30], ui);
     updateDuplicateInfo(ui);
@@ -222,10 +181,29 @@ function setupInitialState(ui) {
     switchMode('SIMPLE', ui);
 }
 
+function populateValidityDropdown(daysArray, ui) {
+    if (!ui.validityDropdownPanel) return;
+    ui.validityDropdownPanel.innerHTML = '';
+    daysArray.forEach(days => {
+        const div = document.createElement('div');
+        div.className = 'p-2 cursor-pointer hover:bg-gray-100 text-sm text-gray-700';
+        div.textContent = `${days} ${days === 1 ? 'dia' : 'dias'}`;
+        div.addEventListener('click', () => {
+            if (ui.validityDays) {
+                ui.validityDays.value = days;
+                updateValidityUnitLabel(ui);
+            }
+            ui.validityDropdownPanel.classList.add('hidden');
+        });
+        ui.validityDropdownPanel.appendChild(div);
+    });
+}
+
 function attachEventListeners(ui) {
     ui.btnModeSimple?.addEventListener('click', () => switchMode('SIMPLE', ui));
     ui.btnModeValidity?.addEventListener('click', () => switchMode('VALIDITY', ui));
     ui.btnModeImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION', ui));
+    ui.btnModeProduction?.addEventListener('click', () => switchMode('PRODUCTION', ui));
 
     ui.validityDropdownBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -250,14 +228,12 @@ function updateValidityUnitLabel(ui) {
 
 function switchMode(mode, ui) {
     appState.mode = mode;
-
     const hojeStr = new Date().toISOString().split('T')[0];
 
-    // Limpa e reseta os campos das 3 abas para evitar resíduos de digitação
     if (ui.labelText) ui.labelText.value = '';
     if (ui.labelSetor) ui.labelSetor.value = 'CONFEITARIA';
     if (ui.labelFabDate) ui.labelFabDate.value = hojeStr;
-    if (ui.labelValDate) ui.labelValDate.value = hojeStr; // Mantém preenchido por padrão
+    if (ui.labelValDate) ui.labelValDate.value = hojeStr;
 
     if (ui.productName) ui.productName.value = '';
     if (ui.mfgDate) ui.mfgDate.value = hojeStr;
@@ -267,27 +243,30 @@ function switchMode(mode, ui) {
     }
     if (ui.immediateProductName) ui.immediateProductName.value = '';
     if (ui.immediateFabDate) ui.immediateFabDate.value = hojeStr;
-    if (ui.immediateValDate) ui.immediateValDate.value = ''; // Limpa ou define vazio conforme regra
+    if (ui.immediateValDate) ui.immediateValDate.value = '';
 
-    // Oculta quaisquer menus flutuantes que estejam abertos
+    if (ui.prodProductName) ui.prodProductName.value = '';
+    if (ui.prodDataPrep) ui.prodDataPrep.value = hojeStr;
+    if (ui.prodDataVal) ui.prodDataVal.value = hojeStr;
+    if (ui.prodHoraPrep) ui.prodHoraPrep.value = '';
+    if (ui.prodHoraDesc) ui.prodHoraDesc.value = '';
+
     document.getElementById('productSuggestions')?.classList.add('hidden');
     document.getElementById('immediateProductSuggestions')?.classList.add('hidden');
     document.getElementById('simpleProductSuggestions')?.classList.add('hidden');
 
-    // Atualiza botões superiores
-    ui.btnModeSimple?.classList.remove('btn-primary');
-    ui.btnModeSimple?.classList.add('btn-secondary');
-    ui.btnModeValidity?.classList.remove('btn-primary');
-    ui.btnModeValidity?.classList.add('btn-secondary');
-    ui.btnModeImmediate?.classList.remove('btn-primary');
-    ui.btnModeImmediate?.classList.add('btn-secondary');
+    [ui.btnModeSimple, ui.btnModeValidity, ui.btnModeImmediate, ui.btnModeProduction].forEach(btn => {
+        if (btn) {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-secondary');
+        }
+    });
 
-    // Oculta todos os formulários
     ui.simpleForm?.classList.add('hidden');
     ui.validityForm?.classList.add('hidden');
     ui.immediateForm?.classList.add('hidden');
+    ui.producaoSection?.classList.add('hidden');
 
-    // Exibe apenas a aba selecionada
     if (mode === 'SIMPLE') {
         ui.btnModeSimple?.classList.remove('btn-secondary');
         ui.btnModeSimple?.classList.add('btn-primary');
@@ -300,6 +279,10 @@ function switchMode(mode, ui) {
         ui.btnModeImmediate?.classList.remove('btn-secondary');
         ui.btnModeImmediate?.classList.add('btn-primary');
         ui.immediateForm?.classList.remove('hidden');
+    } else if (mode === 'PRODUCTION') {
+        ui.btnModeProduction?.classList.remove('btn-secondary');
+        ui.btnModeProduction?.classList.add('btn-primary');
+        ui.producaoSection?.classList.remove('hidden');
     }
 }
 
@@ -326,12 +309,9 @@ function handlePrintAction(ui) {
     if (appState.mode === 'SIMPLE') {
         const text = ui.labelText.value.trim();
         const setor = ui.labelSetor.value.trim() || "CONFEITARIA";
-
-        // Captura direta e segura das datas
         const fabInput = document.getElementById('labelFabDate');
         const valInput = document.getElementById('labelValDate');
 
-        // Validação: A validade não pode ser anterior à fabricação
         if (fabInput?.value && valInput?.value && valInput.value < fabInput.value) {
             showModal('A data de validade não pode ser anterior à data de fabricação.', 'error');
             return;
@@ -353,19 +333,14 @@ function handlePrintAction(ui) {
             return;
         }
 
-        // Número de registro padrão para sair igual à foto do Postman
         const registro = "00001";
-
         endpoint = '/print';
-
-        // ENVIO BLINDADO: Enviamos as datas e o registro sob múltiplas variações de chaves.
         payload = {
             text: text,
             setor: setor,
             dataFabricacao: dataFabricacao,
             dataValidade: dataValidade,
             registro: registro,
-            // Variações e Aliases de segurança:
             mfgDate: dataFabricacao,
             validityDate: dataValidade,
             dataFab: dataFabricacao,
@@ -374,8 +349,6 @@ function handlePrintAction(ui) {
             quantity: quantity,
             labelType: labelType
         };
-
-        console.log("JSON disparado pelo navegador:", JSON.stringify(payload));
 
     } else if (appState.mode === 'VALIDITY') {
         const productName = ui.productName.value.trim();
@@ -399,12 +372,9 @@ function handlePrintAction(ui) {
 
     } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
         const productName = ui.immediateProductName.value.trim();
-
-        // Captura das datas do formulário de consumo imediato
         const fabInput = document.getElementById('immediateFabDate');
         const valInput = document.getElementById('immediateValDate');
 
-        // Validação: A validade (se preenchida) não pode ser anterior à fabricação
         if (fabInput?.value && valInput?.value && valInput.value < fabInput.value) {
             showModal('A data de validade não pode ser anterior à data de fabricação.', 'error');
             return;
@@ -419,12 +389,49 @@ function handlePrintAction(ui) {
         }
 
         endpoint = '/print-consumo-imediato';
-
-        // Payload enviado ao backend contendo o produto e as datas formatadas
         payload = {
             productName: productName,
             dataFabricacao: dataFabricacao,
             validade: dataValidade,
+            quantity: quantity,
+            labelType: labelType
+        };
+
+    } else if (appState.mode === 'PRODUCTION') {
+        const productName = ui.prodProductName?.value.trim();
+        const dataPreparacao = ui.prodDataPrep?.value;
+        const dataValidade = ui.prodDataVal?.value;
+        const horarioPreparo = ui.prodHoraPrep?.value;
+        const horarioDescarte = ui.prodHoraDesc?.value;
+
+        if (!productName) {
+            showModal('O nome do produto não pode estar vazio.', 'error');
+            return;
+        }
+        if (!dataPreparacao) {
+            showModal('A data de preparação é obrigatória.', 'error');
+            return;
+        }
+        if (!dataValidade) {
+            showModal('A data de validade é obrigatória.', 'error');
+            return;
+        }
+        if (!horarioPreparo) {
+            showModal('O horário de preparo é obrigatório.', 'error');
+            return;
+        }
+        if (!horarioDescarte) {
+            showModal('O horário de descarte é obrigatório.', 'error');
+            return;
+        }
+
+        endpoint = '/print-producao';
+        payload = {
+            productName: productName,
+            dataPreparacao: dataPreparacao,
+            horarioPreparo: horarioPreparo,
+            horarioDescarte: horarioDescarte,
+            dataValidade: dataValidade,
             quantity: quantity,
             labelType: labelType
         };
@@ -466,7 +473,6 @@ function setButtonLoading(isLoading, ui) {
 function showModal(message, type = 'success') {
     document.getElementById('alertModalContainer')?.remove();
 
-    // Limpa qualquer temporizador anterior para evitar conflitos
     if (window.modalTimeout) {
         clearTimeout(window.modalTimeout);
     }
@@ -487,7 +493,6 @@ function showModal(message, type = 'success') {
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    // Função global auxiliar para fechar manualmente se o usuário clicar em OK antes dos 3 segundos
     window.fecharModalManual = () => {
         if (window.modalTimeout) {
             clearTimeout(window.modalTimeout);
@@ -495,7 +500,6 @@ function showModal(message, type = 'success') {
         document.getElementById('alertModalContainer')?.remove();
     };
 
-    // Se for mensagem de sucesso, configura o timer de 3 segundos (3000 ms) para fechar sozinho
     if (type === 'success') {
         window.modalTimeout = setTimeout(() => {
             document.getElementById('alertModalContainer')?.remove();

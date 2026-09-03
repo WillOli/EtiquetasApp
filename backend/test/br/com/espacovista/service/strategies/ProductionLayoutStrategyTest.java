@@ -5,9 +5,6 @@ import model.PrintRequest;
 import org.junit.jupiter.api.Test;
 import service.strategies.ProductionLayoutStrategy;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductionLayoutStrategyTest {
@@ -16,10 +13,10 @@ public class ProductionLayoutStrategyTest {
     public void testGenerateZplForProductionLabel() {
         ProductionRequest request = new ProductionRequest();
         request.setProductName("Frango Picado Temperado");
-        request.setDataPreparacao(LocalDate.of(2026, 8, 31));
-        request.setHorarioPreparo(LocalTime.of(14, 30));
-        request.setHorarioDescarte(LocalTime.of(18, 30));
-        request.setDataValidade(LocalDate.of(2026, 9, 5));
+        request.setDataPreparacao("2026-08-31");
+        request.setHorarioPreparo("14:30");
+        request.setHorarioDescarte("18:30");
+        request.setDataValidade("2026-09-05");
         request.setQuantity(1);
         request.setLabelType(PrintRequest.LabelType.SIXTY_TWO_MM);
 
