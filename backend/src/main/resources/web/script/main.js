@@ -284,6 +284,18 @@ function switchMode(mode, ui) {
         ui.btnModeProduction?.classList.add('btn-primary');
         ui.producaoSection?.classList.remove('hidden');
     }
+
+    if (mode === 'PRODUCTION') {
+        ui.labelType.value = 'SIXTY_TWO_MM';
+        ui.labelType.disabled = true;
+        ui.labelType.classList.add('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+    } else {
+        ui.labelType.disabled = false;
+        ui.labelType.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
+    }
+
+    // Atualiza o texto que informa a quantidade impressa para refletir a mudança
+    updateDuplicateInfo(ui);
 }
 
 function updateDuplicateInfo(ui) {
