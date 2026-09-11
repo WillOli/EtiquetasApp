@@ -78,11 +78,11 @@ class PrintControllerIntegrationTest {
         // Arrange
         ValidadePrintRequest payload = new ValidadePrintRequest();
         payload.setProductName("Bolo de Teste");
-        payload.setMfgDate("2025-08-04");
-        payload.setValidityDays(5);
+        payload.setDataFabricacao("2025-08-04");
+        payload.setDataAbertura("2025-08-05");
+        payload.setDataValidade("2025-08-10");
         payload.setQuantity(2);
         payload.setLabelType(PrintRequest.LabelType.SIXTY_TWO_MM);
-
         String requestJson = gson.toJson(payload);
         int serverPort = app.port();
 
@@ -106,7 +106,9 @@ class PrintControllerIntegrationTest {
         // Valida os dados do objeto que foi passado para o serviço.
         ValidadePrintRequest capturedRequest = captor.getValue();
         assertEquals("Bolo de Teste", capturedRequest.getProductName());
-        assertEquals(5, capturedRequest.getValidityDays());
+        assertEquals("2025-08-04", capturedRequest.getDataFabricacao());
+        assertEquals("2025-08-05", capturedRequest.getDataAbertura());
+        assertEquals("2025-08-10", capturedRequest.getDataValidade());
         assertEquals(PrintRequest.LabelType.SIXTY_TWO_MM, capturedRequest.getLabelType());
     }
 }

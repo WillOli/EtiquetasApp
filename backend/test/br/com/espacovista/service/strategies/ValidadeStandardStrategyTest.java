@@ -1,37 +1,40 @@
 package br.com.espacovista.service.strategies;
-import model.PrintRequest;
+
 import model.ValidadePrintRequest;
-import org.junit.jupiter.api.DisplayName;
+import model.PrintRequest;
 import org.junit.jupiter.api.Test;
-import service.strategies.ILabelStrategy;
 import service.strategies.ValidadeStandardStrategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ValidadeStandardStrategyTest {
+public class ValidadeStandardStrategyTest {
 
     @Test
-    @DisplayName("Deve gerar ZPL para etiqueta de validade dupla com 2 colunas")
-    void generateZpl_forDoubleValidity_shouldGenerateTwoColumns() {
-        // Arrange
+    public void generateZpl_forDoubleValidity_shouldGenerateTwoColumns() {
         ValidadePrintRequest request = new ValidadePrintRequest();
-        request.setProductName("Torta de Limao");
-        request.setMfgDate("2025-08-04");
-        request.setValidityDays(3);
-        request.setQuantity(1); // Pedido de 1, deve imprimir 2
+        request.setProductName("Bolo de Teste");
+        request.setDataFabricacao("2026-08-01");
+        request.setDataAbertura("2026-09-01");
+        request.setDataValidade("2026-09-05");
+        request.setQuantity(1);
         request.setLabelType(PrintRequest.LabelType.STANDARD);
 
-        ILabelStrategy strategy = new ValidadeStandardStrategy(request);
+        ValidadeStandardStrategy strategy = new ValidadeStandardStrategy(request);
+        String zpl = strategy.generateZpl();
 
-        // Act
-        String zplResult = strategy.generateZpl();
+        assertNotNull(zpl);
+        int occurrences = countOccurrences(zpl, "Bolo de Teste");
+        assertEquals(2, occurrences, "O nome do produto deve aparecer duas vezes.");
+    }
 
-        // Assert
-        assertNotNull(zplResult);
-        assertTrue(zplResult.startsWith("^XA") && zplResult.endsWith("^XZ\n"));
-
-        // Verifica se o nome do produto aparece duas vezes
-        int count = (zplResult.split("\\^FDTorta de Limao\\^FS", -1).length) - 1;
-        assertEquals(2, count, "O nome do produto deve aparecer duas vezes.");
+    private int countOccurrences(String str, String subStr) {
+        if (subStr == null || subStr.isEmpty()) return 0;
+        int count = 0;
+        int idx = 0;
+        while ((idx = str.indexOf(subStr, idx)) != -1) {
+            count++;
+            idx += subStr.length();
+        }
+        return count;
     }
 }

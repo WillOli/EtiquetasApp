@@ -73,29 +73,71 @@
                 </div>
             </div>
 
-            <!-- 2. ETIQUETA DE VALIDADE (MANTIDA INTACTA) -->
+            <!-- 2. ETIQUETA DE VALIDADE -->
             <div id="validityForm" class="hidden">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="mb-3 col-span-1 sm:col-span-2 relative" id="productNameContainer">
-                        <label for="productName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
-                        <input type="text" id="productName" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Bolo de Chocolate" autocomplete="off">
-                        <ul id="productSuggestions" class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden"></ul>
+
+                    <div class="mb-3 col-span-1 sm:col-span-2 relative"
+                         id="productNameContainer">
+
+                        <label
+                                for="productName"
+                                class="block text-sm font-medium text-[var(--text-primary)] mb-1">
+                            Nome do Produto
+                        </label>
+
+                        <input
+                                type="text"
+                                id="productName"
+                                class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent"
+                                placeholder="Ex: Molho de Tomate"
+                                autocomplete="off">
+
+                        <ul
+                                id="productSuggestions"
+                                class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden">
+                        </ul>
                     </div>
-                    <div class="mb-3">
-                        <label for="mfgDate" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Data de Fabricação</label>
-                        <input type="date" id="mfgDate" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+
+                    <div>
+                        <label
+                                for="validityFabDate"
+                                class="block text-sm font-medium text-[var(--text-primary)] mb-1">
+                            Data de Fabricação
+                        </label>
+
+                        <input
+                                type="date"
+                                id="validityFabDate"
+                                class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
                     </div>
-                    <div class="mb-3">
-                        <label for="validityDays" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Prazo</label>
-                        <div class="relative">
-                            <div class="flex items-center gap-2">
-                                <input type="number" id="validityDays" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: 30" value="1">
-                                <button id="validityDropdownBtn" type="button" class="bg-gray-200 p-2 rounded-md hover:bg-gray-300" aria-label="Abrir opções de prazo">▼</button>
-                                <span id="validityUnitLabel" class="text-[var(--text-primary)] font-medium w-10">dia</span>
-                            </div>
-                            <div id="validityDropdownPanel" class="hidden absolute z-10 mt-1 w-full bg-[var(--bg-content)] border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto"></div>
-                        </div>
+
+                    <div>
+                        <label
+                                for="validityOpenDate"
+                                class="block text-sm font-medium text-[var(--text-primary)] mb-1">
+                            Data de Abertura
+                        </label>
+
+                        <input
+                                type="date"
+                                id="validityOpenDate"
+                                class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
                     </div>
+
+                    <div class="col-span-1 sm:col-span-2">
+                        <label
+                                for="validityExpirationDate"
+                                class="block text-sm font-medium text-[var(--text-primary)] mb-1">
+                            Data de Validade após aberto
+                        </label>
+
+                        <input
+                                type="date"
+                                id="validityExpirationDate"
+                                class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
+                    </div>
+
                 </div>
             </div>
 

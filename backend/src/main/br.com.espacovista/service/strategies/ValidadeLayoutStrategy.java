@@ -1,8 +1,6 @@
 package service.strategies;
 
 import model.ValidadePrintRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import static service.ZplConstants.*;
 
 public class ValidadeLayoutStrategy implements ILabelStrategy {
@@ -14,44 +12,51 @@ public class ValidadeLayoutStrategy implements ILabelStrategy {
 
     @Override
     public String generateZpl() {
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate manufacturingDate = LocalDate.parse(request.getMfgDate());
-        String formattedMfgDate = manufacturingDate.format(displayFormatter);
+        String formattedMfgDate = formatData(request.getDataFabricacao());
+        String formattedOpenDate = formatData(request.getDataAbertura());
+        String formattedValDate = formatData(request.getDataValidade());
 
-        int days = request.getValidityDays();
-        String prazoText = (days == 1 ) ? days + " dia" : days + "dias";
-
-        int fontSize = 28;
-        int textMargin = 30;
-        int valueMargin = 200;
-        int lineWidth = 400;
-        int lineMargin = 30;
+        int fontSize = 22; // Fonte otimizada para caber sem apertar
+        int textMargin = 15;
+        int valueMargin = 320;
 
         StringBuilder zplBuilder = new StringBuilder();
-        for (int i = 0; i < request.getQuantity(); i++) {
+        int quantity = request.getQuantity() > 0 ? request.getQuantity() : 1;
+
+        for (int i = 0; i < quantity; i++) {
             zplBuilder.append("^XA\n^CI28\n^PW").append(LABEL_WIDTH_MM_SIXTY_TWO_MM * DOTS_PER_MM).append("\n^LL").append(LABEL_HEIGHT_MM_SIXTY_TWO_MM * DOTS_PER_MM).append("\n");
 
-            int yPosProduto = 40;
-            zplBuilder.append("^FO").append(textMargin).append(",").append(yPosProduto).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FDProduto:^FS\n");
-            zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosProduto).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(request.getProductName()).append("^FS\n");
-            zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosProduto + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
+            // Título menor e mais alto
+            zplBuilder.append(String.format("^FO%d,8^A0N,22,22^FDETIQUETA DE VALIDADE^FS\n", textMargin));
 
-            int yPosFabricacao = 95;
-            zplBuilder.append("^FO").append(textMargin).append(",").append(yPosFabricacao).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FDFabricacao:^FS\n");
-            zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosFabricacao).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(formattedMfgDate).append("^FS\n");
-            zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosFabricacao + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
+            // Linhas distribuídas de forma compacta para não estourar a altura
+            int y1 = 42;
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDProduto:^FS\n", textMargin, y1, fontSize, fontSize));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y1, fontSize, fontSize, request.getProductName() != null ? request.getProductName() : ""));
 
-            int yPosValidade = 150;
-            zplBuilder.append("^FO").append(textMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FDValidade:^FS\n");
-            zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(request.getValidityDays() + " dias").append("^FS\n");
-            zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosValidade + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
+            int y2 = 78;
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDFabricacao:^FS\n", textMargin, y2, fontSize, fontSize));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y2, fontSize, fontSize, formattedMfgDate));
 
-            // Usa a nova variável com o texto formatado
-            zplBuilder.append("^FO").append(valueMargin).append(",").append(yPosValidade).append("^A0N,").append(fontSize).append(",").append(fontSize).append("^FD").append(prazoText).append("^FS\n");
-            zplBuilder.append("^FO").append(lineMargin).append(",").append(yPosValidade + fontSize).append("^GB").append(lineWidth).append(",2,2^FS\n");
+            int y3 = 114;
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDData Abertura:^FS\n", textMargin, y3, fontSize, fontSize));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y3, fontSize, fontSize, formattedOpenDate));
+
+            int y4 = 150;
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDValidade (aberto):^FS\n", textMargin, y4, fontSize, fontSize));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y4, fontSize, fontSize, formattedValDate));
 
             zplBuilder.append("^XZ\n");
         }
         return zplBuilder.toString();
+    }
+
+    private String formatData(String dateStr) {
+        if (dateStr == null || !dateStr.contains("-")) return dateStr != null ? dateStr : "";
+        String[] p = dateStr.split("-");
+        if (p.length == 3) {
+            return p[2] + "/" + p[1] + "/" + p[0];
+        }
+        return dateStr;
     }
 }

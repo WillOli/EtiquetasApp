@@ -1,53 +1,61 @@
 package model;
 
-// Importa o enum do outro modelo para reutilização.
 import model.PrintRequest.LabelType;
 
 public class ValidadePrintRequest {
+
     private String productName;
-    private String mfgDate;
-    private int validityDays;
+    private String dataFabricacao;
+    private String dataAbertura;
+    private String dataValidade;
     private int quantity;
-    // O tipo do campo deve ser LabelType
     private LabelType labelType;
 
-    // --- GETTERS ---
+    public ValidadePrintRequest() {
+    }
+
     public String getProductName() {
         return productName;
     }
 
-    public String getMfgDate() {
-        return mfgDate;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
-    public int getValidityDays() {
-        return validityDays;
+    public String getDataFabricacao() {
+        return dataFabricacao;
+    }
+
+    public void setDataFabricacao(String dataFabricacao) {
+        this.dataFabricacao = dataFabricacao;
+    }
+
+    public String getDataAbertura() {
+        return dataAbertura;
+    }
+
+    public void setDataAbertura(String dataAbertura) {
+        this.dataAbertura = dataAbertura;
+    }
+
+    public String getDataValidade() {
+        return dataValidade;
+    }
+
+    public void setDataValidade(String dataValidade) {
+        this.dataValidade = dataValidade;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    // O getter deve retornar o tipo LabelType
-    public LabelType getLabelType() {
-        return labelType;
-    }
-
-    // --- SETTERS ---
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public void setMfgDate(String mfgDate) {
-        this.mfgDate = mfgDate;
-    }
-
-    public void setValidityDays(int validityDays) {
-        this.validityDays = validityDays;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public LabelType getLabelType() {
+        return labelType;
     }
 
     public void setLabelType(LabelType labelType) {

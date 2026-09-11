@@ -134,20 +134,22 @@ document.addEventListener('DOMContentLoaded', () => {
         immediateForm: document.getElementById('immediateForm'),
         producaoSection: document.getElementById('producao-section'),
 
+        // Campos da Etiqueta Simples
         labelText: document.getElementById('labelText'),
         labelSetor: document.getElementById('labelSetor'),
         labelFabDate: document.getElementById('labelFabDate'),
         labelValDate: document.getElementById('labelValDate'),
 
+        // Campos da Validade (Atualizados)
         productName: document.getElementById('productName'),
-        mfgDate: document.getElementById('mfgDate'),
-        validityDays: document.getElementById('validityDays'),
-        validityDropdownBtn: document.getElementById('validityDropdownBtn'),
-        validityDropdownPanel: document.getElementById('validityDropdownPanel'),
-        validityUnitLabel: document.getElementById('validityUnitLabel'),
+        validityFabDate: document.getElementById('validityFabDate'),
+        validityOpenDate: document.getElementById('validityOpenDate'),
+        validityExpirationDate: document.getElementById('validityExpirationDate'),
 
+        // Campos do Consumo Imediato
         immediateProductName: document.getElementById('immediateProductName'),
 
+        // Campos Globais
         labelQuantity: document.getElementById('labelQuantity'),
         labelType: document.getElementById('labelType'),
         duplicateInfoText: document.getElementById('duplicate-info-text'),
@@ -155,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         printButtonText: document.getElementById('printButtonText'),
         spinner: document.getElementById('spinner'),
 
+        // Campos da Produção
         prodProductName: document.getElementById('prod-product-name'),
         prodDataPrep: document.getElementById('prod-data-prep'),
         prodDataVal: document.getElementById('prod-data-val'),
@@ -169,34 +172,17 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupInitialState(ui) {
     const hojeStr = new Date().toISOString().split('T')[0];
 
-    if (ui.mfgDate) ui.mfgDate.value = hojeStr;
+    if (ui.validityFabDate) ui.validityFabDate.value = hojeStr;
+    if (ui.validityOpenDate) ui.validityOpenDate.value = hojeStr;
+    if (ui.validityExpirationDate) ui.validityExpirationDate.value = hojeStr;
+
     if (ui.labelFabDate) ui.labelFabDate.value = hojeStr;
     if (ui.labelValDate) ui.labelValDate.value = hojeStr;
     if (ui.prodDataPrep) ui.prodDataPrep.value = hojeStr;
     if (ui.prodDataVal) ui.prodDataVal.value = hojeStr;
 
-    populateValidityDropdown([1, 2, 3, 5, 7, 10, 15, 30], ui);
     updateDuplicateInfo(ui);
-    updateValidityUnitLabel(ui);
     switchMode('SIMPLE', ui);
-}
-
-function populateValidityDropdown(daysArray, ui) {
-    if (!ui.validityDropdownPanel) return;
-    ui.validityDropdownPanel.innerHTML = '';
-    daysArray.forEach(days => {
-        const div = document.createElement('div');
-        div.className = 'p-2 cursor-pointer hover:bg-gray-100 text-sm text-gray-700';
-        div.textContent = `${days} ${days === 1 ? 'dia' : 'dias'}`;
-        div.addEventListener('click', () => {
-            if (ui.validityDays) {
-                ui.validityDays.value = days;
-                updateValidityUnitLabel(ui);
-            }
-            ui.validityDropdownPanel.classList.add('hidden');
-        });
-        ui.validityDropdownPanel.appendChild(div);
-    });
 }
 
 function attachEventListeners(ui) {
@@ -205,25 +191,10 @@ function attachEventListeners(ui) {
     ui.btnModeImmediate?.addEventListener('click', () => switchMode('IMMEDIATE_CONSUMPTION', ui));
     ui.btnModeProduction?.addEventListener('click', () => switchMode('PRODUCTION', ui));
 
-    ui.validityDropdownBtn?.addEventListener('click', (e) => {
-        e.stopPropagation();
-        ui.validityDropdownPanel?.classList.toggle('hidden');
-    });
-    document.addEventListener('click', () => {
-        ui.validityDropdownPanel?.classList.add('hidden');
-    });
-
-    ui.validityDays?.addEventListener('input', () => updateValidityUnitLabel(ui));
     ui.labelQuantity?.addEventListener('input', () => updateDuplicateInfo(ui));
     ui.labelType?.addEventListener('change', () => updateDuplicateInfo(ui));
 
     ui.printButton?.addEventListener('click', () => handlePrintAction(ui));
-}
-
-function updateValidityUnitLabel(ui) {
-    if (!ui.validityDays || !ui.validityUnitLabel) return;
-    const days = Number(ui.validityDays.value);
-    ui.validityUnitLabel.textContent = (days === 1) ? 'dia' : 'dias';
 }
 
 function switchMode(mode, ui) {
@@ -237,10 +208,9 @@ function switchMode(mode, ui) {
 
     if (ui.productName) ui.productName.value = '';
     if (ui.mfgDate) ui.mfgDate.value = hojeStr;
-    if (ui.validityDays) {
-        ui.validityDays.value = 1;
-        updateValidityUnitLabel(ui);
-    }
+    if (ui.openDate) ui.openDate.value = hojeStr;
+    if (ui.valDateAfterOpen) ui.valDateAfterOpen.value = hojeStr;
+
     if (ui.immediateProductName) ui.immediateProductName.value = '';
     if (ui.immediateFabDate) ui.immediateFabDate.value = hojeStr;
     if (ui.immediateValDate) ui.immediateValDate.value = '';
@@ -294,7 +264,6 @@ function switchMode(mode, ui) {
         ui.labelType.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
     }
 
-    // Atualiza o texto que informa a quantidade impressa para refletir a mudança
     updateDuplicateInfo(ui);
 }
 
@@ -363,24 +332,71 @@ function handlePrintAction(ui) {
         };
 
     } else if (appState.mode === 'VALIDITY') {
+
         const productName = ui.productName.value.trim();
-        const mfgDate = ui.mfgDate.value;
-        const validityDays = parseInt(ui.validityDays.value);
+
+        const dataFabricacao = ui.validityFabDate.value;
+        const dataAbertura = ui.validityOpenDate.value;
+        const dataValidade = ui.validityExpirationDate.value;
 
         if (!productName) {
-            showModal('O nome do produto não pode estar vazio.', 'error');
+            showModal(
+                'O nome do produto não pode estar vazio.',
+                'error'
+            );
             return;
         }
-        if (!mfgDate) {
-            showModal('A data de fabricação é obrigatória.', 'error');
+
+        if (!dataFabricacao) {
+            showModal(
+                'A data de fabricação é obrigatória.',
+                'error'
+            );
             return;
         }
-        if (isNaN(validityDays) || validityDays < 0) {
-            showModal('O prazo de validade deve ser um número igual ou maior que zero.', 'error');
+
+        if (!dataAbertura) {
+            showModal(
+                'A data de abertura é obrigatória.',
+                'error'
+            );
             return;
         }
+
+        if (!dataValidade) {
+            showModal(
+                'A data de validade é obrigatória.',
+                'error'
+            );
+            return;
+        }
+
+        if (dataAbertura < dataFabricacao) {
+            showModal(
+                'A data de abertura não pode ser anterior à data de fabricação.',
+                'error'
+            );
+            return;
+        }
+
+        if (dataValidade < dataAbertura) {
+            showModal(
+                'A data de validade não pode ser anterior à data de abertura.',
+                'error'
+            );
+            return;
+        }
+
         endpoint = '/print-validade';
-        payload = { productName, mfgDate, validityDays, quantity, labelType };
+
+        payload = {
+            productName,
+            dataFabricacao,
+            dataAbertura,
+            dataValidade,
+            quantity,
+            labelType
+        };
 
     } else if (appState.mode === 'IMMEDIATE_CONSUMPTION') {
         const productName = ui.immediateProductName.value.trim();
