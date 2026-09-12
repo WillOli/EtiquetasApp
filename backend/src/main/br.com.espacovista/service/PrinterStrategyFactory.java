@@ -12,20 +12,28 @@ public class PrinterStrategyFactory {
      * Retorna a estratégia correta para uma requisição de etiqueta simples.
      */
     public static ILabelStrategy getStrategy(PrintRequest request) {
-        // 1. Geramos o número sequencial antes do if/else para que AMBOS os tipos de etiqueta tenham registro
-        long proximoRegistro = SequenceManager.getNextSequenceAndIncrement(request.getQuantity());
+        int requestedQuantity = request.getQuantity();
+
+        int physicalLabelCount =
+                request.getLabelType() == PrintRequest.LabelType.STANDARD
+                        ? requestedQuantity * 2
+                        : requestedQuantity;
+
+        long proximoRegistro =
+                SequenceManager.getNextSequenceAndIncrement(
+                        physicalLabelCount
+                );
 
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return new SimpleLayoutStrategy(
                     request.getText(),
-                    request.getQuantity(),
+                    requestedQuantity,
                     request.getSetor(),
                     request.getDataFabricacao(),
                     request.getDataValidade(),
                     proximoRegistro
             );
         } else {
-            // ✅ CORREÇÃO: Agora formatamos o registro e repassamos TODOS os dados para a Etiqueta Dupla!
             String regFormatado = String.format("%05d", proximoRegistro);
             return new SimpleStandardStrategy(
                     request.getText(),
@@ -33,7 +41,7 @@ public class PrinterStrategyFactory {
                     request.getDataFabricacao(),
                     request.getDataValidade(),
                     regFormatado,
-                    request.getQuantity()
+                    requestedQuantity
             );
         }
     }

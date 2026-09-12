@@ -10,44 +10,103 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 public class SequenceManager {
-    private static final Logger logger = LoggerFactory.getLogger(SequenceManager.class);
 
-    // O arquivo será salvo automaticamente na raiz do seu projeto no Windows
-    private static final Path LOG_FILE = Paths.get("log_impressoes.txt");
+    private static final Logger logger =
+            LoggerFactory.getLogger(SequenceManager.class);
+
+    private static final Path LOG_FILE =
+            Paths.get("log_impressoes.txt");
 
     /**
-     * Lê o último número do arquivo, calcula o próximo início e já salva a numeração futura.
-     * O 'synchronized' impede concorrência e duplicação de registros.
+     * Método utilizado pela aplicação.
      */
-    public static synchronized long getNextSequenceAndIncrement(int quantityToPrint) {
-        long currentSequence = 1L; // Número padrão caso o arquivo ainda não exista
+    public static long getNextSequenceAndIncrement(
+            int quantityToPrint
+    ) {
+        return getNextSequenceAndIncrement(
+                LOG_FILE,
+                quantityToPrint
+        );
+    }
 
-        try {
-            // 1. Se o arquivo existir, lê o número que está lá dentro
-            if (Files.exists(LOG_FILE)) {
-                String content = Files.readString(LOG_FILE).trim();
-                if (!content.isEmpty()) {
-                    currentSequence = Long.parseLong(content);
-                }
-            } else {
-                logger.info("Arquivo log_impressoes.txt não encontrado. Criando novo arquivo na raiz do projeto.");
-            }
+    /**
+     * Sobrecarga que permite informar o arquivo da sequência.
+     * Usada pelos testes para não alterar o arquivo real.
+     */
+    public static synchronized long getNextSequenceAndIncrement(
+            Path sequenceFile,
+            int quantityToPrint
+    ) {
 
-            // 2. Calcula qual será o número da PRÓXIMA impressão no futuro
-            long nextSequenceToSave = currentSequence + quantityToPrint;
-
-            // 3. Sobrescreve o arquivo .txt com a nova numeração futura
-            Files.writeString(LOG_FILE, String.valueOf(nextSequenceToSave),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.TRUNCATE_EXISTING);
-
-            logger.info("Sequência liberada: [{}]. Próxima impressão começará em: [{}]", currentSequence, nextSequenceToSave);
-
-        } catch (IOException | NumberFormatException e) {
-            logger.error("Erro ao ler ou gravar no log_impressoes.txt. Usando sequência de fallback (1).", e);
+        if (quantityToPrint < 1) {
+            throw new SequenceException(
+                    "A quantidade de registros a reservar deve ser maior que zero."
+            );
         }
 
-        // Retorna o número onde a impressão ATUAL deve começar
-        return currentSequence;
+        long currentSequence = 1L;
+
+        try {
+
+            if (Files.exists(sequenceFile)) {
+
+                String content =
+                        Files.readString(sequenceFile).trim();
+
+                if (!content.isEmpty()) {
+                    currentSequence =
+                            Long.parseLong(content);
+                }
+
+            } else {
+
+                logger.info(
+                        "Arquivo de sequência não encontrado. Criando novo arquivo."
+                );
+            }
+
+            long nextSequenceToSave =
+                    currentSequence + quantityToPrint;
+
+            Files.writeString(
+                    sequenceFile,
+                    String.valueOf(nextSequenceToSave),
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            );
+
+            logger.info(
+                    "Sequência reservada de [{}] até [{}]. Próximo registro: [{}]",
+                    currentSequence,
+                    nextSequenceToSave - 1,
+                    nextSequenceToSave
+            );
+
+            return currentSequence;
+
+        } catch (IOException e) {
+
+            logger.error(
+                    "Falha ao acessar ou gravar o arquivo de sequência.",
+                    e
+            );
+
+            throw new SequenceException(
+                    "Não foi possível reservar a sequência de impressão.",
+                    e
+            );
+
+        } catch (NumberFormatException e) {
+
+            logger.error(
+                    "Arquivo de sequência contém um valor inválido.",
+                    e
+            );
+
+            throw new SequenceException(
+                    "O arquivo de sequência contém um valor inválido.",
+                    e
+            );
+        }
     }
 }
