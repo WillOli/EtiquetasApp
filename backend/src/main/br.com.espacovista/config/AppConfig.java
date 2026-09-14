@@ -2,6 +2,8 @@ package config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,5 +39,64 @@ public class AppConfig {
     public static String getLogFilename() {
         // Este método pode ser removido se não for mais usado em outro lugar.
         return properties.getProperty("log.filename", "logs/impressao.log");
+    }
+
+    public static Path getSequenceFilePath() {
+
+        String systemProperty =
+                System.getProperty(
+                        "etiquetas.sequence.file"
+                );
+
+        if (systemProperty != null &&
+                !systemProperty.trim().isEmpty()) {
+
+            return Paths.get(
+                    systemProperty.trim()
+            );
+        }
+
+        String environmentVariable =
+                System.getenv(
+                        "ETIQUETAS_SEQUENCE_FILE"
+                );
+
+        if (environmentVariable != null &&
+                !environmentVariable.trim().isEmpty()) {
+
+            return Paths.get(
+                    environmentVariable.trim()
+            );
+        }
+
+        String configuredPath =
+                properties.getProperty(
+                        "sequence.file"
+                );
+
+        if (configuredPath != null &&
+                !configuredPath.trim().isEmpty()) {
+
+            return Paths.get(
+                    configuredPath.trim()
+            );
+        }
+
+        /*
+         * Fallback de desenvolvimento.
+         *
+         * Mac:
+         * ~/EspacoVista/EtiquetasApp/data/sequence.txt
+         *
+         * Windows:
+         * C:\Users\<usuario>\EspacoVista\EtiquetasApp\data\sequence.txt
+         */
+        return Paths.get(
+                System.getProperty("user.home"),
+                "EspacoVista",
+                "EtiquetasApp",
+                "data",
+                "sequence.txt"
+        );
     }
 }

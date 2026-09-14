@@ -18,12 +18,20 @@ class SequenceManagerTest {
     Path tempDir;
 
     @Test
-    @DisplayName("Deve iniciar sequência em 1 quando arquivo não existir")
-    void shouldStartSequenceAtOneWhenFileDoesNotExist()
+    @DisplayName("Deve criar diretórios automaticamente e persistir a sequência")
+    void shouldCreateDirectoriesAndPersistSequence()
             throws IOException {
 
         Path sequenceFile =
-                tempDir.resolve("sequence.txt");
+                tempDir
+                        .resolve("EspacoVista")
+                        .resolve("EtiquetasApp")
+                        .resolve("data")
+                        .resolve("sequence.txt");
+
+        assertFalse(
+                Files.exists(sequenceFile.getParent())
+        );
 
         long firstSequence =
                 SequenceManager.getNextSequenceAndIncrement(
@@ -31,7 +39,20 @@ class SequenceManagerTest {
                         1
                 );
 
-        assertEquals(1L, firstSequence);
+        assertEquals(
+                1L,
+                firstSequence
+        );
+
+        assertTrue(
+                Files.exists(sequenceFile)
+        );
+
+        assertTrue(
+                Files.isDirectory(
+                        sequenceFile.getParent()
+                )
+        );
 
         assertEquals(
                 "2",
@@ -232,15 +253,103 @@ class SequenceManagerTest {
     }
 
     @Test
-    @DisplayName("Erro de escrita deve interromper a reserva")
-    void writeFailureShouldThrowException() {
+    @DisplayName("Falha real de acesso ao caminho deve interromper a reserva")
+    void ioFailureShouldThrowException()
+            throws IOException {
+
+        /*
+         * Criamos um ARQUIVO onde deveria existir um diretório.
+         */
+        Path invalidParent =
+                tempDir.resolve(
+                        "arquivo-no-lugar-de-diretorio"
+                );
+
+        Files.writeString(
+                invalidParent,
+                "conteudo"
+        );
+
+        /*
+         * Tentamos criar sequence.txt dentro desse arquivo.
+         *
+         * Isso é impossível e deve gerar erro de I/O.
+         */
+        Path sequenceFile =
+                invalidParent.resolve(
+                        "sequence.txt"
+                );
+
+        assertThrows(
+                SequenceException.class,
+                () -> SequenceManager
+                        .getNextSequenceAndIncrement(
+                                sequenceFile,
+                                1
+                        )
+        );
+    }
+
+
+    @Test
+    @DisplayName("Arquivo de sequência vazio deve interromper a reserva")
+    void emptySequenceFileShouldThrowException()
+            throws IOException {
 
         Path sequenceFile =
-                tempDir
-                        .resolve("diretorio-inexistente")
-                        .resolve("sequence.txt");
+                tempDir.resolve("sequence.txt");
 
-        // O diretório pai propositalmente não existe.
+        Files.writeString(
+                sequenceFile,
+                ""
+        );
+
+        assertThrows(
+                SequenceException.class,
+                () -> SequenceManager
+                        .getNextSequenceAndIncrement(
+                                sequenceFile,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    @DisplayName("Sequência zero deve ser rejeitada")
+    void zeroStoredSequenceShouldThrowException()
+            throws IOException {
+
+        Path sequenceFile =
+                tempDir.resolve("sequence.txt");
+
+        Files.writeString(
+                sequenceFile,
+                "0"
+        );
+
+        assertThrows(
+                SequenceException.class,
+                () -> SequenceManager
+                        .getNextSequenceAndIncrement(
+                                sequenceFile,
+                                1
+                        )
+        );
+    }
+
+    @Test
+    @DisplayName("Sequência negativa deve ser rejeitada")
+    void negativeStoredSequenceShouldThrowException()
+            throws IOException {
+
+        Path sequenceFile =
+                tempDir.resolve("sequence.txt");
+
+        Files.writeString(
+                sequenceFile,
+                "-10"
+        );
+
         assertThrows(
                 SequenceException.class,
                 () -> SequenceManager
