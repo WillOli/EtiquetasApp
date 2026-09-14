@@ -1,29 +1,20 @@
-### IntelliJ IDEA ###
+# Estado da aplicação
+log_impressoes.txt
+**/log_impressoes.txt
+
+sequence.txt
+**/sequence.txt
+**/sequence.txt.tmp
+*.tmp
+
+# Maven
+target/
+**/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
+# macOS
 .DS_Store
