@@ -33,3 +33,8 @@ out/
 # =====================================================
 
 .DS_Store
+# Configuração local e artefatos gerados
+backend/dependency-reduced-pom.xml
+*.lock
+config/local.properties
+logs/
