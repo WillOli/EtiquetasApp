@@ -3,346 +3,98 @@ package service;
 import config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.StandardOpenOption;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import static java.nio.file.StandardOpenOption.*;
 
-public class SequenceManager {
+/** Reserva persistente. Arquivo ausente exige inicialização administrativa explícita. */
+public final class SequenceManager {
+    private static final Logger logger = LoggerFactory.getLogger(SequenceManager.class);
+    private SequenceManager() {}
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(SequenceManager.class);
-
-    /**
-     * Caminho oficial utilizado pela aplicação.
-     *
-     * A definição do caminho fica centralizada no AppConfig.
-     */
-    private static final Path SEQUENCE_FILE =
-            AppConfig.getSequenceFilePath();
-
-    /**
-     * Método utilizado normalmente pela aplicação.
-     *
-     * Reserva a quantidade necessária de registros utilizando
-     * o arquivo oficial configurado no AppConfig.
-     */
-    public static long getNextSequenceAndIncrement(
-            int quantityToPrint
-    ) {
-
-        return getNextSequenceAndIncrement(
-                SEQUENCE_FILE,
-                quantityToPrint
-        );
+    public static long getNextSequenceAndIncrement(int quantity) {
+        return getNextSequenceAndIncrement(AppConfig.getSequenceFilePath(), quantity);
     }
 
-    /**
-     * Sobrecarga utilizada também pelos testes.
-     *
-     * Permite informar um arquivo específico para que os testes
-     * não alterem a sequência real da aplicação.
-     */
-    public static synchronized long getNextSequenceAndIncrement(
-            Path sequenceFile,
-            int quantityToPrint
-    ) {
+    public static synchronized long getNextSequenceAndIncrement(Path file, int quantity) {
+        if (quantity < 1) throw new SequenceException("A quantidade de registros deve ser positiva.");
+        return locked(file, path -> {
+            long current = read(path);
+            long next = Math.addExact(current, quantity);
+            replace(path, next);
+            logger.info("Registros reservados: {} a {}. Próximo: {}.", current, next - 1, next);
+            return current;
+        });
+    }
 
-        /*
-         * Validação da quantidade.
-         */
-        if (quantityToPrint < 1) {
+    /** Somente em primeira instalação ou recuperação conferida. Nunca sobrescreve arquivo existente. */
+    public static synchronized void initialize(Path file, long next) {
+        if (next < 1) throw new SequenceException("O próximo registro deve ser positivo.");
+        locked(file, path -> {
+            try (FileChannel channel = FileChannel.open(path, CREATE_NEW, WRITE)) {
+                write(channel, next);
+            }
+            return next;
+        });
+    }
 
-            throw new SequenceException(
-                    "A quantidade de registros a reservar deve ser maior que zero."
-            );
-        }
+    /** Backup explícito sob o mesmo lock das reservas. Destino existente não é sobrescrito. */
+    public static synchronized void backup(Path file, Path destination) {
+        locked(file, path -> {
+            long next = read(path);
+            try (FileChannel channel = FileChannel.open(destination, CREATE_NEW, WRITE)) {
+                write(channel, next);
+            }
+            return next;
+        });
+    }
 
-        /*
-         * Validação do caminho.
-         */
-        if (sequenceFile == null) {
-
-            throw new SequenceException(
-                    "O caminho do arquivo de sequência não foi configurado."
-            );
-        }
-
-        long currentSequence = 1L;
-
+    private interface Operation { long run(Path path) throws IOException; }
+    private static long locked(Path file, Operation operation) {
+        if (file == null) throw new SequenceException("Caminho da sequência não configurado.");
+        Path path = file.toAbsolutePath().normalize();
         try {
-
-            /*
-             * =========================================================
-             * 1. GARANTE QUE O DIRETÓRIO EXISTA
-             * =========================================================
-             */
-
-            Path parentDirectory =
-                    sequenceFile.getParent();
-
-            if (parentDirectory != null) {
-
-                Files.createDirectories(
-                        parentDirectory
-                );
-
-                if (!Files.isWritable(parentDirectory)) {
-
-                    throw new SequenceException(
-                            "Sem permissão de escrita no diretório da sequência: "
-                                    + parentDirectory
-                    );
-                }
+            Files.createDirectories(path.getParent());
+            // Canonicaliza o diretório para que caminhos equivalentes usem o mesmo lock.
+            path = path.getParent().toRealPath().resolve(path.getFileName());
+            if (Files.isSymbolicLink(path)) throw new IOException("A sequência não pode ser um link simbólico.");
+            Path lockPath = path.resolveSibling(path.getFileName() + ".lock");
+            try (FileChannel channel = FileChannel.open(lockPath, CREATE, WRITE);
+                 FileLock lock = channel.tryLock()) {
+                if (lock == null) throw new IOException("Sequência em uso por outro processo.");
+                return operation.run(path);
             }
-
-            /*
-             * =========================================================
-             * 2. LÊ E VALIDA O ARQUIVO EXISTENTE
-             * =========================================================
-             */
-
-            if (Files.exists(sequenceFile)) {
-
-                /*
-                 * Garante que não estamos apontando, por exemplo,
-                 * para uma pasta no lugar de um arquivo.
-                 */
-                if (!Files.isRegularFile(sequenceFile)) {
-
-                    throw new SequenceException(
-                            "O caminho da sequência não aponta para um arquivo válido: "
-                                    + sequenceFile
-                    );
-                }
-
-                /*
-                 * O sistema precisa conseguir ler o próximo registro.
-                 */
-                if (!Files.isReadable(sequenceFile)) {
-
-                    throw new SequenceException(
-                            "Sem permissão de leitura no arquivo de sequência: "
-                                    + sequenceFile
-                    );
-                }
-
-                /*
-                 * E também precisa conseguir atualizar o arquivo.
-                 */
-                if (!Files.isWritable(sequenceFile)) {
-
-                    throw new SequenceException(
-                            "Sem permissão de escrita no arquivo de sequência: "
-                                    + sequenceFile
-                    );
-                }
-
-                String content =
-                        Files.readString(sequenceFile).trim();
-
-                /*
-                 * Arquivo existente porém vazio é considerado erro.
-                 *
-                 * Não retornamos para 1 porque isso poderia causar
-                 * reutilização de registros já impressos.
-                 */
-                if (content.isEmpty()) {
-
-                    throw new SequenceException(
-                            "O arquivo de sequência está vazio: "
-                                    + sequenceFile
-                    );
-                }
-
-                currentSequence =
-                        Long.parseLong(content);
-
-                /*
-                 * O registro precisa sempre ser positivo.
-                 */
-                if (currentSequence < 1) {
-
-                    throw new SequenceException(
-                            "O número armazenado no arquivo de sequência é inválido: "
-                                    + currentSequence
-                    );
-                }
-
-            } else {
-
-                /*
-                 * Arquivo inexistente é permitido.
-                 *
-                 * Isso representa a primeira inicialização da sequência.
-                 */
-                logger.info(
-                        "Arquivo de sequência não encontrado. " +
-                                "Um novo arquivo será criado em [{}].",
-                        sequenceFile.toAbsolutePath()
-                );
-            }
-
-            /*
-             * =========================================================
-             * 3. CALCULA O PRÓXIMO REGISTRO DISPONÍVEL
-             * =========================================================
-             */
-
-            long nextSequenceToSave =
-                    Math.addExact(
-                            currentSequence,
-                            quantityToPrint
-                    );
-
-            /*
-             * =========================================================
-             * 4. GRAVA PRIMEIRO EM ARQUIVO TEMPORÁRIO
-             * =========================================================
-             *
-             * Não truncamos diretamente o sequence.txt.
-             *
-             * Primeiro gravamos:
-             *
-             * sequence.txt.tmp
-             *
-             * e somente depois substituímos o arquivo oficial.
-             */
-
-            Path tempFile =
-                    sequenceFile.resolveSibling(
-                            sequenceFile
-                                    .getFileName()
-                                    .toString()
-                                    + ".tmp"
-                    );
-
-            Files.writeString(
-                    tempFile,
-                    String.valueOf(nextSequenceToSave),
-                    StandardOpenOption.CREATE,
-                    StandardOpenOption.TRUNCATE_EXISTING,
-                    StandardOpenOption.WRITE
-            );
-
-            /*
-             * =========================================================
-             * 5. SUBSTITUI O ARQUIVO OFICIAL
-             * =========================================================
-             *
-             * ATOMIC_MOVE reduz o risco de termos um arquivo
-             * parcialmente atualizado em caso de interrupção.
-             */
-
-            try {
-
-                Files.move(
-                        tempFile,
-                        sequenceFile,
-                        StandardCopyOption.REPLACE_EXISTING,
-                        StandardCopyOption.ATOMIC_MOVE
-                );
-
-            } catch (AtomicMoveNotSupportedException e) {
-
-                /*
-                 * Alguns sistemas de arquivos não suportam
-                 * movimentação atômica.
-                 *
-                 * Nesse caso usamos uma substituição convencional.
-                 */
-
-                logger.warn(
-                        "Movimentação atômica não suportada para [{}]. " +
-                                "Usando substituição convencional.",
-                        sequenceFile.toAbsolutePath()
-                );
-
-                Files.move(
-                        tempFile,
-                        sequenceFile,
-                        StandardCopyOption.REPLACE_EXISTING
-                );
-            }
-
-            /*
-             * =========================================================
-             * 6. REGISTRA A RESERVA REALIZADA
-             * =========================================================
-             */
-
-            logger.info(
-                    "Sequência reservada de [{}] até [{}]. " +
-                            "Próximo registro: [{}]. Arquivo: [{}]",
-                    currentSequence,
-                    nextSequenceToSave - 1,
-                    nextSequenceToSave,
-                    sequenceFile.toAbsolutePath()
-            );
-
-            /*
-             * Retorna o primeiro registro reservado.
-             */
-            return currentSequence;
-
-        } catch (NumberFormatException e) {
-
-            /*
-             * Exemplo:
-             *
-             * sequence.txt contém:
-             *
-             * ABC
-             *
-             * Não tentamos corrigir automaticamente.
-             */
-
-            logger.error(
-                    "Arquivo de sequência contém um valor inválido. Arquivo: [{}]",
-                    sequenceFile.toAbsolutePath(),
-                    e
-            );
-
-            throw new SequenceException(
-                    "O arquivo de sequência contém um valor inválido.",
-                    e
-            );
-
-        } catch (ArithmeticException e) {
-
-            /*
-             * Proteção contra overflow de long.
-             */
-            logger.error(
-                    "A sequência ultrapassou o limite numérico permitido.",
-                    e
-            );
-
-            throw new SequenceException(
-                    "A sequência atingiu um valor inválido.",
-                    e
-            );
-
-        } catch (IOException e) {
-
-            /*
-             * Qualquer problema real de leitura ou escrita impede
-             * a impressão para não correr risco de repetir registros.
-             */
-
-            logger.error(
-                    "Falha ao acessar ou gravar o arquivo de sequência: [{}]",
-                    sequenceFile.toAbsolutePath(),
-                    e
-            );
-
-            throw new SequenceException(
-                    "Não foi possível reservar a sequência de impressão.",
-                    e
-            );
+        } catch (IOException | ArithmeticException | NumberFormatException | OverlappingFileLockException e) {
+            logger.error("Falha na sequência {}.", path, e);
+            throw new SequenceException("Não foi possível reservar a sequência. Confira o arquivo e o procedimento de recuperação; não reinicie a contagem.", e);
         }
+    }
+
+    private static long read(Path file) throws IOException {
+        if (!Files.isRegularFile(file) || !Files.isReadable(file) || !Files.isWritable(file))
+            throw new IOException("Arquivo de sequência ausente ou inacessível.");
+        long next = Long.parseLong(Files.readString(file, StandardCharsets.UTF_8).trim());
+        if (next < 1) throw new IOException("Sequência inválida.");
+        return next;
+    }
+
+    private static void write(FileChannel channel, long next) throws IOException {
+        ByteBuffer bytes = StandardCharsets.UTF_8.encode(Long.toString(next));
+        while (bytes.hasRemaining()) channel.write(bytes);
+        channel.force(true);
+    }
+
+    private static void replace(Path file, long next) throws IOException {
+        Path temporary = Files.createTempFile(file.getParent(), "sequence-", ".tmp");
+        try {
+            try (FileChannel channel = FileChannel.open(temporary, WRITE, TRUNCATE_EXISTING)) { write(channel, next); }
+            // Sem fallback não atômico: se o volume não suportar, bloqueia a impressão.
+            Files.move(temporary, file, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } finally { Files.deleteIfExists(temporary); }
     }
 }

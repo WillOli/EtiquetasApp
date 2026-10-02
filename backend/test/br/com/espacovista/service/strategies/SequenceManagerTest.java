@@ -33,6 +33,8 @@ class SequenceManagerTest {
                 Files.exists(sequenceFile.getParent())
         );
 
+        SequenceManager.initialize(sequenceFile, 1);
+
         long firstSequence =
                 SequenceManager.getNextSequenceAndIncrement(
                         sequenceFile,

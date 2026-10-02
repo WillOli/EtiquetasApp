@@ -48,11 +48,15 @@ class PrintControllerIntegrationTest {
 
     @Test
     @DisplayName("POST /print deve retornar 200 OK para um pedido de Etiqueta Simples válido")
-    void postToPrint_withValidRequest_shouldReturn200() throws IOException, InterruptedException {
-        // --- CORREÇÃO APLICADA AQUI ---
-        // Cria o objeto usando o construtor padrão e os setters.
+    void postToPrint_withValidRequest_shouldReturn200()
+            throws IOException, InterruptedException {
+
         PrintRequest payload = new PrintRequest();
+
         payload.setText("TESTE-SIMPLES");
+        payload.setSetor("CONFEITARIA");
+        payload.setDataFabricacao("2026-09-18");
+        payload.setDataValidade("2026-09-18");
         payload.setQuantity(1);
         payload.setLabelType("STANDARD");
 
@@ -60,16 +64,63 @@ class PrintControllerIntegrationTest {
         int serverPort = app.port();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:" + serverPort + "/print"))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(requestJson))
+                .uri(
+                        URI.create(
+                                "http://localhost:"
+                                        + serverPort
+                                        + "/print"
+                        )
+                )
+                .header(
+                        "Content-Type",
+                        "application/json"
+                )
+                .POST(
+                        HttpRequest.BodyPublishers
+                                .ofString(requestJson)
+                )
                 .build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        assertEquals(200, response.statusCode());
-        ArgumentCaptor<PrintRequest> captor = ArgumentCaptor.forClass(PrintRequest.class);
-        verify(mockPrinterService).printLabels(captor.capture());
-        assertEquals("TESTE-SIMPLES", captor.getValue().getText());
+        HttpResponse<String> response =
+                httpClient.send(
+                        request,
+                        HttpResponse.BodyHandlers.ofString()
+                );
+
+        assertEquals(
+                200,
+                response.statusCode()
+        );
+
+        ArgumentCaptor<PrintRequest> captor =
+                ArgumentCaptor.forClass(
+                        PrintRequest.class
+                );
+
+        verify(mockPrinterService)
+                .printLabels(
+                        captor.capture()
+                );
+
+        assertEquals(
+                "TESTE-SIMPLES",
+                captor.getValue().getText()
+        );
+
+        assertEquals(
+                "CONFEITARIA",
+                captor.getValue().getSetor()
+        );
+
+        assertEquals(
+                "2026-09-18",
+                captor.getValue().getDataFabricacao()
+        );
+
+        assertEquals(
+                "2026-09-18",
+                captor.getValue().getDataValidade()
+        );
     }
 
     @Test
@@ -97,7 +148,7 @@ class PrintControllerIntegrationTest {
 
         // Assert
         assertEquals(200, response.statusCode());
-        assertEquals("Etiqueta de validade enviada com sucesso!", response.body());
+        assertEquals("Pedido enviado à fila da impressora. Confira a saída das etiquetas.", response.body());
 
         // Verify
         ArgumentCaptor<ValidadePrintRequest> captor = ArgumentCaptor.forClass(ValidadePrintRequest.class);

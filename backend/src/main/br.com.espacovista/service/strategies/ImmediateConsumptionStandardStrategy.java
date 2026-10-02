@@ -1,4 +1,5 @@
 package service.strategies;
+import static service.ZplSanitizer.sanitize;
 import model.ImmediateConsumptionRequest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,13 +19,13 @@ public class ImmediateConsumptionStandardStrategy extends AbstractTwoColumnStrat
         int baseOffset = 10;
         int currentX = (column > 0) ? startX + baseOffset +15 : startX + baseOffset;
 
-        String productName = request.getProductName() != null ? request.getProductName() : "";
+        String productName = sanitize(request.getProductName());
 
         String dataFabricacao = request.getDataFabricacao() != null && !request.getDataFabricacao().isEmpty()
-                ? request.getDataFabricacao()
+                ? service.LabelDateFormatter.format(request.getDataFabricacao())
                 : LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        String validade = request.getValidade() != null ? request.getValidade() : "";
+        String validade = service.LabelDateFormatter.format(request.getValidade());
 
         int fontSizeTitle = 22;
         int fontSizeText = 19;
@@ -39,6 +40,6 @@ public class ImmediateConsumptionStandardStrategy extends AbstractTwoColumnStrat
     }
 
     private String createLine(int x, int y, int fontSize, String text) {
-        return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", x, y, fontSize, fontSize, text);
+        return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", x, y, fontSize, fontSize, sanitize(text));
     }
 }

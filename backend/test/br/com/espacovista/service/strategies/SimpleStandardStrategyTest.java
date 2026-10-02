@@ -19,7 +19,7 @@ class SimpleStandardStrategyTest {
                 "CONFEITARIA",
                 "27/07/2026",
                 "30/07/2026",
-                "00015",
+                15L,
                 2
         );
 

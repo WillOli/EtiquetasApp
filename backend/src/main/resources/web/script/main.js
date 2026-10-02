@@ -3,7 +3,7 @@
  * @description Lógica principal para a aplicação de impressão de etiquetas do Espaço Vista.
  */
 
-const API_BASE_URL = 'http://localhost:8081';
+const API_BASE_URL = '';
 
 const appState = {
     mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY', 'IMMEDIATE_CONSUMPTION' ou 'PRODUCTION'
@@ -272,15 +272,15 @@ function updateDuplicateInfo(ui) {
     const quantity = parseInt(ui.labelQuantity.value) || 0;
     const isStandard = ui.labelType.value === 'STANDARD';
     const totalPrinted = isStandard ? quantity * 2 : quantity;
-    ui.duplicateInfoText.textContent = `Quantidade solicitada: ${quantity}, Total impresso: ${totalPrinted}`;
+    ui.duplicateInfoText.textContent = `Quantidade solicitada: ${quantity}, Etiquetas previstas: ${totalPrinted}`;
 }
 
 function handlePrintAction(ui) {
-    const quantity = parseInt(ui.labelQuantity.value) || 0;
+    const quantity = Number(ui.labelQuantity.value);
     const labelType = ui.labelType.value;
 
-    if (quantity < 1) {
-        showModal('A quantidade deve ser de no mínimo 1.', 'error');
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 50) {
+        showModal('A quantidade deve ser um número inteiro entre 1 e 50.', 'error');
         return;
     }
 
@@ -495,7 +495,7 @@ function setButtonLoading(isLoading, ui) {
     ui.printButton.classList.toggle('opacity-70', isLoading);
     ui.printButton.classList.toggle('cursor-not-allowed', isLoading);
     ui.spinner?.classList.toggle('hidden', !isLoading);
-    ui.printButtonText.textContent = isLoading ? 'Imprimindo...' : 'Imprimir Etiquetas';
+    ui.printButtonText.textContent = isLoading ? 'Enviando à fila...' : 'Imprimir Etiquetas';
 }
 
 function showModal(message, type = 'success') {
@@ -512,7 +512,7 @@ function showModal(message, type = 'success') {
                 <div class="${bgColor} text-white p-3 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 font-bold text-xl">
                     ${type === 'success' ? '✓' : '✕'}
                 </div>
-                <p class="text-gray-800 text-base mb-4 font-medium">${message}</p>
+                <p id="alertModalMessage" class="text-gray-800 text-base mb-4 font-medium"></p>
                 <button onclick="fecharModalManual()" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 w-full font-bold">
                     OK
                 </button>
@@ -520,6 +520,7 @@ function showModal(message, type = 'success') {
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+    document.getElementById('alertModalMessage').textContent = message;
 
     window.fecharModalManual = () => {
         if (window.modalTimeout) {

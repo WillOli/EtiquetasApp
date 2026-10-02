@@ -1,4 +1,5 @@
 package service.strategies;
+import static service.ZplSanitizer.sanitize;
 
 import model.ValidadePrintRequest;
 import static service.ZplConstants.*;
@@ -17,7 +18,7 @@ public class ValidadeStandardStrategy extends AbstractTwoColumnStrategy {
         String formattedMfgDate = formatData(request.getDataFabricacao());
         String formattedOpenDate = formatData(request.getDataAbertura());
         String formattedValDate = formatData(request.getDataValidade());
-        String productName = request.getProductName() != null ? request.getProductName() : "";
+        String productName = sanitize(request.getProductName());
 
         int fontSize = 16;
         int textMargin = 8;
@@ -58,7 +59,7 @@ public class ValidadeStandardStrategy extends AbstractTwoColumnStrategy {
 
     private String generateLine(String label, String value, int startX, int yPos, int fontSize, int textMargin, int valueMargin) {
         return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + textMargin, yPos, fontSize, fontSize, label) +
-                String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + valueMargin, yPos, fontSize, fontSize, value);
+                String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + valueMargin, yPos, fontSize, fontSize, sanitize(value));
     }
 
     private String formatData(String dateStr) {

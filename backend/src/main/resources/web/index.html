@@ -43,7 +43,7 @@
                                 class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent"
                                 placeholder="Ex: Brownie, Cookie Nutella..."
                                 autocomplete="off"
-                        >
+                         maxlength="80">
                         <small class="text-gray-500 block mt-1 text-xs">Digite para filtrar pelas letras ou clique para escolher do cardápio.</small>
                         <ul id="simpleProductSuggestions" class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden"></ul>
                     </div>
@@ -91,7 +91,7 @@
                                 id="productName"
                                 class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent"
                                 placeholder="Ex: Molho de Tomate"
-                                autocomplete="off">
+                                autocomplete="off" maxlength="80">
 
                         <ul
                                 id="productSuggestions"
@@ -147,7 +147,7 @@
                 <!-- Nome do Produto -->
                 <div class="relative" id="immediateProductNameContainer">
                     <label for="immediateProductName" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
-                    <input type="text" id="immediateProductName" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Bolo de Chocolate" autocomplete="off">
+                    <input type="text" id="immediateProductName" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Bolo de Chocolate" autocomplete="off" maxlength="80">
                     <small class="text-gray-500 block mt-1 text-xs">Esta etiqueta será marcada como "CONSUMO IMEDIATO" automaticamente.</small>
                     <ul id="immediateProductSuggestions" class="absolute z-20 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto hidden"></ul>
                 </div>
@@ -170,7 +170,7 @@
             <div id="producao-section" class="hidden flex flex-col gap-4">
                 <div class="input-group">
                     <label for="prod-product-name" class="block text-sm font-medium text-[var(--text-primary)] mb-1">Nome do Produto</label>
-                    <input type="text" id="prod-product-name" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Frango Picado Temperado">
+                    <input type="text" id="prod-product-name" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" placeholder="Ex: Frango Picado Temperado" maxlength="80">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -202,7 +202,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div class="mb-3">
                     <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
-                    <input id="labelQuantity" type="number" min="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" />
+                    <input id="labelQuantity" type="number" min="1" max="50" step="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" />
                 </div>
                 <div class="mb-3">
                     <label for="labelType" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Tipo de Etiqueta</label>

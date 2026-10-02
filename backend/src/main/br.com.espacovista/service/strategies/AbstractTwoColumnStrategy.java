@@ -25,6 +25,7 @@ public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
      */
     @Override
     public final String generateZpl() {
+        beforeGeneration();
         StringBuilder zplBuilder = new StringBuilder();
         int pageWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM * 2 + GAP_HORIZONTAL_DOTS * 2;
         int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
@@ -59,6 +60,8 @@ public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
      * @param column O índice da coluna (0 para esquerda, 1 para direita).
      * @return Uma String contendo os comandos ZPL (^FO, ^A0, ^FD, etc.) para o conteúdo da etiqueta.
      */
+    protected void beforeGeneration() {}
+
     protected abstract String generateLabelContent(int startX, int column);
 }
 

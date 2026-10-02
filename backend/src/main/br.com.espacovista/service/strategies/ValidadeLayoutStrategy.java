@@ -1,4 +1,5 @@
 package service.strategies;
+import static service.ZplSanitizer.sanitize;
 
 import model.ValidadePrintRequest;
 import static service.ZplConstants.*;
@@ -32,19 +33,19 @@ public class ValidadeLayoutStrategy implements ILabelStrategy {
             // Linhas distribuídas de forma compacta para não estourar a altura
             int y1 = 42;
             zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDProduto:^FS\n", textMargin, y1, fontSize, fontSize));
-            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y1, fontSize, fontSize, request.getProductName() != null ? request.getProductName() : ""));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y1, fontSize, fontSize, sanitize(request.getProductName())));
 
             int y2 = 78;
             zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDFabricacao:^FS\n", textMargin, y2, fontSize, fontSize));
-            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y2, fontSize, fontSize, formattedMfgDate));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y2, fontSize, fontSize, sanitize(formattedMfgDate)));
 
             int y3 = 114;
             zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDData Abertura:^FS\n", textMargin, y3, fontSize, fontSize));
-            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y3, fontSize, fontSize, formattedOpenDate));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y3, fontSize, fontSize, sanitize(formattedOpenDate)));
 
             int y4 = 150;
             zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FDValidade (aberto):^FS\n", textMargin, y4, fontSize, fontSize));
-            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y4, fontSize, fontSize, formattedValDate));
+            zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", valueMargin, y4, fontSize, fontSize, sanitize(formattedValDate)));
 
             zplBuilder.append("^XZ\n");
         }

@@ -1,6 +1,6 @@
 package br.com.espacovista.service.strategies;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import service.strategies.ILabelStrategy;
 import service.strategies.SimpleLayoutStrategy;
@@ -15,7 +15,7 @@ public class SimpleLayoutStrategyTest {
     public void generateZpl_forSimpleLayout_shouldContainEssentialCommands() {
         // Arrange (Preparação)
         // Cria uma instância da estratégia específica que queremos testar.
-        ILabelStrategy strategy = new SimpleLayoutStrategy("TESTE-ZPL", 1);
+        ILabelStrategy strategy = new SimpleLayoutStrategy("TESTE-ZPL", 1, "COZINHA", "02/10/2026", "03/10/2026", 1L);
 
         // Act (Ação)
         // Executa o método da estratégia.

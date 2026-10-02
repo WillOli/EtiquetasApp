@@ -1,4 +1,5 @@
 package service.strategies;
+import static service.ZplSanitizer.sanitize;
 
 import model.ProductionRequest;
 
@@ -22,7 +23,7 @@ public class ProductionLayoutStrategy implements ILabelStrategy {
         String horaPrep = formatHora(request.getHorarioPreparo());
         String horaDesc = formatHora(request.getHorarioDescarte());
 
-        zpl.append("^XA\n");
+        zpl.append("^XA\n^CI28\n");
         zpl.append("^PW640\n");
         zpl.append("^LL240\n");
 
@@ -30,15 +31,15 @@ public class ProductionLayoutStrategy implements ILabelStrategy {
         int col2X = 330;
 
         zpl.append(String.format("^FO%d,15^A0N,24,24^FDETIQUETA DE PRODUCAO^FS\n", startX));
-        zpl.append(String.format("^FO%d,60^A0N,24,24^FDProduto: %s^FS\n", startX, request.getProductName() != null ? request.getProductName() : ""));
-        zpl.append(String.format("^FO%d,110^A0N,22,22^FDData Prep: %s^FS\n", startX, dataPrep));
-        zpl.append(String.format("^FO%d,110^A0N,22,22^FDValidade: %s^FS\n", col2X, dataVal));
-        zpl.append(String.format("^FO%d,155^A0N,22,22^FDHora Prep: %s^FS\n", startX, horaPrep));
-        zpl.append(String.format("^FO%d,155^A0N,22,22^FDDescarte: %s^FS\n", col2X, horaDesc));
+        zpl.append(String.format("^FO%d,60^A0N,24,24^FDProduto: %s^FS\n", startX, sanitize(request.getProductName())));
+        zpl.append(String.format("^FO%d,110^A0N,22,22^FDData Prep: %s^FS\n", startX, sanitize(dataPrep)));
+        zpl.append(String.format("^FO%d,110^A0N,22,22^FDValidade: %s^FS\n", col2X, sanitize(dataVal)));
+        zpl.append(String.format("^FO%d,155^A0N,22,22^FDHora Prep: %s^FS\n", startX, sanitize(horaPrep)));
+        zpl.append(String.format("^FO%d,155^A0N,22,22^FDDescarte: %s^FS\n", col2X, sanitize(horaDesc)));
 
         zpl.append("^XZ\n");
 
-        return zpl.toString();
+        return zpl.toString().repeat(request.getQuantity());
     }
 
     private String formatData(String dateStr) {

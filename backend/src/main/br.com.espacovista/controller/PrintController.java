@@ -1,118 +1,59 @@
 package controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import io.javalin.http.Context;
-import model.ImmediateConsumptionRequest;
-import model.PrintRequest;
-import model.ProductionRequest;
-import model.ValidadePrintRequest;
+import model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.PrinterService;
-import service.PrinterStrategyFactory;
-import service.strategies.ILabelStrategy;
+import service.SequenceException;
+import validation.PrintRequestValidator;
+import validation.RequestValidationException;
+import java.util.function.Consumer;
 
 public class PrintController {
-    private final PrinterService printerService;
-    private final Gson gson = new Gson();
     private static final Logger logger = LoggerFactory.getLogger(PrintController.class);
+    private final PrinterService printerService;
+    private final Gson gson = new GsonBuilder().setStrictness(Strictness.STRICT).create();
 
-    public PrintController(PrinterService printerService) {
-        this.printerService = printerService;
-    }
+    public PrintController(PrinterService printerService) { this.printerService = printerService; }
 
     public void handlePrintRequest(Context ctx) {
-        try {
-            PrintRequest printRequest = gson.fromJson(ctx.body(), PrintRequest.class);
-            logger.info("Recebida requisição para /print: {}", ctx.body());
-
-            if (printRequest == null || printRequest.getText() == null || printRequest.getText().trim().isEmpty()) {
-                logger.warn("Requisição /print inválida: texto da etiqueta vazio.");
-                ctx.status(400).result("Erro: Texto da etiqueta não pode ser vazio.");
-                return;
-            }
-
-            printerService.printLabels(printRequest);
-            ctx.status(200).result("Impressão enviada com sucesso!");
-
-        } catch (JsonSyntaxException e) {
-            logger.warn("Erro de sintaxe no JSON recebido em /print.", e);
-            ctx.status(400).result("Erro: Formato do JSON inválido.");
-        } catch (Exception e) {
-            logger.error("Erro interno no servidor ao processar /print.", e);
-            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
-        }
+        handle(ctx, PrintRequest.class, PrintRequestValidator::validate, printerService::printLabels);
     }
-
     public void handleValidadePrintRequest(Context ctx) {
-        try {
-            ValidadePrintRequest request = gson.fromJson(ctx.body(), ValidadePrintRequest.class);
-            logger.info("Recebida requisição para /print-validade: {}", ctx.body());
-
-            if (request == null || request.getProductName() == null || request.getProductName().trim().isEmpty()) {
-                logger.warn("Requisição /print-validade inválida: nome do produto vazio.");
-                ctx.status(400).result("Erro: Nome do produto não pode ser vazio.");
-                return;
-            }
-
-            printerService.printValidadeLabel(request);
-            ctx.status(200).result("Etiqueta de validade enviada com sucesso!");
-
-        } catch (JsonSyntaxException e) {
-            logger.warn("Erro de sintaxe no JSON recebido em /print-validade.", e);
-            ctx.status(400).result("Erro: Formato do JSON inválido.");
-        } catch (Exception e) {
-            logger.error("Erro interno no servidor ao processar /print-validade.", e);
-            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
-        }
+        handle(ctx, ValidadePrintRequest.class, PrintRequestValidator::validate, printerService::printValidadeLabel);
     }
-
     public void handleImmediateConsumptionRequest(Context ctx) {
-        try {
-            ImmediateConsumptionRequest request = gson.fromJson(ctx.body(), ImmediateConsumptionRequest.class);
-            logger.info("Recebida requisição para /print-consumo-imediato: {}", ctx.body());
-
-            if (request == null || request.getProductName() == null || request.getProductName().trim().isEmpty()) {
-                logger.warn("Requisição /print-consumo-imediato inválida: nome do produto vazio.");
-                ctx.status(400).result("Erro: Nome do produto não pode ser vazio.");
-                return;
-            }
-
-            printerService.printImmediateConsumptionLabel(request);
-            ctx.status(200).result("Etiqueta de consumo imediato enviada com sucesso!");
-
-        } catch (JsonSyntaxException e) {
-            logger.warn("Erro de sintaxe no JSON recebido em /print-consumo-imediato.", e);
-            ctx.status(400).result("Erro: Formato do JSON inválido.");
-        } catch (Exception e) {
-            logger.error("Erro interno no servidor ao processar /print-consumo-imediato.", e);
-            ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
-        }
+        handle(ctx, ImmediateConsumptionRequest.class, PrintRequestValidator::validate, printerService::printImmediateConsumptionLabel);
+    }
+    public void handleProductionRequest(Context ctx) {
+        handle(ctx, ProductionRequest.class, PrintRequestValidator::validate, printerService::printProductionLabel);
     }
 
-    // --- NOVO MÉTODO NO PADRÃO JAVALIN ---
-    public void handleProductionRequest(Context ctx) {
+    private <T> void handle(Context ctx, Class<T> type, Consumer<T> validate, Consumer<T> print) {
+        ctx.contentType("text/plain; charset=utf-8");
         try {
-            ProductionRequest request = gson.fromJson(ctx.body(), ProductionRequest.class);
-            logger.info("Recebida requisição para /print-producao: {}", ctx.body());
-
-            if (request == null || request.getProductName() == null || request.getProductName().trim().isEmpty()) {
-                logger.warn("Requisição /print-producao inválida: nome do produto vazio.");
-                ctx.status(400).result("Erro: Nome do produto não pode ser vazio.");
-                return;
-            }
-
-            ILabelStrategy strategy = PrinterStrategyFactory.getStrategy(request);
-            printerService.printProductionLabel(request); // Assumindo que este método aceita a estratégia
-
-            ctx.status(200).result("Etiqueta de Produção enviada com sucesso!");
-
-        } catch (JsonSyntaxException e) {
-            logger.warn("Erro de sintaxe no JSON recebido em /print-producao.", e);
-            ctx.status(400).result("Erro: Formato do JSON inválido.");
+            T request = gson.fromJson(ctx.body(), type);
+            validate.accept(request);
+            print.accept(request);
+            ctx.status(200).result("Pedido enviado à fila da impressora. Confira a saída das etiquetas.");
+        } catch (io.javalin.http.HttpResponseException e) {
+            throw e;
+        } catch (JsonParseException e) {
+            logger.warn("JSON inválido em {}.", ctx.path());
+            ctx.status(400).result("Formato do JSON inválido.");
+        } catch (RequestValidationException e) {
+            logger.warn("Pedido inválido em {}: {}", ctx.path(), e.getMessage());
+            ctx.status(400).result(e.getMessage());
+        } catch (PrinterService.PrinterServiceException e) {
+            logger.error("Impressora indisponível em {}.", ctx.path(), e);
+            ctx.status(503).result(e.getMessage());
+        } catch (SequenceException e) {
+            logger.error("Falha na sequência em {}.", ctx.path(), e);
+            ctx.status(503).result("Impressão bloqueada: não foi possível garantir o registro. Consulte o responsável pela sequência.");
         } catch (Exception e) {
-            logger.error("Erro interno no servidor ao processar /print-producao.", e);
+            logger.error("Erro interno em {}.", ctx.path(), e);
             ctx.status(500).result("Ocorreu um erro inesperado no servidor.");
         }
     }

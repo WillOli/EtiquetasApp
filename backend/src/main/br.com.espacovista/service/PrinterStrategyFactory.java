@@ -34,13 +34,12 @@ public class PrinterStrategyFactory {
                     proximoRegistro
             );
         } else {
-            String regFormatado = String.format("%05d", proximoRegistro);
             return new SimpleStandardStrategy(
                     request.getText(),
                     request.getSetor(),
                     request.getDataFabricacao(),
                     request.getDataValidade(),
-                    regFormatado,
+                    proximoRegistro,
                     requestedQuantity
             );
         }

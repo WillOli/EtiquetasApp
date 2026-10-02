@@ -4,45 +4,76 @@ import config.AppConfig;
 import controller.PrintController;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
-import io.javalin.plugin.bundled.CorsPlugin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.PrinterService;
+import service.SequenceManager;
+import javax.print.PrintServiceLookup;
+import javax.print.attribute.standard.PrinterName;
+import java.net.URI;
+import java.nio.file.Path;
+import java.util.Locale;
 
-public class Main {
+public final class Main {
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-        // Leitura dinâmica da porta definida no arquivo de propriedades
-        int port = AppConfig.getServerPort();
+        if (args.length > 0) {
+            switch (args[0]) {
+                case "--list-printers":
+                    for (var printer : PrintServiceLookup.lookupPrintServices(null, null)) {
+                        PrinterName internal = printer.getAttribute(PrinterName.class);
+                        System.out.println(printer.getName() + (internal == null ? "" : " | " + internal.getValue()));
+                    }
+                    return;
+                case "--initialize-sequence":
+                    if (args.length != 2) throw new IllegalArgumentException("Informe o próximo registro conferido.");
+                    SequenceManager.initialize(AppConfig.getSequenceFilePath(), Long.parseLong(args[1]));
+                    logger.info("Sequência inicializada em {}.", AppConfig.getSequenceFilePath());
+                    return;
+                case "--backup-sequence":
+                    if (args.length != 2) throw new IllegalArgumentException("Informe o caminho do backup novo.");
+                    SequenceManager.backup(AppConfig.getSequenceFilePath(), Path.of(args[1]));
+                    logger.info("Backup da sequência concluído.");
+                    return;
+                default: throw new IllegalArgumentException("Opção desconhecida.");
+            }
+        }
+        Javalin app = createApp(new PrinterService()).start("127.0.0.1", AppConfig.getServerPort());
+        Runtime.getRuntime().addShutdownHook(new Thread(app::stop));
+        logger.info("Abra http://localhost:{}/web/index.html", app.port());
+    }
 
-        // Inicializa os componentes principais do sistema
-        var printerService = new PrinterService();
-        var printController = new PrintController(printerService);
-
-        Javalin app = Javalin.create(config -> {
-            // Configuração de CORS liberada para evitar bloqueios no navegador durante o desenvolvimento
-            config.registerPlugin(new CorsPlugin(cors -> {
-                cors.addRule(it -> it.anyHost());
-            }));
-
-            // ✅ ALTERAÇÃO PRINCIPAL: Mudamos para Location.EXTERNAL lendo direto da pasta do projeto.
-            // Isso resolve o erro de "directory does not exist" e permite atualizar o HTML/JS sem reiniciar o Java!
-            config.staticFiles.add(staticFiles -> {
-                staticFiles.hostedPath = "/web";
-                staticFiles.directory = "src/main/resources/web";
-                staticFiles.location = Location.EXTERNAL;
+    public static Javalin createApp(PrinterService printer) {
+        PrintController controller = new PrintController(printer);
+        return Javalin.create(config -> {
+            config.http.maxRequestSize = 16_384L;
+            config.staticFiles.add(files -> {
+                files.hostedPath = "/web";
+                files.directory = AppConfig.isDevelopment() ? AppConfig.getWebDirectory() : "/web";
+                files.location = AppConfig.isDevelopment() ? Location.EXTERNAL : Location.CLASSPATH;
             });
-        }).start(port);
+        }).before(ctx -> {
+            if (!ctx.method().name().equals("POST")) return;
+            String origin = ctx.header("Origin");
+            if (origin != null && !sameOrigin(origin, ctx.header("Host")))
+                throw new io.javalin.http.ForbiddenResponse("Origem não permitida.");
+            String contentType = ctx.contentType();
+            if (contentType == null || !contentType.split(";", 2)[0].trim().toLowerCase(Locale.ROOT).equals("application/json"))
+                throw new io.javalin.http.UnsupportedMediaTypeResponse("Use application/json.");
+        }).post("/print", controller::handlePrintRequest)
+          .post("/print-validade", controller::handleValidadePrintRequest)
+          .post("/print-consumo-imediato", controller::handleImmediateConsumptionRequest)
+          .post("/print-producao", controller::handleProductionRequest)
+          .get("/", ctx -> ctx.redirect("/web/index.html"));
+    }
 
-        logger.info("Servidor iniciado com sucesso na porta {}", port);
-        logger.info("Acesse http://localhost:{}/web/index.html para usar a aplicação.", port);
-
-        // Mapeamento das rotas da nossa API de impressão
-        app.post("/print", printController::handlePrintRequest);
-        app.post("/print-validade", printController::handleValidadePrintRequest);
-        app.post("/print-consumo-imediato", printController::handleImmediateConsumptionRequest);
-        app.post("/print-producao", printController::handleProductionRequest);
-        app.get("/", ctx -> ctx.result("Servidor de impressão Espaço Vista está no ar!"));
+    private static boolean sameOrigin(String origin, String host) {
+        try {
+            URI uri = URI.create(origin);
+            return "http".equals(uri.getScheme()) && uri.getRawUserInfo() == null
+                    && ("localhost".equals(uri.getHost()) || "127.0.0.1".equals(uri.getHost()))
+                    && uri.getRawAuthority().equals(host);
+        } catch (IllegalArgumentException e) { return false; }
     }
 }

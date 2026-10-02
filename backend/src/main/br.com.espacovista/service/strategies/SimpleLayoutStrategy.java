@@ -1,4 +1,5 @@
 package service.strategies;
+import static service.ZplSanitizer.sanitize;
 
 public class SimpleLayoutStrategy implements ILabelStrategy {
     private final String text;
@@ -8,16 +9,12 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
     private final String dataValidade;
     private final long numeroImpressao;
 
-    public SimpleLayoutStrategy(String text, int quantity) {
-        this(text, quantity, "", "", "", 0L);
-    }
-
     public SimpleLayoutStrategy(String text, int quantity, String setor, String dataFabricacao, String dataValidade, long numeroImpressao) {
         this.text = text;
         this.quantity = quantity;
         this.setor = (setor != null) ? setor : "";
-        this.dataFabricacao = (dataFabricacao != null) ? dataFabricacao : "";
-        this.dataValidade = (dataValidade != null) ? dataValidade : "";
+        this.dataFabricacao = service.LabelDateFormatter.format(dataFabricacao);
+        this.dataValidade = service.LabelDateFormatter.format(dataValidade);
         this.numeroImpressao = numeroImpressao;
     }
 
@@ -46,13 +43,13 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
 
                 zplBuilder.append("^FO").append(offsetX).append(",25")
                         .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
-                        .append("^FB340,1,0,C,0^FD").append(this.text.toUpperCase()).append("^FS\n");
+                        .append("^FB340,1,0,C,0^FD").append(sanitize(this.text.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",65")
-                        .append("^A0N,22,22^FB340,1,0,C,0^FDSETOR: ").append(this.setor.toUpperCase()).append("^FS\n");
+                        .append("^A0N,22,22^FB340,1,0,C,0^FDSETOR: ").append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",100")
-                        .append("^A0N,20,20^FB340,1,0,C,0^FDFAB.: ").append(this.dataFabricacao).append("^FS\n");
+                        .append("^A0N,20,20^FB340,1,0,C,0^FDFAB.: ").append(sanitize(this.dataFabricacao)).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",130")
-                        .append("^A0N,20,20^FB340,1,0,C,0^FDVAL.: ").append(this.dataValidade).append("^FS\n");
+                        .append("^A0N,20,20^FB340,1,0,C,0^FDVAL.: ").append(sanitize(this.dataValidade)).append("^FS\n");
                 zplBuilder.append("^FO").append(offsetX).append(",160")
                         .append("^A0N,20,20^FB340,1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
             }

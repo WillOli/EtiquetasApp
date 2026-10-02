@@ -9,7 +9,7 @@ public class PrintRequest {
     private String setor;
     private String dataFabricacao;
     private String dataValidade;
-    private String registro; // ✅ Adicionado para suportar o número sequencial
+    private String registro;
 
     public enum LabelType {
         STANDARD,
@@ -17,59 +17,83 @@ public class PrintRequest {
     }
 
     public PrintRequest() {
-
     }
 
-    // --- GETTERS ---
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public LabelType getLabelType() {
-        return (labelType == null) ? LabelType.STANDARD : labelType;
-    }
-
-    // --- SETTERS ---
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    /**
-     * ✅ Mantido: A lógica de conversão segura para o Enum.
-     */
-    public void setLabelType(String labelTypeStr) {
-        LabelType tempType;
-        try {
-            if (labelTypeStr == null || labelTypeStr.trim().isEmpty()) {
-                tempType = LabelType.STANDARD;
-            } else {
-                tempType = LabelType.valueOf(labelTypeStr.toUpperCase());
-            }
-        } catch (IllegalArgumentException e) {
-            System.err.println("[AVISO] Valor de labelType inválido recebido: '" + labelTypeStr + "'. Usando padrão.");
-            tempType = LabelType.STANDARD;
-        }
-        this.labelType = tempType;
+    public LabelType getLabelType() {
+        return labelType;
     }
 
-    // --- GETTERS E SETTERS DOS CAMPOS COMPLEMENTARES ---
-    public String getSetor() { return setor; }
-    public void setSetor(String setor) { this.setor = setor; }
+    public void setLabelType(LabelType labelType) {
+        this.labelType = labelType;
+    }
 
-    public String getDataFabricacao() { return dataFabricacao; }
-    public void setDataFabricacao(String dataFabricacao) { this.dataFabricacao = dataFabricacao; }
+    public void setLabelType(String labelTypeStr) {
 
-    public String getDataValidade() { return dataValidade; }
-    public void setDataValidade(String dataValidade) { this.dataValidade = dataValidade; }
+        if (labelTypeStr == null ||
+                labelTypeStr.trim().isEmpty()) {
 
-    public String getRegistro() { return registro; }
-    public void setRegistro(String registro) { this.registro = registro; }
+            this.labelType = null;
+            return;
+        }
+
+        try {
+            this.labelType =
+                    LabelType.valueOf(
+                            labelTypeStr
+                                    .trim()
+                                    .toUpperCase(java.util.Locale.ROOT)
+                    );
+
+        } catch (IllegalArgumentException e) {
+            this.labelType = null;
+        }
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+
+    public String getDataFabricacao() {
+        return dataFabricacao;
+    }
+
+    public void setDataFabricacao(String dataFabricacao) {
+        this.dataFabricacao = dataFabricacao;
+    }
+
+    public String getDataValidade() {
+        return dataValidade;
+    }
+
+    public void setDataValidade(String dataValidade) {
+        this.dataValidade = dataValidade;
+    }
+
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
+    }
 }
