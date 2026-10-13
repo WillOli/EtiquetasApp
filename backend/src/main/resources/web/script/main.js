@@ -237,22 +237,32 @@ function switchMode(mode, ui) {
     ui.immediateForm?.classList.add('hidden');
     ui.producaoSection?.classList.add('hidden');
 
+    const revealForm = (form) => {
+        if (!form) return;
+        form.classList.remove('mode-form-enter');
+        form.classList.remove('hidden');
+        // Reinicia a animação quando o usuário volta a um modo já visitado.
+        void form.offsetWidth;
+        form.classList.add('mode-form-enter');
+        form.addEventListener('animationend', () => form.classList.remove('mode-form-enter'), { once: true });
+    };
+
     if (mode === 'SIMPLE') {
         ui.btnModeSimple?.classList.remove('btn-secondary');
         ui.btnModeSimple?.classList.add('btn-primary');
-        ui.simpleForm?.classList.remove('hidden');
+        revealForm(ui.simpleForm);
     } else if (mode === 'VALIDITY') {
         ui.btnModeValidity?.classList.remove('btn-secondary');
         ui.btnModeValidity?.classList.add('btn-primary');
-        ui.validityForm?.classList.remove('hidden');
+        revealForm(ui.validityForm);
     } else if (mode === 'IMMEDIATE_CONSUMPTION') {
         ui.btnModeImmediate?.classList.remove('btn-secondary');
         ui.btnModeImmediate?.classList.add('btn-primary');
-        ui.immediateForm?.classList.remove('hidden');
+        revealForm(ui.immediateForm);
     } else if (mode === 'PRODUCTION') {
         ui.btnModeProduction?.classList.remove('btn-secondary');
         ui.btnModeProduction?.classList.add('btn-primary');
-        ui.producaoSection?.classList.remove('hidden');
+        revealForm(ui.producaoSection);
     }
 
     if (mode === 'PRODUCTION') {
