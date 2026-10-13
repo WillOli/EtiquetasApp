@@ -7,7 +7,7 @@
     <title>Espaço Vista - Impressão de Etiquetas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/web/css/style.css" />
-    <link rel="icon" href="/web/img/Logo_V.png" type="image/png" />
+    <link id="app-favicon" rel="icon" href="/web/img/Logo_V_Branco.png" type="image/png" />
 </head>
 <body class="bg-[var(--bg-primary)] min-h-screen flex flex-col font-sans">
 
@@ -22,7 +22,7 @@
             <!-- Seletor de Modos -->
             <div class="mb-4">
                 <label class="block text-sm font-medium text-[var(--text-primary)] mb-2">Qual tipo de etiqueta você quer imprimir?</label>
-                <div class="flex gap-2 flex-wrap">
+                <div class="mode-switcher flex gap-2 flex-wrap">
                     <button id="btnModeSimple" class="btn-primary w-full sm:w-auto">Etiqueta Simples</button>
                     <button id="btnModeValidity" class="btn-secondary w-full sm:w-auto">Etiqueta de Validade</button>
                     <button id="btnModeImmediate" class="btn-accent w-full sm:w-auto">Consumo Imediato</button>

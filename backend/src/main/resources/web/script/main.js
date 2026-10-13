@@ -5,6 +5,25 @@
 
 const API_BASE_URL = '';
 
+// Anima o favicon enquanto a pessoa está em outra aba e restaura o V estático ao voltar.
+const faviconLink = document.getElementById('app-favicon');
+if (faviconLink) {
+    const staticFavicon = '/web/img/Logo_V_Branco.png';
+    const animatedFavicon = '/web/img/Logo_V_Branco_Animado.gif';
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const updateFavicon = () => {
+        const animate = document.hidden && !reducedMotion.matches;
+        faviconLink.href = animate ? animatedFavicon : staticFavicon;
+        faviconLink.type = animate ? 'image/gif' : 'image/png';
+    };
+
+    document.addEventListener('visibilitychange', updateFavicon);
+    window.addEventListener('focus', updateFavicon);
+    window.addEventListener('blur', updateFavicon);
+    reducedMotion.addEventListener('change', updateFavicon);
+}
+
 const appState = {
     mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY', 'IMMEDIATE_CONSUMPTION' ou 'PRODUCTION'
 };
