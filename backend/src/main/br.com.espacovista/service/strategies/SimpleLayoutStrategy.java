@@ -22,37 +22,38 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
     public String generateZpl() {
         int labelWidthDots = 824;
         int labelHeightDots = 240;
-        int fontHeightNome = (this.text.length() > 16) ? 24 : 28;
+        int contentWidth = labelWidthDots - 80;
+        int fontHeightNome = this.text.length() > 30
+                ? Math.max(12, (int) (contentWidth * 0.8 / (this.text.length() * 0.62)))
+                : 36;
 
         StringBuilder zplBuilder = new StringBuilder();
 
-        for (int i = 0; i < this.quantity; i += 2) {
+        for (int i = 0; i < this.quantity; i++) {
             zplBuilder.append("^XA\n");
             zplBuilder.append("^CI28\n");
             zplBuilder.append("^PW").append(labelWidthDots).append("\n");
             zplBuilder.append("^LL").append(labelHeightDots).append("\n");
 
-            for (int col = 0; col < 2; col++) {
-                int itemAtual = i + col;
-                if (itemAtual >= this.quantity) break;
-
-                // Ajuste das colunas para centralizar sem cortar nas bordas
-                int offsetX = (col == 0) ? 20 : 430;
-                long regAtual = this.numeroImpressao + itemAtual;
-                String regFormatado = String.format("%05d", regAtual);
-
-                zplBuilder.append("^FO").append(offsetX).append(",25")
-                        .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
-                        .append("^FB340,1,0,C,0^FD").append(sanitize(this.text.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
-                zplBuilder.append("^FO").append(offsetX).append(",65")
-                        .append("^A0N,22,22^FB340,1,0,C,0^FDSETOR: ").append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
-                zplBuilder.append("^FO").append(offsetX).append(",100")
-                        .append("^A0N,20,20^FB340,1,0,C,0^FDFAB.: ").append(sanitize(this.dataFabricacao)).append("^FS\n");
-                zplBuilder.append("^FO").append(offsetX).append(",130")
-                        .append("^A0N,20,20^FB340,1,0,C,0^FDVAL.: ").append(sanitize(this.dataValidade)).append("^FS\n");
-                zplBuilder.append("^FO").append(offsetX).append(",160")
-                        .append("^A0N,20,20^FB340,1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
-            }
+            long regAtual = this.numeroImpressao + i;
+            String regFormatado = String.format("%05d", regAtual);
+            int contentStart = 40;
+            zplBuilder.append("^FO").append(contentStart).append(",18")
+                    .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
+                    .append("^FB").append(contentWidth).append(",1,0,C,0^FD")
+                    .append(sanitize(this.text.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
+            zplBuilder.append("^FO").append(contentStart).append(",64")
+                    .append("^A0N,26,26^FB").append(contentWidth).append(",1,0,C,0^FDSETOR: ")
+                    .append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
+            zplBuilder.append("^FO").append(contentStart).append(",105")
+                    .append("^A0N,25,25^FB").append(contentWidth).append(",1,0,C,0^FDFAB.: ")
+                    .append(sanitize(this.dataFabricacao)).append("^FS\n");
+            zplBuilder.append("^FO").append(contentStart).append(",145")
+                    .append("^A0N,25,25^FB").append(contentWidth).append(",1,0,C,0^FDVAL.: ")
+                    .append(sanitize(this.dataValidade)).append("^FS\n");
+            zplBuilder.append("^FO").append(contentStart).append(",185")
+                    .append("^A0N,24,24^FB").append(contentWidth).append(",1,0,C,0^FDREG.: ")
+                    .append(regFormatado).append("^FS\n");
             zplBuilder.append("^XZ\n");
         }
         return zplBuilder.toString();

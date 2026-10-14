@@ -1,6 +1,7 @@
 package validation;
 
 import model.ImmediateConsumptionRequest;
+import model.LabelStyle;
 import model.PrintRequest;
 import model.ProductionRequest;
 import model.ValidadePrintRequest;
@@ -70,6 +71,7 @@ public final class PrintRequestValidator {
         validateLabelType(
                 request.getLabelType()
         );
+        validateStyle(request.getStyle());
 
         LocalDate fabricacao =
                 requireDate(
@@ -136,6 +138,7 @@ public final class PrintRequestValidator {
         validateLabelType(
                 request.getLabelType()
         );
+        validateStyle(request.getStyle());
 
         LocalDate fabricacao =
                 requireDate(
@@ -208,6 +211,7 @@ public final class PrintRequestValidator {
         validateLabelType(
                 request.getLabelType()
         );
+        validateStyle(request.getStyle());
 
         LocalDate fabricacao =
                 requireDate(
@@ -280,6 +284,7 @@ public final class PrintRequestValidator {
         validateLabelType(
                 request.getLabelType()
         );
+        validateStyle(request.getStyle());
 
         /*
          * Regra de negócio:
@@ -384,6 +389,25 @@ public final class PrintRequestValidator {
             throw new RequestValidationException(
                     "Tipo de etiqueta é obrigatório ou inválido."
             );
+        }
+    }
+
+    private static void validateStyle(LabelStyle style) {
+        if (style == null) return; // Compatível com clientes antigos sem opções de estilo.
+        if (style.getFontScale() < 80 || style.getFontScale() > 125) {
+            throw new RequestValidationException("O tamanho do texto deve ficar entre 80% e 125%.");
+        }
+        if (style.getAlignment() == null || !java.util.Set.of("left", "center", "right").contains(style.getAlignment())) {
+            throw new RequestValidationException("Alinhamento de etiqueta inválido.");
+        }
+        if (style.getSpacing() == null || !java.util.Set.of("compact", "normal", "relaxed").contains(style.getSpacing())) {
+            throw new RequestValidationException("Espaçamento de etiqueta inválido.");
+        }
+        if (style.getFontFamily() == null || !java.util.Set.of("0", "A", "D").contains(style.getFontFamily())) {
+            throw new RequestValidationException("Fonte de etiqueta inválida.");
+        }
+        if (style.getBorder() == null || !java.util.Set.of("none", "solid").contains(style.getBorder())) {
+            throw new RequestValidationException("Borda de etiqueta inválida.");
         }
     }
 

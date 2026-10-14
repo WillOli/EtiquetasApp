@@ -15,9 +15,8 @@ public class ImmediateConsumptionStandardStrategy extends AbstractTwoColumnStrat
 
     @Override
     public String generateLabelContent(int startX, int column) {
-        // Ajuste fino: garantimos margem segura na esquerda e empurramos um pouco mais a coluna direita para evitar cortes
-        int baseOffset = 10;
-        int currentX = (column > 0) ? startX + baseOffset +15 : startX + baseOffset;
+        int currentX = startX + 8;
+        int contentWidth = 304;
 
         String productName = sanitize(request.getProductName());
 
@@ -27,19 +26,19 @@ public class ImmediateConsumptionStandardStrategy extends AbstractTwoColumnStrat
 
         String validade = service.LabelDateFormatter.format(request.getValidade());
 
-        int fontSizeTitle = 22;
-        int fontSizeText = 19;
+        int fontSizeTitle = 24;
+        int fontSizeText = 22;
 
         StringBuilder contentBuilder = new StringBuilder();
-        contentBuilder.append(createLine(currentX, 15, fontSizeTitle, "CONSUMO IMEDIATO"));
-        contentBuilder.append(createLine(currentX, 55, fontSizeText, "Produto: " + productName));
-        contentBuilder.append(createLine(currentX, 95, fontSizeText, "Data de Fabricação: " + dataFabricacao));
-        contentBuilder.append(createLine(currentX, 135, fontSizeText, "Validade: " + validade));
+        contentBuilder.append(createLine(currentX, 12, contentWidth, fontSizeTitle, "CONSUMO IMEDIATO"));
+        contentBuilder.append(createLine(currentX, 58, contentWidth, fontSizeText, "Produto: " + productName));
+        contentBuilder.append(createLine(currentX, 104, contentWidth, 21, "Fabricação: " + dataFabricacao));
+        contentBuilder.append(createLine(currentX, 150, contentWidth, fontSizeText, "Validade: " + validade));
 
         return contentBuilder.toString();
     }
 
-    private String createLine(int x, int y, int fontSize, String text) {
-        return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", x, y, fontSize, fontSize, sanitize(text));
+    private String createLine(int x, int y, int width, int fontSize, String text) {
+        return String.format("^FO%d,%d^A0N,%d,%d^FB%d,1,0,L,0^FD%s^FS\n", x, y, fontSize, fontSize, width, sanitize(text));
     }
 }

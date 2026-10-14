@@ -20,46 +20,23 @@ public class ValidadeStandardStrategy extends AbstractTwoColumnStrategy {
         String formattedValDate = formatData(request.getDataValidade());
         String productName = sanitize(request.getProductName());
 
-        int fontSize = 16;
-        int textMargin = 8;
-        int valueMargin = 115;
-        int offsetX = 5;
-
-        // Deslocamento de 12 dots (~1.5mm) aplicado apenas na coluna da direita (column == 1)
-        int columnAdjustment = (column == 1) ? 12 : 0;
-        int adjustedStartX = startX + offsetX + columnAdjustment;
-
-        int currentValueMargin = valueMargin;
-        if (column == 1) {
-            currentValueMargin += 10;
-        }
-
-        int yPos = 12;
-        int lineSpacing = 32;
+        int contentX = startX + 8;
+        int contentWidth = 304;
+        int productFontSize = productName.length() > 18
+                ? Math.max(12, (int) (contentWidth * 0.75 / ((productName.length() + 9) * 0.62)))
+                : 22;
 
         StringBuilder contentBuilder = new StringBuilder();
-
-        // --- Linha 1: Produto ---
-        contentBuilder.append(generateLine("Produto:", productName, adjustedStartX, yPos, fontSize, textMargin, currentValueMargin));
-        yPos += lineSpacing;
-
-        // --- Linha 2: Fabricação ---
-        contentBuilder.append(generateLine("Fabricacao:", formattedMfgDate, adjustedStartX, yPos, fontSize, textMargin, currentValueMargin));
-        yPos += lineSpacing;
-
-        // --- Linha 3: Abertura ---
-        contentBuilder.append(generateLine("Abertura:", formattedOpenDate, adjustedStartX, yPos, fontSize, textMargin, currentValueMargin));
-        yPos += lineSpacing;
-
-        // --- Linha 4: Validade (após aberto) ---
-        contentBuilder.append(generateLine("Val. Aberto:", formattedValDate, adjustedStartX, yPos, fontSize, textMargin, currentValueMargin));
+        contentBuilder.append(generateLine(contentX, 12, contentWidth, productFontSize, "Produto: " + productName));
+        contentBuilder.append(generateLine(contentX, 58, contentWidth, 22, "Fab.: " + formattedMfgDate));
+        contentBuilder.append(generateLine(contentX, 104, contentWidth, 22, "Abert.: " + formattedOpenDate));
+        contentBuilder.append(generateLine(contentX, 150, contentWidth, 22, "Val.: " + formattedValDate));
 
         return contentBuilder.toString();
     }
 
-    private String generateLine(String label, String value, int startX, int yPos, int fontSize, int textMargin, int valueMargin) {
-        return String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + textMargin, yPos, fontSize, fontSize, label) +
-                String.format("^FO%d,%d^A0N,%d,%d^FD%s^FS\n", startX + valueMargin, yPos, fontSize, fontSize, sanitize(value));
+    private String generateLine(int x, int y, int width, int fontSize, String text) {
+        return String.format("^FO%d,%d^A0N,%d,%d^FB%d,1,0,L,0^FD%s^FS\n", x, y, fontSize, fontSize, width, sanitize(text));
     }
 
     private String formatData(String dateStr) {

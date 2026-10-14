@@ -15,9 +15,9 @@
     <img src="/web/img/LOGO-ESPACO-VISTA1.png" alt="Logo Espaço Vista" class="h-12 sm:h-14" />
 </header>
 
-<main class="w-full max-w-2xl mx-auto px-4 flex-grow flex flex-col my-4">
-    <div class="flex flex-col gap-4 h-full">
-        <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-4 flex flex-col h-full" aria-label="Área de impressão de etiquetas">
+<main class="w-full max-w-7xl mx-auto px-4 flex-grow flex flex-col my-4">
+    <div class="app-layout">
+        <section class="bg-[var(--bg-content)] rounded-lg shadow-lg p-4 flex flex-col" aria-label="Área de impressão de etiquetas">
 
             <!-- Seletor de Modos -->
             <div class="mb-4">
@@ -229,6 +229,64 @@
             </div>
 
         </section>
+
+        <aside class="preview-panel bg-[var(--bg-content)] rounded-lg shadow-lg p-4 flex flex-col gap-4" aria-labelledby="previewPanelTitle">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <p class="preview-eyebrow">AMBIENTE DE TESTE</p>
+                    <h2 id="previewPanelTitle" class="text-lg font-bold text-[var(--text-primary)]">Laboratório de estilo</h2>
+                </div>
+                <span class="preview-status">Prévia</span>
+            </div>
+
+            <p class="preview-description">Ajuste a aparência e confira a simulação. As opções do laboratório serão aplicadas às próximas impressões.</p>
+
+            <div class="preview-meta">
+                <span id="previewModeName">Etiqueta Simples</span>
+                <span id="previewLabelType">Etiqueta Simples · formato 80 mm</span>
+            </div>
+
+            <div class="preview-stage" aria-label="Prévia visual da página de etiquetas">
+                <div id="previewPage" class="preview-page" aria-live="polite">
+                    <div id="previewLabels" class="preview-labels"></div>
+                </div>
+            </div>
+
+            <div class="preview-controls">
+                <label for="previewFontScale">Tamanho do texto <output id="previewFontScaleValue">100%</output></label>
+                <input id="previewFontScale" type="range" min="80" max="125" step="5" value="100" />
+
+                <label for="previewFontFamily">Tipografia</label>
+                <select id="previewFontFamily">
+                    <option value="0" selected>Padrão da impressora</option>
+                    <option value="A">Compacta</option>
+                    <option value="D">Monoespaçada</option>
+                </select>
+
+                <label for="previewAlignment">Alinhamento</label>
+                <select id="previewAlignment">
+                    <option value="left">À esquerda</option>
+                    <option value="center" selected>Centralizado</option>
+                    <option value="right">À direita</option>
+                </select>
+
+                <label for="previewSpacing">Espaçamento</label>
+                <select id="previewSpacing">
+                    <option value="compact">Compacto</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="relaxed">Amplo</option>
+                </select>
+
+                <label for="previewBorder">Borda</label>
+                <select id="previewBorder">
+                    <option value="none" selected>Sem borda externa</option>
+                    <option value="solid">Sólida</option>
+                </select>
+            </div>
+
+            <button id="resetPreviewStyle" class="btn-secondary preview-reset" type="button">Restaurar estilo inicial</button>
+            <p class="preview-footnote">As opções de tamanho, fonte, alinhamento, espaçamento e borda são enviadas junto com a impressão.</p>
+        </aside>
     </div>
 </main>
 

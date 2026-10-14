@@ -6,6 +6,7 @@ public class ImmediateConsumptionRequest {
     private String validade;
     private int quantity;
     private PrintRequest.LabelType labelType; // <-- Deve usar o Enum do PrintRequest
+    private LabelStyle style = new LabelStyle();
 
     // Getters e Setters
     public String getProductName() { return productName; }
@@ -22,4 +23,6 @@ public class ImmediateConsumptionRequest {
 
     public PrintRequest.LabelType getLabelType() { return labelType; }
     public void setLabelType(PrintRequest.LabelType labelType) { this.labelType = labelType; }
+    public LabelStyle getStyle() { return style; }
+    public void setStyle(LabelStyle style) { this.style = style; }
 }

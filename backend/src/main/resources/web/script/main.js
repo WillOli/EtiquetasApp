@@ -3,6 +3,8 @@
  * @description Lógica principal para a aplicação de impressão de etiquetas do Espaço Vista.
  */
 
+import { getLabelPrintStyle, initLabelPreview } from './utils/labelPreview.js';
+
 const API_BASE_URL = '';
 
 // Anima o favicon enquanto a pessoa está em outra aba e restaura o V estático ao voltar.
@@ -27,6 +29,8 @@ if (faviconLink) {
 const appState = {
     mode: 'SIMPLE', // 'SIMPLE', 'VALIDITY', 'IMMEDIATE_CONSUMPTION' ou 'PRODUCTION'
 };
+
+let refreshLabelPreview = () => {};
 
 // =========================================================================
 // LISTAS DE EXIBIÇÃO E AUTOCOMPLETE OTIMIZADO (SEPARADAS POR ABA)
@@ -184,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prodHoraDesc: document.getElementById('prod-hora-desc'),
     };
 
+    refreshLabelPreview = initLabelPreview(() => appState.mode);
     attachEventListeners(ui);
     setupInitialState(ui);
 });
@@ -294,6 +299,7 @@ function switchMode(mode, ui) {
     }
 
     updateDuplicateInfo(ui);
+    refreshLabelPreview();
 }
 
 function updateDuplicateInfo(ui) {
@@ -494,6 +500,7 @@ function handlePrintAction(ui) {
         };
     }
 
+    payload.style = getLabelPrintStyle();
     sendRequest(endpoint, payload, ui);
 }
 

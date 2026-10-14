@@ -1,4 +1,5 @@
 import * as modalUtils from './modalUtils.js';
+import { getLabelPrintStyle } from './labelPreview.js';
 
 async function sendPrintRequest(text, quantity, labelType, buttonId, buttonTextId, spinnerId) {
     const printButton = document.getElementById(buttonId);
@@ -16,7 +17,7 @@ async function sendPrintRequest(text, quantity, labelType, buttonId, buttonTextI
     printButtonText.textContent = 'Imprimindo...';
 
     try {
-        const payload = { text, quantity, labelType };
+        const payload = { text, quantity, labelType, style: getLabelPrintStyle() };
 
         const response = await fetch('/print', {
             method: 'POST',

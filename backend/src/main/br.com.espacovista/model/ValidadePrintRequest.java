@@ -10,6 +10,7 @@ public class ValidadePrintRequest {
     private String dataValidade;
     private int quantity;
     private LabelType labelType;
+    private LabelStyle style = new LabelStyle();
 
     public ValidadePrintRequest() {
     }
@@ -61,4 +62,7 @@ public class ValidadePrintRequest {
     public void setLabelType(LabelType labelType) {
         this.labelType = labelType;
     }
+
+    public LabelStyle getStyle() { return style; }
+    public void setStyle(LabelStyle style) { this.style = style; }
 }

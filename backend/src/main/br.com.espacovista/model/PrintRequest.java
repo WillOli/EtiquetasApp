@@ -10,6 +10,7 @@ public class PrintRequest {
     private String dataFabricacao;
     private String dataValidade;
     private String registro;
+    private LabelStyle style = new LabelStyle();
 
     public enum LabelType {
         STANDARD,
@@ -96,4 +97,7 @@ public class PrintRequest {
     public void setRegistro(String registro) {
         this.registro = registro;
     }
+
+    public LabelStyle getStyle() { return style; }
+    public void setStyle(LabelStyle style) { this.style = style; }
 }

@@ -37,25 +37,25 @@ public class PrinterService {
 
     public void printLabels(PrintRequest request) {
         PrintRequestValidator.validate(request);
-        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), request.getLabelType().name());
+        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), request.getLabelType().name(), request.getStyle());
     }
     public void printValidadeLabel(ValidadePrintRequest request) {
         PrintRequestValidator.validate(request);
-        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "VALIDADE");
+        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "VALIDADE", request.getStyle());
     }
     public void printImmediateConsumptionLabel(ImmediateConsumptionRequest request) {
         PrintRequestValidator.validate(request);
-        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "CONSUMO_IMEDIATO");
+        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "CONSUMO_IMEDIATO", request.getStyle());
     }
     public void printProductionLabel(ProductionRequest request) {
         PrintRequestValidator.validate(request);
-        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "PRODUCAO");
+        print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "PRODUCAO", request.getStyle());
     }
 
-    private void print(Supplier<ILabelStrategy> strategy, int quantity, String type) {
+    private void print(Supplier<ILabelStrategy> strategy, int quantity, String type, LabelStyle style) {
         // Confirma a impressora antes de consumir registros. Falha posterior pode deixar lacunas, nunca reutilizar registros.
         PrintService printer = selectPrinter();
-        String zpl = strategy.get().generateZpl();
+        String zpl = ZplStyleApplicator.apply(strategy.get().generateZpl(), style);
         logger.debug("ZPL gerado: {}", zpl);
         try {
             sender.send(printer, zpl);

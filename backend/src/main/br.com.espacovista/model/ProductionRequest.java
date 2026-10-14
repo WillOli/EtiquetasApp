@@ -8,6 +8,7 @@ public class ProductionRequest {
     private String dataValidade;     // Mudado de LocalDate para String
     private int quantity;
     private PrintRequest.LabelType labelType;
+    private LabelStyle style = new LabelStyle();
 
     // Getters e Setters (ajuste para aceitar e retornar String)
     public String getProductName() { return productName; }
@@ -30,4 +31,6 @@ public class ProductionRequest {
 
     public PrintRequest.LabelType getLabelType() { return labelType; }
     public void setLabelType(PrintRequest.LabelType labelType) { this.labelType = labelType; }
+    public LabelStyle getStyle() { return style; }
+    public void setStyle(LabelStyle style) { this.style = style; }
 }
