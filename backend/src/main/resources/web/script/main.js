@@ -289,14 +289,8 @@ function switchMode(mode, ui) {
         revealForm(ui.producaoSection);
     }
 
-    if (mode === 'PRODUCTION') {
-        ui.labelType.value = 'SIXTY_TWO_MM';
-        ui.labelType.disabled = true;
-        ui.labelType.classList.add('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
-    } else {
-        ui.labelType.disabled = false;
-        ui.labelType.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
-    }
+    ui.labelType.disabled = false;
+    ui.labelType.classList.remove('bg-gray-100', 'text-gray-500', 'cursor-not-allowed');
 
     updateDuplicateInfo(ui);
     refreshLabelPreview();
@@ -305,7 +299,7 @@ function switchMode(mode, ui) {
 function updateDuplicateInfo(ui) {
     if (!ui.labelQuantity || !ui.labelType || !ui.duplicateInfoText) return;
     const quantity = parseInt(ui.labelQuantity.value) || 0;
-    const isStandard = ui.labelType.value === 'STANDARD';
+    const isStandard = ['STANDARD', 'DOUBLE_25X25'].includes(ui.labelType.value);
     const totalPrinted = isStandard ? quantity * 2 : quantity;
     ui.duplicateInfoText.textContent = `Quantidade solicitada: ${quantity}, Etiquetas previstas: ${totalPrinted}`;
 }
@@ -500,7 +494,7 @@ function handlePrintAction(ui) {
         };
     }
 
-    payload.style = getLabelPrintStyle();
+    payload.style = getLabelPrintStyle(appState.mode);
     sendRequest(endpoint, payload, ui);
 }
 

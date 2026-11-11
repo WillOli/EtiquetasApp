@@ -13,8 +13,28 @@ public class PrintRequest {
     private LabelStyle style = new LabelStyle();
 
     public enum LabelType {
-        STANDARD,
-        SIXTY_TWO_MM
+        STANDARD(40, 25, true),
+        SIXTY_TWO_MM(80, 25, false),
+        SINGLE_25X50(50, 25, false),
+        DOUBLE_25X25(25, 25, true),
+        SINGLE_30X50(50, 30, false);
+
+        private final int widthMm;
+        private final int heightMm;
+        private final boolean doubleLabel;
+
+        LabelType(int widthMm, int heightMm, boolean doubleLabel) {
+            this.widthMm = widthMm;
+            this.heightMm = heightMm;
+            this.doubleLabel = doubleLabel;
+        }
+
+        public int getWidthMm() { return widthMm; }
+        public int getHeightMm() { return heightMm; }
+        public boolean isDoubleLabel() { return doubleLabel; }
+        public boolean isNewStockType() {
+            return this == SINGLE_25X50 || this == DOUBLE_25X25 || this == SINGLE_30X50;
+        }
     }
 
     public PrintRequest() {

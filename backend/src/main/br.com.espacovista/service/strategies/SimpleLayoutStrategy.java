@@ -8,6 +8,8 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
     private final String dataFabricacao;
     private final String dataValidade;
     private final long numeroImpressao;
+    private final int sizedWidthMm;
+    private final int sizedHeightMm;
 
     public SimpleLayoutStrategy(String text, int quantity, String setor, String dataFabricacao, String dataValidade, long numeroImpressao) {
         this.text = text;
@@ -16,17 +18,39 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
         this.dataFabricacao = service.LabelDateFormatter.format(dataFabricacao);
         this.dataValidade = service.LabelDateFormatter.format(dataValidade);
         this.numeroImpressao = numeroImpressao;
+        this.sizedWidthMm = 0;
+        this.sizedHeightMm = 0;
+    }
+
+    public SimpleLayoutStrategy(String text, int quantity, String setor, String dataFabricacao,
+                                String dataValidade, long numeroImpressao, int widthMm, int heightMm) {
+        this.text = text;
+        this.quantity = quantity;
+        this.setor = setor != null ? setor : "";
+        this.dataFabricacao = service.LabelDateFormatter.format(dataFabricacao);
+        this.dataValidade = service.LabelDateFormatter.format(dataValidade);
+        this.numeroImpressao = numeroImpressao;
+        this.sizedWidthMm = widthMm;
+        this.sizedHeightMm = heightMm;
     }
 
     @Override
     public String generateZpl() {
-        int labelWidthDots = 824;
-        int labelHeightDots = 240;
-        int contentWidth = labelWidthDots - 80;
-        int fontHeightNome = this.text.length() > 30
-                ? Math.max(12, (int) (contentWidth * 0.8 / (this.text.length() * 0.62)))
-                : 36;
-
+        if (sizedWidthMm > 0 && sizedHeightMm > 0) return generateSizedZpl();
+        int labelWidthDots = service.ZplConstants.LABEL_WIDTH_MM_SIXTY_TWO_MM * service.ZplConstants.DOTS_PER_MM;
+        int labelHeightDots = service.ZplConstants.LABEL_HEIGHT_MM_SIXTY_TWO_MM * service.ZplConstants.DOTS_PER_MM;
+        int horizontalInset = 24;
+        int verticalInset = 8;
+        int contentWidth = labelWidthDots - horizontalInset * 2;
+        int contentHeight = labelHeightDots - verticalInset * 2;
+        int rowHeight = contentHeight / 5;
+        String[] fields = {
+                sanitize(this.text.toUpperCase(java.util.Locale.ROOT)),
+                "SETOR: " + sanitize(this.setor.toUpperCase(java.util.Locale.ROOT)),
+                "FAB.: " + sanitize(this.dataFabricacao),
+                "VAL.: " + sanitize(this.dataValidade),
+                "REG.: "
+        };
         StringBuilder zplBuilder = new StringBuilder();
 
         for (int i = 0; i < this.quantity; i++) {
@@ -34,28 +58,54 @@ public class SimpleLayoutStrategy implements ILabelStrategy {
             zplBuilder.append("^CI28\n");
             zplBuilder.append("^PW").append(labelWidthDots).append("\n");
             zplBuilder.append("^LL").append(labelHeightDots).append("\n");
+            zplBuilder.append("^LH0,0^LS0^LT0\n");
 
-            long regAtual = this.numeroImpressao + i;
-            String regFormatado = String.format("%05d", regAtual);
-            int contentStart = 40;
-            zplBuilder.append("^FO").append(contentStart).append(",18")
-                    .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
-                    .append("^FB").append(contentWidth).append(",1,0,C,0^FD")
-                    .append(sanitize(this.text.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
-            zplBuilder.append("^FO").append(contentStart).append(",64")
-                    .append("^A0N,26,26^FB").append(contentWidth).append(",1,0,C,0^FDSETOR: ")
-                    .append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
-            zplBuilder.append("^FO").append(contentStart).append(",105")
-                    .append("^A0N,25,25^FB").append(contentWidth).append(",1,0,C,0^FDFAB.: ")
-                    .append(sanitize(this.dataFabricacao)).append("^FS\n");
-            zplBuilder.append("^FO").append(contentStart).append(",145")
-                    .append("^A0N,25,25^FB").append(contentWidth).append(",1,0,C,0^FDVAL.: ")
-                    .append(sanitize(this.dataValidade)).append("^FS\n");
-            zplBuilder.append("^FO").append(contentStart).append(",185")
-                    .append("^A0N,24,24^FB").append(contentWidth).append(",1,0,C,0^FDREG.: ")
-                    .append(regFormatado).append("^FS\n");
+            fields[4] = "REG.: " + String.format("%05d", this.numeroImpressao + i);
+            for (int row = 0; row < fields.length; row++) {
+                int maximumFont = row == 0 ? 30 : 22;
+                int font = fitFont(fields[row], maximumFont, contentWidth);
+                int y = verticalInset + row * rowHeight;
+                zplBuilder.append(String.format("^FO%d,%d^A0N,%d,%d^FB%d,1,0,C,0^FD%s^FS\n",
+                        horizontalInset, y, font, font, contentWidth, fields[row]));
+            }
             zplBuilder.append("^XZ\n");
         }
         return zplBuilder.toString();
+    }
+
+    private String generateSizedZpl() {
+        int pageWidth = sizedWidthMm * service.ZplConstants.DOTS_PER_MM;
+        int pageHeight = sizedHeightMm * service.ZplConstants.DOTS_PER_MM;
+        int contentX = Math.max(8, pageWidth / 20);
+        int contentWidth = pageWidth - contentX * 2;
+        int verticalInset = Math.max(8, pageHeight / 20);
+        int rowHeight = (pageHeight - verticalInset * 2) / 5;
+        String[] fields = {
+                sanitize(text.toUpperCase(java.util.Locale.ROOT)),
+                "SETOR: " + sanitize(setor.toUpperCase(java.util.Locale.ROOT)),
+                "FAB.: " + sanitize(dataFabricacao),
+                "VAL.: " + sanitize(dataValidade),
+                "REG.: "
+        };
+        StringBuilder zpl = new StringBuilder();
+        for (int i = 0; i < quantity; i++) {
+            zpl.append("^XA\n^CI28\n^PW").append(pageWidth).append("\n^LL").append(pageHeight).append('\n');
+            fields[4] = "REG.: " + String.format("%05d", numeroImpressao + i);
+            for (int row = 0; row < fields.length; row++) {
+                int maxFont = Math.min(28, Math.max(12, rowHeight - 8));
+                int font = fitFont(fields[row], maxFont, contentWidth);
+                int y = verticalInset + row * rowHeight;
+                zpl.append(String.format("^FO%d,%d^A0N,%d,%d^FB%d,1,0,C,0^FD%s^FS\n",
+                        contentX, y, font, font, contentWidth, fields[row]));
+            }
+            zpl.append("^XZ\n");
+        }
+        return zpl.toString();
+    }
+
+    private int fitFont(String value, int maximum, int width) {
+        if (value == null || value.isBlank()) return maximum;
+        int estimated = (int) (width * 0.88 / (value.length() * 0.62));
+        return Math.max(10, Math.min(maximum, estimated));
     }
 }

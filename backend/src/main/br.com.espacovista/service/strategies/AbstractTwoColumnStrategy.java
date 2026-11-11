@@ -7,14 +7,22 @@ import static service.ZplConstants.*;
  */
 public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
     private final int quantity;
+    private final int labelWidthMm;
+    private final int labelHeightMm;
 
     /**
      * Construtor para a estratégia de duas colunas.
      * @param quantity A quantidade de etiquetas solicitada pelo usuário (será duplicada internamente).
      */
     public AbstractTwoColumnStrategy(int quantity) {
+        this(quantity, LABEL_WIDTH_MM_STANDARD, LABEL_HEIGHT_MM_STANDARD);
+    }
+
+    protected AbstractTwoColumnStrategy(int quantity, int labelWidthMm, int labelHeightMm) {
         // A quantidade real de etiquetas a serem impressas é sempre o dobro da solicitada.
         this.quantity = quantity * 2;
+        this.labelWidthMm = labelWidthMm;
+        this.labelHeightMm = labelHeightMm;
     }
 
 
@@ -27,17 +35,18 @@ public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
     public final String generateZpl() {
         beforeGeneration();
         StringBuilder zplBuilder = new StringBuilder();
-        int pageWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM * 2 + GAP_HORIZONTAL_DOTS * 2;
-        int labelHeightDots = LABEL_HEIGHT_MM_STANDARD * DOTS_PER_MM;
+        int labelWidthDots = this.labelWidthMm * DOTS_PER_MM;
+        int pageWidthDots = labelWidthDots * 2 + GAP_HORIZONTAL_DOTS * 2;
+        int labelHeightDots = this.labelHeightMm * DOTS_PER_MM;
 
         for (int i = 0; i < this.quantity; i++) {
             // Inicia uma nova página a cada duas etiquetas (na primeira e na terceira, etc.)
             if (i % 2 == 0) {
                 zplBuilder.append("^XA\n^CI28\n^PW").append(pageWidthDots).append("\n^LL").append(labelHeightDots).append("\n");
+                if (this.labelWidthMm == 25) zplBuilder.append("^LH0,0^LS0^LT0\n");
             }
 
             int col = i % 2;
-            int labelWidthDots = LABEL_WIDTH_MM_STANDARD * DOTS_PER_MM;
             int currentX = col * (labelWidthDots + GAP_HORIZONTAL_DOTS);
 
             // Chama o método abstrato para obter o conteúdo específico da etiqueta.
@@ -64,4 +73,3 @@ public abstract class   AbstractTwoColumnStrategy implements ILabelStrategy {
 
     protected abstract String generateLabelContent(int startX, int column);
 }
-

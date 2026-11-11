@@ -61,6 +61,6 @@ class SequenceSafetyTest {
         assertEquals("106", Files.readString(file));
     }
     public static class SequenceProcess {
-        public static void main(String[] args) { SequenceManager.getNextSequenceAndIncrement(Path.of(args[0]), 3); }
+        public static void main(String[] args) {SequenceManager.getNextSequenceAndIncrement(Path.of(args[0]), 3); }
     }
 }

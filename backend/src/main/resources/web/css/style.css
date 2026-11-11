@@ -252,6 +252,13 @@ footer {
     background: #E2E8F0;
 }
 
+#previewPage[data-orientation="portrait"] {
+    width: auto;
+    height: 10rem;
+    max-width: 100%;
+    flex: 0 1 auto;
+}
+
 #previewPage[data-border="solid"] { border: 2px solid #64748B; }
 #previewPage[data-border="none"] { border-color: transparent; }
 
@@ -264,6 +271,19 @@ footer {
 
 .preview-labels[data-format="double"] .label-preview:first-child {
     border-right: 1px dashed #64748B;
+}
+
+#previewPage[data-label-type="DOUBLE_25X25"] .preview-labels[data-format="double"] {
+    justify-content: flex-start;
+    gap: 2.38095%;
+}
+
+#previewPage[data-label-type="DOUBLE_25X25"] .label-preview {
+    flex: 0 0 47.61905%;
+}
+
+.label-preview[data-layout^="double-25x25-"] .label-preview-position {
+    display: none;
 }
 
 #previewPage[data-border="solid"] .preview-labels[data-format="double"] .label-preview:first-child {
@@ -282,7 +302,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     gap: 0.16rem;
-    padding: 0.4rem;
+    padding: 0;
     border: 0;
     border-radius: 0;
     background: #FFFFFF;
@@ -319,17 +339,12 @@ footer {
 }
 
 .label-preview[data-alignment="left"] { text-align: left; }
-.label-preview[data-alignment="left"] { padding-inline: 0.55rem; }
-#previewPage[data-mode="SIMPLE"][data-alignment="left"] .label-preview {
-    padding-left: 1.9rem;
-    padding-right: 0.55rem;
-}
 .label-preview[data-alignment="center"] { text-align: center; }
 .label-preview[data-alignment="right"] { text-align: right; }
-.label-preview[data-alignment="right"] { padding-right: 0.75rem; }
-#previewPage[data-mode="SIMPLE"][data-alignment="right"] .label-preview {
-    padding-right: 2.9rem;
-    padding-left: 0.55rem;
+
+.label-preview-content {
+    width: 100%;
+    min-width: 0;
 }
 
 .label-preview-heading {
@@ -343,6 +358,7 @@ footer {
 .label-preview-fields {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: var(--preview-line-gap);
 }
 
@@ -351,6 +367,7 @@ footer {
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: inherit;
+    width: 100%;
     min-width: 0;
     gap: 0.15rem;
     line-height: 1.15;
@@ -387,6 +404,10 @@ footer {
     gap: 0.45rem;
 }
 
+#doublePositionControls[hidden] { display: none; }
+#doublePositionControls { display: grid; gap: 0.45rem; padding-top: 0.4rem; border-top: 1px solid #e2e8f0; }
+#doublePositionControls h4 { margin: 0.35rem 0 0; color: #0f172a; font-size: 0.82rem; }
+
 .preview-controls > label {
     display: flex;
     align-items: center;
@@ -395,6 +416,13 @@ footer {
     color: #334155;
     font-size: 0.8rem;
     font-weight: 650;
+}
+
+.preview-controls > label[hidden],
+.preview-controls select[hidden],
+.preview-controls input[hidden],
+.preview-controls button[hidden] {
+    display: none;
 }
 
 .preview-controls input[type="range"] {

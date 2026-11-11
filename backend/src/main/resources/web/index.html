@@ -198,18 +198,11 @@
 
             <hr class="my-4">
 
-            <!-- CONFIGURAÇÃO DE QUANTIDADE E TIPO -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- CONFIGURAÇÃO DE QUANTIDADE -->
+            <div class="grid grid-cols-1 gap-4">
                 <div class="mb-3">
                     <label for="labelQuantity" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Quantidade</label>
                     <input id="labelQuantity" type="number" min="1" max="50" step="1" value="1" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent" />
-                </div>
-                <div class="mb-3">
-                    <label for="labelType" class="block text-xs sm:text-sm font-medium text-[var(--text-primary)] mb-1">Tipo de Etiqueta</label>
-                    <select id="labelType" class="w-full border border-gray-300 rounded-md shadow-sm text-sm sm:text-base p-2 focus:ring-2 focus:ring-[var(--btn-primary)] focus:border-transparent">
-                        <option value="SIXTY_TWO_MM">Etiqueta Simples</option>
-                        <option value="STANDARD">Etiqueta Dupla</option>
-                    </select>
                 </div>
             </div>
 
@@ -241,9 +234,20 @@
 
             <p class="preview-description">Ajuste a aparência e confira a simulação. As opções do laboratório serão aplicadas às próximas impressões.</p>
 
+            <div class="preview-controls">
+                <label for="labelType">Formato que será configurado</label>
+                <select id="labelType" aria-describedby="labelTypeHelp">
+                    <option value="SIXTY_TWO_MM" selected>Simples contínua · 80 × 25 mm</option>
+                    <option value="SINGLE_25X50">Simples horizontal · 50 × 25 mm</option>
+                    <option value="DOUBLE_25X25">Dupla · 2 × 25 × 25 mm</option>
+                    <option value="SINGLE_30X50">Simples horizontal · 50 × 30 mm</option>
+                </select>
+                <small id="labelTypeHelp" class="text-xs text-slate-500">As opções abaixo ficam salvas para este módulo e formato.</small>
+            </div>
+
             <div class="preview-meta">
                 <span id="previewModeName">Etiqueta Simples</span>
-                <span id="previewLabelType">Etiqueta Simples · formato 80 mm</span>
+                <span id="previewLabelType">Simples contínua · 80 × 25 mm</span>
             </div>
 
             <div class="preview-stage" aria-label="Prévia visual da página de etiquetas">
@@ -263,12 +267,46 @@
                     <option value="D">Monoespaçada</option>
                 </select>
 
-                <label for="previewAlignment">Alinhamento</label>
+                <label id="previewAlignmentLabel" for="previewAlignment">Alinhamento</label>
                 <select id="previewAlignment">
                     <option value="left">À esquerda</option>
                     <option value="center" selected>Centralizado</option>
                     <option value="right">À direita</option>
                 </select>
+                <button id="applyDoubleAlignment" class="btn btn-secondary" type="button" hidden>
+                    Aplicar alinhamento às duas etiquetas
+                </button>
+
+                <label id="previewOffsetXLabel" for="previewOffsetX">Ajuste horizontal <output id="previewOffsetXValue">0 mm</output></label>
+                <input id="previewOffsetX" type="range" min="-10" max="10" step="0.5" value="0" />
+
+                <label id="previewOffsetYLabel" for="previewOffsetY">Ajuste vertical <output id="previewOffsetYValue">0 mm</output></label>
+                <input id="previewOffsetY" type="range" min="-10" max="10" step="0.5" value="0" />
+
+                <section id="doublePositionControls" hidden aria-label="Posição independente das etiquetas duplas">
+                    <h4>Posição 1 (esquerda)</h4>
+                    <label id="previewFirstLabelAlignmentLabel" for="previewFirstLabelAlignment">Alinhamento da posição 1</label>
+                    <select id="previewFirstLabelAlignment">
+                        <option value="left">À esquerda</option>
+                        <option value="center">Centralizado</option>
+                        <option value="right">À direita</option>
+                    </select>
+                    <label for="previewFirstOffsetX">Horizontal <output id="previewFirstOffsetXValue">0 mm</output></label>
+                    <input id="previewFirstOffsetX" type="range" min="-6" max="6" step="0.5" value="0" />
+                    <label for="previewFirstOffsetY">Vertical <output id="previewFirstOffsetYValue">0 mm</output></label>
+                    <input id="previewFirstOffsetY" type="range" min="-3" max="3" step="0.5" value="0" />
+                    <h4>Posição 2 (direita)</h4>
+                    <label id="previewSecondLabelAlignmentLabel" for="previewSecondLabelAlignment">Alinhamento da posição 2</label>
+                    <select id="previewSecondLabelAlignment">
+                        <option value="left">À esquerda</option>
+                        <option value="center">Centralizado</option>
+                        <option value="right">À direita</option>
+                    </select>
+                    <label for="previewSecondOffsetX">Horizontal <output id="previewSecondOffsetXValue">0 mm</output></label>
+                    <input id="previewSecondOffsetX" type="range" min="-6" max="6" step="0.5" value="0" />
+                    <label for="previewSecondOffsetY">Vertical <output id="previewSecondOffsetYValue">0 mm</output></label>
+                    <input id="previewSecondOffsetY" type="range" min="-3" max="3" step="0.5" value="0" />
+                </section>
 
                 <label for="previewSpacing">Espaçamento</label>
                 <select id="previewSpacing">
@@ -285,7 +323,7 @@
             </div>
 
             <button id="resetPreviewStyle" class="btn-secondary preview-reset" type="button">Restaurar estilo inicial</button>
-            <p class="preview-footnote">As opções de tamanho, fonte, alinhamento, espaçamento e borda são enviadas junto com a impressão.</p>
+            <p class="preview-footnote">Formato, alinhamento e ajustes de posição são aplicados ao layout impresso. Os ajustes são salvos separadamente para cada módulo e formato.</p>
         </aside>
     </div>
 </main>

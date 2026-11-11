@@ -5,7 +5,8 @@ import io.javalin.http.Context;
 import model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.PrinterService;
+import service.LabelPrintingException;
+import service.LabelPrintingUseCase;
 import service.SequenceException;
 import validation.PrintRequestValidator;
 import validation.RequestValidationException;
@@ -13,10 +14,10 @@ import java.util.function.Consumer;
 
 public class PrintController {
     private static final Logger logger = LoggerFactory.getLogger(PrintController.class);
-    private final PrinterService printerService;
+    private final LabelPrintingUseCase printerService;
     private final Gson gson = new GsonBuilder().setStrictness(Strictness.STRICT).create();
 
-    public PrintController(PrinterService printerService) { this.printerService = printerService; }
+    public PrintController(LabelPrintingUseCase printerService) { this.printerService = printerService; }
 
     public void handlePrintRequest(Context ctx) {
         handle(ctx, PrintRequest.class, PrintRequestValidator::validate, printerService::printLabels);
@@ -46,7 +47,7 @@ public class PrintController {
         } catch (RequestValidationException e) {
             logger.warn("Pedido inválido em {}: {}", ctx.path(), e.getMessage());
             ctx.status(400).result(e.getMessage());
-        } catch (PrinterService.PrinterServiceException e) {
+        } catch (LabelPrintingException e) {
             logger.error("Impressora indisponível em {}.", ctx.path(), e);
             ctx.status(503).result(e.getMessage());
         } catch (SequenceException e) {

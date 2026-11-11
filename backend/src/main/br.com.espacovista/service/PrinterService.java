@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-public class PrinterService {
+public class PrinterService implements LabelPrintingUseCase {
     private static final Logger logger = LoggerFactory.getLogger(PrinterService.class);
     private final Supplier<String> printerName;
     private final Supplier<PrintService[]> printers;
@@ -31,22 +31,26 @@ public class PrinterService {
         this.sender = sender;
     }
 
-    public static class PrinterServiceException extends RuntimeException {
+    public static class PrinterServiceException extends LabelPrintingException {
         public PrinterServiceException(String message, Throwable cause) { super(message, cause); }
     }
 
+    @Override
     public void printLabels(PrintRequest request) {
         PrintRequestValidator.validate(request);
         print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), request.getLabelType().name(), request.getStyle());
     }
+    @Override
     public void printValidadeLabel(ValidadePrintRequest request) {
         PrintRequestValidator.validate(request);
         print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "VALIDADE", request.getStyle());
     }
+    @Override
     public void printImmediateConsumptionLabel(ImmediateConsumptionRequest request) {
         PrintRequestValidator.validate(request);
         print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "CONSUMO_IMEDIATO", request.getStyle());
     }
+    @Override
     public void printProductionLabel(ProductionRequest request) {
         PrintRequestValidator.validate(request);
         print(() -> PrinterStrategyFactory.getStrategy(request), request.getQuantity(), "PRODUCAO", request.getStyle());
@@ -55,7 +59,8 @@ public class PrinterService {
     private void print(Supplier<ILabelStrategy> strategy, int quantity, String type, LabelStyle style) {
         // Confirma a impressora antes de consumir registros. Falha posterior pode deixar lacunas, nunca reutilizar registros.
         PrintService printer = selectPrinter();
-        String zpl = ZplStyleApplicator.apply(strategy.get().generateZpl(), style);
+        ILabelStrategy selectedStrategy = strategy.get();
+        String zpl = ZplStyleApplicator.apply(selectedStrategy.generateZpl(), style);
         logger.debug("ZPL gerado: {}", zpl);
         try {
             sender.send(printer, zpl);

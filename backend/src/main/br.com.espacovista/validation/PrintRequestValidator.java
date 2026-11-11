@@ -290,11 +290,11 @@ public final class PrintRequestValidator {
          * Regra de negócio:
          * Produção aceita somente layout simples.
          */
-        if (request.getLabelType()
-                != PrintRequest.LabelType.SIXTY_TWO_MM) {
+        if (request.getLabelType() != PrintRequest.LabelType.SIXTY_TWO_MM
+                && !request.getLabelType().isNewStockType()) {
 
             throw new RequestValidationException(
-                    "Etiqueta de Produção aceita somente o layout simples."
+                    "Tipo de etiqueta não suportado para produção."
             );
         }
 
@@ -400,6 +400,16 @@ public final class PrintRequestValidator {
         if (style.getAlignment() == null || !java.util.Set.of("left", "center", "right").contains(style.getAlignment())) {
             throw new RequestValidationException("Alinhamento de etiqueta inválido.");
         }
+        if (!Double.isFinite(style.getOffsetXmm()) || Math.abs(style.getOffsetXmm()) > 10
+                || !Double.isFinite(style.getOffsetYmm()) || Math.abs(style.getOffsetYmm()) > 10) {
+            throw new RequestValidationException("O ajuste de posição deve ficar entre -10 mm e 10 mm.");
+        }
+        validateDoubleLabelOffset(style.getFirstLabelOffsetXmm(), -6, 6);
+        validateDoubleLabelOffset(style.getSecondLabelOffsetXmm(), -6, 6);
+        validateDoubleLabelOffset(style.getFirstLabelOffsetYmm(), -3, 3);
+        validateDoubleLabelOffset(style.getSecondLabelOffsetYmm(), -3, 3);
+        validateDoubleLabelAlignment(style.getFirstLabelAlignment());
+        validateDoubleLabelAlignment(style.getSecondLabelAlignment());
         if (style.getSpacing() == null || !java.util.Set.of("compact", "normal", "relaxed").contains(style.getSpacing())) {
             throw new RequestValidationException("Espaçamento de etiqueta inválido.");
         }
@@ -408,6 +418,18 @@ public final class PrintRequestValidator {
         }
         if (style.getBorder() == null || !java.util.Set.of("none", "solid").contains(style.getBorder())) {
             throw new RequestValidationException("Borda de etiqueta inválida.");
+        }
+    }
+
+    private static void validateDoubleLabelOffset(Double value, double min, double max) {
+        if (value != null && (!Double.isFinite(value) || value < min || value > max)) {
+            throw new RequestValidationException("O ajuste individual da etiqueta dupla está fora do limite permitido.");
+        }
+    }
+
+    private static void validateDoubleLabelAlignment(String alignment) {
+        if (alignment != null && !java.util.Set.of("left", "center", "right").contains(alignment)) {
+            throw new RequestValidationException("Alinhamento individual da etiqueta dupla inválido.");
         }
     }
 

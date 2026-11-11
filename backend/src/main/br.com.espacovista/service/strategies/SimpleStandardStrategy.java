@@ -14,6 +14,7 @@ public class SimpleStandardStrategy extends AbstractTwoColumnStrategy {
     private final String setor;
     private final String dataFabricacao;
     private final String dataValidade;
+    private final int labelWidthMm;
 
     // ✅ Alterado para um contador mutável, permitindo avançar a cada coluna impressa
     private long currentRegistro;
@@ -21,11 +22,17 @@ public class SimpleStandardStrategy extends AbstractTwoColumnStrategy {
 
     // Construtor principal recebendo o número base (long) para cálculo sequencial
     public SimpleStandardStrategy(String text, String setor, String dataFabricacao, String dataValidade, long registroInicial, int quantity) {
-        super(quantity);
+        this(text, setor, dataFabricacao, dataValidade, registroInicial, quantity, 40);
+    }
+
+    public SimpleStandardStrategy(String text, String setor, String dataFabricacao, String dataValidade,
+                                  long registroInicial, int quantity, int labelWidthMm) {
+        super(quantity, labelWidthMm, 25);
         this.text = (text != null) ? text : "";
         this.setor = (setor != null) ? setor : "";
         this.dataFabricacao = service.LabelDateFormatter.format(dataFabricacao);
         this.dataValidade = service.LabelDateFormatter.format(dataValidade);
+        this.labelWidthMm = labelWidthMm;
         this.initialRegistro = registroInicial;
         this.currentRegistro = registroInicial;
     }
@@ -39,48 +46,67 @@ public class SimpleStandardStrategy extends AbstractTwoColumnStrategy {
 
     @Override
     protected String generateLabelContent(int startX, int column) {
-        // Cada posição ocupa 40 × 25 mm (320 × 200 dots), com margens iguais.
-        int offsetX = startX + 8;
-        int contentWidth = 304;
-        int fontHeightNome = this.text.length() > 14
-                ? Math.max(12, (int) (contentWidth * 0.78 / (this.text.length() * 0.62)))
-                : 34;
+        // Etiqueta dupla de 25 × 25 mm: reserva 3 mm em cada lateral.
+        int offsetX = startX + (this.labelWidthMm == 25 ? 24 : 8);
+        int labelWidthDots = this.labelWidthMm * service.ZplConstants.DOTS_PER_MM;
+        int contentWidth = labelWidthDots - (this.labelWidthMm == 25 ? 48 : 16);
+        boolean compact = contentWidth < 240;
+        int fontHeightNome = compact
+                ? fitFont(this.text.toUpperCase(java.util.Locale.ROOT), 24, contentWidth)
+                : this.text.length() > 14
+                    ? Math.max(12, (int) (contentWidth * 0.78 / (this.text.length() * 0.62)))
+                    : 34;
+        int yTitle = compact ? 18 : 20;
+        int ySector = compact ? 54 : 60;
+        int yMfg = compact ? 90 : 96;
+        int yValidity = compact ? 126 : 128;
+        int yRegistration = compact ? 162 : 160;
+        int smallFont = compact ? 14 : 22;
 
         StringBuilder contentBuilder = new StringBuilder();
 
         // 1. NOME DO PRODUTO
-        contentBuilder.append("^FO").append(offsetX).append(",12")
+        contentBuilder.append("^FO").append(offsetX).append(",").append(yTitle)
                 .append("^A0N,").append(fontHeightNome).append(",").append(fontHeightNome)
                 .append("^FB").append(contentWidth).append(",1,0,C,0^FD").append(sanitize(this.text.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
 
         // 2. SETOR
         if (!this.setor.isEmpty()) {
-            contentBuilder.append("^FO").append(offsetX).append(",52")
-                    .append("^A0N,20,20^FB").append(contentWidth).append(",1,0,C,0^FDSETOR: ").append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
+            String setorText = "SETOR: " + this.setor.toUpperCase(java.util.Locale.ROOT);
+            int sectorFont = compact ? fitFont(setorText, smallFont, contentWidth) : 20;
+            contentBuilder.append("^FO").append(offsetX).append(",").append(ySector)
+                    .append("^A0N,").append(sectorFont).append(',').append(sectorFont).append("^FB").append(contentWidth).append(",1,0,C,0^FDSETOR: ").append(sanitize(this.setor.toUpperCase(java.util.Locale.ROOT))).append("^FS\n");
         }
 
         // 3. DATA DE FABRICAÇÃO
         if (!this.dataFabricacao.isEmpty()) {
-            contentBuilder.append("^FO").append(offsetX).append(",88")
-                    .append("^A0N,22,22^FB").append(contentWidth).append(",1,0,C,0^FDFAB.: ").append(sanitize(this.dataFabricacao)).append("^FS\n");
+            contentBuilder.append("^FO").append(offsetX).append(',').append(yMfg)
+                    .append("^A0N,").append(compact ? smallFont : 22).append(',').append(compact ? smallFont : 22).append("^FB").append(contentWidth).append(",1,0,C,0^FDFAB.: ").append(sanitize(this.dataFabricacao)).append("^FS\n");
         }
 
         // 4. DATA DE VALIDADE
         if (!this.dataValidade.isEmpty()) {
-            contentBuilder.append("^FO").append(offsetX).append(",120")
-                    .append("^A0N,22,22^FB").append(contentWidth).append(",1,0,C,0^FDVAL.: ").append(sanitize(this.dataValidade)).append("^FS\n");
+            contentBuilder.append("^FO").append(offsetX).append(',').append(yValidity)
+                    .append("^A0N,").append(compact ? smallFont : 22).append(',').append(compact ? smallFont : 22).append("^FB").append(contentWidth).append(",1,0,C,0^FDVAL.: ").append(sanitize(this.dataValidade)).append("^FS\n");
         }
 
         // 5. REGISTRO SEQUENCIAL INCREMENTAL
         // Formata o número atual com 5 dígitos (ex: 00001, 00002)
         String regFormatado = String.format("%05d", this.currentRegistro);
-        contentBuilder.append("^FO").append(offsetX).append(",152")
-                .append("^A0N,21,21^FB").append(contentWidth).append(",1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
+        int registrationFont = compact ? 14 : 21;
+        contentBuilder.append("^FO").append(offsetX).append(',').append(yRegistration)
+                .append("^A0N,").append(registrationFont).append(',').append(registrationFont).append("^FB").append(contentWidth).append(",1,0,C,0^FDREG.: ").append(regFormatado).append("^FS\n");
 
         // ✅ O SEGREDO: Incrementa o contador! A próxima coluna ou etiqueta receberá o número seguinte.
         this.currentRegistro++;
 
         return contentBuilder.toString();
+    }
+
+    private int fitFont(String value, int maximum, int width) {
+        if (value == null || value.isBlank()) return maximum;
+        int estimated = (int) (width * 0.88 / (value.length() * 0.62));
+        return Math.max(10, Math.min(maximum, estimated));
     }
 
 }

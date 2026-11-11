@@ -15,7 +15,7 @@ public class PrinterStrategyFactory {
         int requestedQuantity = request.getQuantity();
 
         int physicalLabelCount =
-                request.getLabelType() == PrintRequest.LabelType.STANDARD
+                request.getLabelType().isDoubleLabel()
                         ? requestedQuantity * 2
                         : requestedQuantity;
 
@@ -33,7 +33,7 @@ public class PrinterStrategyFactory {
                     request.getDataValidade(),
                     proximoRegistro
             );
-        } else {
+        } else if (request.getLabelType() == PrintRequest.LabelType.STANDARD) {
             return new SimpleStandardStrategy(
                     request.getText(),
                     request.getSetor(),
@@ -41,6 +41,18 @@ public class PrinterStrategyFactory {
                     request.getDataValidade(),
                     proximoRegistro,
                     requestedQuantity
+            );
+        } else if (request.getLabelType().isDoubleLabel()) {
+            return new SimpleStandardStrategy(
+                    request.getText(), request.getSetor(), request.getDataFabricacao(),
+                    request.getDataValidade(), proximoRegistro, requestedQuantity,
+                    request.getLabelType().getWidthMm()
+            );
+        } else {
+            return new SimpleLayoutStrategy(
+                    request.getText(), requestedQuantity, request.getSetor(),
+                    request.getDataFabricacao(), request.getDataValidade(), proximoRegistro,
+                    request.getLabelType().getWidthMm(), request.getLabelType().getHeightMm()
             );
         }
     }
@@ -51,8 +63,12 @@ public class PrinterStrategyFactory {
     public static ILabelStrategy getStrategy(ValidadePrintRequest request) {
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return new ValidadeLayoutStrategy(request);
-        } else {
+        } else if (request.getLabelType() == PrintRequest.LabelType.STANDARD) {
             return new ValidadeStandardStrategy(request);
+        } else if (request.getLabelType().isDoubleLabel()) {
+            return new ValidadeStandardStrategy(request);
+        } else {
+            return new ValidadeLayoutStrategy(request, request.getLabelType().getWidthMm(), request.getLabelType().getHeightMm());
         }
     }
 
@@ -62,8 +78,12 @@ public class PrinterStrategyFactory {
     public static ILabelStrategy getStrategy(ImmediateConsumptionRequest request) {
         if (request.getLabelType() == PrintRequest.LabelType.SIXTY_TWO_MM) {
             return new ImmediateConsumptionLayoutStrategy(request);
-        } else {
+        } else if (request.getLabelType() == PrintRequest.LabelType.STANDARD) {
             return new ImmediateConsumptionStandardStrategy(request);
+        } else if (request.getLabelType().isDoubleLabel()) {
+            return new ImmediateConsumptionStandardStrategy(request);
+        } else {
+            return new ImmediateConsumptionLayoutStrategy(request, request.getLabelType().getWidthMm(), request.getLabelType().getHeightMm());
         }
     }
 

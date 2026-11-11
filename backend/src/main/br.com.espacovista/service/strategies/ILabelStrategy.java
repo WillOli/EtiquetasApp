@@ -5,4 +5,5 @@ package service.strategies;
  */
 public interface ILabelStrategy {
     String generateZpl();
+
 }

@@ -6,6 +6,7 @@ import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.LabelPrintingUseCase;
 import service.PrinterService;
 import service.SequenceManager;
 import javax.print.PrintServiceLookup;
@@ -44,7 +45,7 @@ public final class Main {
         logger.info("Abra http://localhost:{}/web/index.html", app.port());
     }
 
-    public static Javalin createApp(PrinterService printer) {
+    public static Javalin createApp(LabelPrintingUseCase printer) {
         PrintController controller = new PrintController(printer);
         return Javalin.create(config -> {
             config.http.maxRequestSize = 16_384L;

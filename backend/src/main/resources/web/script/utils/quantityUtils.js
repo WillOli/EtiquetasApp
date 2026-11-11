@@ -17,7 +17,7 @@ export function updateDuplicateInfo() {
     let totalPrinted;
 
     // --- 3. Lógica Dinâmica ---
-    if (selectedType === 'STANDARD') { // 'STANDARD' é o valor para a Etiqueta Dupla
+    if (selectedType === 'STANDARD' || selectedType === 'DOUBLE_25X25') {
         totalPrinted = quantity * 2;
     } else { // Para a 'Padrão' (80mmx25mm) e qualquer outra
         totalPrinted = quantity;
@@ -36,8 +36,8 @@ export function setQuantity(amount) {
   try {
     const input = document.getElementById('labelQuantity');
     if (!input) {
-      throw new Error('Elemento labelQuantity não encontrado');
-    }
+      throw new Error('Elementow labelQuantity não encontrado');
+    }[                                ó]
     input.value = amount;
     updateDuplicateInfo();
   } catch (error) {

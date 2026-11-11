@@ -57,8 +57,8 @@ Não há fallback para impressora padrão. No macOS, o envio continua raw pelo C
 
 Quatro endpoints POST: `/print`, `/print-validade`, `/print-consumo-imediato`, `/print-producao`. Exigem `application/json`, corpo até 16 KiB e dados válidos. Requisições de outras origens são bloqueadas; frontend e backend usam a mesma origem.
 
-- Quantidade inteira de 1 a 50. STANDARD representa pares, portanto 2 a 100 etiquetas físicas. SIXTY_TWO_MM representa a quantidade física solicitada.
-- `labelType` obrigatório: STANDARD ou SIXTY_TWO_MM. Produção aceita somente SIXTY_TWO_MM.
+- Quantidade inteira de 1 a 50. Formatos duplos representam pares; formatos simples representam a quantidade física solicitada.
+- `labelType` obrigatório. Os valores novos são `SINGLE_25X50` (etiqueta simples horizontal, 50 mm de largura × 25 mm de altura), `DOUBLE_25X25` (duas etiquetas de 25 × 25 mm) e `SINGLE_30X50` (etiqueta simples horizontal, 50 mm de largura × 30 mm de altura). `STANDARD` e `SIXTY_TWO_MM` permanecem aceitos para compatibilidade com integrações antigas.
 - Produto até 80 caracteres e setor até 40. Acentos são preservados; controles, quebras, `^`, `~` e barra invertida viram espaços para impedir comandos ZPL. Esses limites não garantem legibilidade física para qualquer texto; confira nomes longos nos layouts homologados.
 - Datas DD/MM/AAAA ou AAAA-MM-DD, calendário estrito e ordem cronológica válida. Datas ISO são exibidas em formato brasileiro.
 - Horários HH:mm ou HH:mm:ss. Descarte pode atravessar a meia-noite; não se presume que seu horário seja maior que o de preparo.

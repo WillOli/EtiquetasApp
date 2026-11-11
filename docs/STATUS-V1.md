@@ -39,7 +39,7 @@ O responsável pediu a execução do backlog e depois delimitou: **concluir a pa
 
 ## Decisões de comportamento
 
-- STANDARD: quantidade solicitada representa pares, com duas etiquetas físicas por unidade. SIXTY_TWO_MM representa o total físico; no formulário Simples, SimpleLayoutStrategy distribui esse total em até duas colunas por página, sem dobrá-lo. O nome legado do enum foi preservado para evitar romper frontend/API.
+- STANDARD: valor legado para pares de etiquetas de 40 × 25 mm; SIXTY_TWO_MM também permanece aceito por compatibilidade. Os formatos físicos novos são SINGLE_25X50 (simples horizontal, 50 mm de largura × 25 mm de altura), DOUBLE_25X25 (duas etiquetas de 25 × 25 mm por unidade) e SINGLE_30X50 (simples horizontal, 50 mm de largura × 30 mm de altura).
 - Produção e Consumo Imediato simples agora repetem a quantidade correta; não geram sempre uma única etiqueta.
 - Validação aceita datas ISO e brasileiras; horários com minutos ou segundos. Descarte pode atravessar meia-noite; não foi inventada uma restrição de horário.
 - Segurança de texto: produto até 80 caracteres, setor até 40, pedidos até 16 KiB; metacaracteres ZPL e controles viram espaços. Acentos permanecem em UTF-8 com ^CI28.

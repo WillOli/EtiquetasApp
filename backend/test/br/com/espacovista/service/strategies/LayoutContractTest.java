@@ -32,14 +32,14 @@ class LayoutContractTest {
             return Stream.of(
                 DynamicTest.dynamicTest("Validade " + type + " " + quantity, () -> {
                     var strategy = PrinterStrategyFactory.getStrategy(v);
-                    assertEquals(type == PrintRequest.LabelType.STANDARD ? ValidadeStandardStrategy.class : ValidadeLayoutStrategy.class, strategy.getClass());
+                    assertEquals(type.isDoubleLabel() ? ValidadeStandardStrategy.class : ValidadeLayoutStrategy.class, strategy.getClass());
                     assertEquals(quantity, count(strategy.generateZpl(), "^XA"));
-                    assertEquals(type == PrintRequest.LabelType.STANDARD ? quantity * 2 : quantity, count(strategy.generateZpl(), "Café"));
+                    assertEquals(type.isDoubleLabel() ? quantity * 2 : quantity, count(strategy.generateZpl(), "Café"));
                 }),
                 DynamicTest.dynamicTest("Consumo " + type + " " + quantity, () -> {
                     var strategy = PrinterStrategyFactory.getStrategy(i);
-                    assertEquals(type == PrintRequest.LabelType.STANDARD ? ImmediateConsumptionStandardStrategy.class : ImmediateConsumptionLayoutStrategy.class, strategy.getClass());
-                    assertEquals(type == PrintRequest.LabelType.STANDARD ? quantity * 2 : quantity, count(strategy.generateZpl(), "Café"));
+                    assertEquals(type.isDoubleLabel() ? ImmediateConsumptionStandardStrategy.class : ImmediateConsumptionLayoutStrategy.class, strategy.getClass());
+                    assertEquals(type.isDoubleLabel() ? quantity * 2 : quantity, count(strategy.generateZpl(), "Café"));
                 })
             );
         }));

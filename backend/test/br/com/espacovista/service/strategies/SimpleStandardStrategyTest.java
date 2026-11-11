@@ -35,6 +35,7 @@ class SimpleStandardStrategyTest {
         assertTrue(zplResult.contains("FAB.: 27/07/2026"), "Deve conter fabricação.");
         assertTrue(zplResult.contains("VAL.: 30/07/2026"), "Deve conter validade.");
         assertTrue(zplResult.contains("REG.: 00015"), "Deve conter o registro.");
-        assertTrue(zplResult.contains("^FB340"), "Deve usar ^FB340 para centralização.");
+        assertTrue(zplResult.contains("^FO8,20^A0N,34,34^FB304"), "A primeira etiqueta deve respeitar a área útil de 304 dots.");
+        assertTrue(zplResult.contains("^FO338,20^A0N,34,34^FB304"), "A segunda etiqueta deve respeitar a área útil de 304 dots.");
     }
 }
